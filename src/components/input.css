@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--vt-space-1);
+    container-type: inline-size;
+    container-name: field;
   }
 
   .vt-label {
@@ -34,6 +36,17 @@
       box-shadow var(--vt-duration-fast) ease,
       background-color var(--vt-duration-fast) ease;
     outline: none;
+    /* Prevent system accent color from bleeding through on autofill */
+    -webkit-text-fill-color: var(--vt-color-text);
+  }
+
+  /* Override browser autofill background which ignores our colors */
+  .vt-input:-webkit-autofill,
+  .vt-input:-webkit-autofill:hover,
+  .vt-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px var(--vt-color-surface-overlay) inset;
+    -webkit-text-fill-color: var(--vt-color-text);
+    caret-color: var(--vt-color-text);
   }
 
   .vt-input::placeholder {
@@ -54,6 +67,7 @@
     opacity: 0.5;
     cursor: not-allowed;
     background-color: var(--vt-color-surface-raised);
+    -webkit-text-fill-color: var(--vt-color-text-muted);
   }
 
   .vt-input--error {
@@ -72,5 +86,28 @@
 
   .vt-hint--error {
     color: var(--vt-color-danger);
+  }
+
+  /*
+    Container query — in narrow containers (mobile, sidebar) stack label
+    and hint differently. The field knows its own width; no viewport media query.
+  */
+  @container field (min-width: 400px) {
+    .vt-field--inline {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .vt-field--inline .vt-label {
+      flex: 0 0 auto;
+      min-width: 120px;
+    }
+    .vt-field--inline .vt-input {
+      flex: 1;
+    }
+    .vt-field--inline .vt-hint {
+      flex: 0 0 100%;
+      padding-inline-start: 120px;
+    }
   }
 }

@@ -2,7 +2,7 @@
  * Volty v0.1.0
  * Modern CSS theme library — typed design tokens, container-scoped theming, zero build step
  * MIT License
- * Built: 2026-04-04T06:36:50.595Z
+ * Built: 2026-04-04T06:48:14.433Z
  */
 
 /* ==============================================================================
@@ -17,7 +17,13 @@
    2. PROPERTIES — src/core/properties.css
    =================================================================== */
 
-/* Color tokens — typed as <color> so they can be transitioned */
+/* =============================================================================
+   @property token registrations
+   Typed syntax enables: animation, transition, validation, and computed fallbacks.
+   These are the things no untyped custom property can do.
+   ============================================================================= */
+
+/* --- Surface colors -------------------------------------------------------- */
 @property --vt-color-brand {
   syntax: "<color>";
   inherits: true;
@@ -36,7 +42,7 @@
 @property --vt-color-surface-overlay {
   syntax: "<color>";
   inherits: true;
-  initial-value: oklch(94% 0 0);
+  initial-value: oklch(100% 0 0);
 }
 @property --vt-color-text {
   syntax: "<color>";
@@ -59,34 +65,98 @@
   initial-value: white;
 }
 
-/* Spacing tokens — typed as <length> */
-@property --vt-space-1 { syntax: "<length>"; inherits: true; initial-value: 4px; }
-@property --vt-space-2 { syntax: "<length>"; inherits: true; initial-value: 8px; }
-@property --vt-space-3 { syntax: "<length>"; inherits: true; initial-value: 12px; }
-@property --vt-space-4 { syntax: "<length>"; inherits: true; initial-value: 16px; }
-@property --vt-space-5 { syntax: "<length>"; inherits: true; initial-value: 24px; }
-@property --vt-space-6 { syntax: "<length>"; inherits: true; initial-value: 32px; }
-@property --vt-space-8 { syntax: "<length>"; inherits: true; initial-value: 48px; }
+/* --- Derived brand colors (registered so they can be transitioned) --------- */
+@property --vt-color-brand-hover {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(45% 0.2 250);
+}
+@property --vt-color-brand-active {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(38% 0.2 250);
+}
+@property --vt-color-brand-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 250);
+}
+@property --vt-color-brand-ring {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(55% 0.2 250 / 40%);
+}
+
+/* --- Semantic colors ------------------------------------------------------- */
+@property --vt-color-success {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(55% 0.15 145);
+}
+@property --vt-color-warning {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(70% 0.18 70);
+}
+@property --vt-color-danger {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(55% 0.22 25);
+}
+@property --vt-color-info {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(60% 0.15 240);
+}
+@property --vt-color-success-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 145);
+}
+@property --vt-color-warning-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 70);
+}
+@property --vt-color-danger-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 25);
+}
+@property --vt-color-info-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 240);
+}
+
+/* --- Spacing tokens — typed as <length> ----------------------------------- */
+@property --vt-space-1  { syntax: "<length>"; inherits: true; initial-value: 4px; }
+@property --vt-space-2  { syntax: "<length>"; inherits: true; initial-value: 8px; }
+@property --vt-space-3  { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-space-4  { syntax: "<length>"; inherits: true; initial-value: 16px; }
+@property --vt-space-5  { syntax: "<length>"; inherits: true; initial-value: 24px; }
+@property --vt-space-6  { syntax: "<length>"; inherits: true; initial-value: 32px; }
+@property --vt-space-8  { syntax: "<length>"; inherits: true; initial-value: 48px; }
 @property --vt-space-10 { syntax: "<length>"; inherits: true; initial-value: 64px; }
 
-/* Radius tokens */
-@property --vt-radius-sm { syntax: "<length>"; inherits: true; initial-value: 4px; }
-@property --vt-radius-md { syntax: "<length>"; inherits: true; initial-value: 8px; }
-@property --vt-radius-lg { syntax: "<length>"; inherits: true; initial-value: 12px; }
-@property --vt-radius-xl { syntax: "<length>"; inherits: true; initial-value: 16px; }
+/* --- Radius tokens --------------------------------------------------------- */
+@property --vt-radius-sm   { syntax: "<length>"; inherits: true; initial-value: 4px; }
+@property --vt-radius-md   { syntax: "<length>"; inherits: true; initial-value: 8px; }
+@property --vt-radius-lg   { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-radius-xl   { syntax: "<length>"; inherits: true; initial-value: 16px; }
 @property --vt-radius-full { syntax: "<length>"; inherits: true; initial-value: 9999px; }
 
-/* Font size tokens */
-@property --vt-text-xs { syntax: "<length>"; inherits: true; initial-value: 12px; }
-@property --vt-text-sm { syntax: "<length>"; inherits: true; initial-value: 14px; }
+/* --- Font size tokens ------------------------------------------------------ */
+@property --vt-text-xs   { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-text-sm   { syntax: "<length>"; inherits: true; initial-value: 14px; }
 @property --vt-text-base { syntax: "<length>"; inherits: true; initial-value: 16px; }
-@property --vt-text-lg { syntax: "<length>"; inherits: true; initial-value: 18px; }
-@property --vt-text-xl { syntax: "<length>"; inherits: true; initial-value: 20px; }
-@property --vt-text-2xl { syntax: "<length>"; inherits: true; initial-value: 24px; }
-@property --vt-text-3xl { syntax: "<length>"; inherits: true; initial-value: 30px; }
-@property --vt-text-4xl { syntax: "<length>"; inherits: true; initial-value: 36px; }
+@property --vt-text-lg   { syntax: "<length>"; inherits: true; initial-value: 18px; }
+@property --vt-text-xl   { syntax: "<length>"; inherits: true; initial-value: 20px; }
+@property --vt-text-2xl  { syntax: "<length>"; inherits: true; initial-value: 24px; }
+@property --vt-text-3xl  { syntax: "<length>"; inherits: true; initial-value: 30px; }
+@property --vt-text-4xl  { syntax: "<length>"; inherits: true; initial-value: 36px; }
 
-/* Transition speed tokens */
+/* --- Transition speed tokens —typed as <time> ------------------------------ */
 @property --vt-duration-fast { syntax: "<time>"; inherits: true; initial-value: 100ms; }
 @property --vt-duration-base { syntax: "<time>"; inherits: true; initial-value: 200ms; }
 @property --vt-duration-slow { syntax: "<time>"; inherits: true; initial-value: 350ms; }
@@ -98,12 +168,13 @@
 
 @layer volty.tokens {
   :root, [data-theme] {
-    /* Auto-generate brand scale from --vt-color-brand */
-    --vt-brand-50:  color-mix(in oklch, var(--vt-color-brand) 10%, white);
-    --vt-brand-100: color-mix(in oklch, var(--vt-color-brand) 20%, white);
-    --vt-brand-200: color-mix(in oklch, var(--vt-color-brand) 35%, white);
-    --vt-brand-300: color-mix(in oklch, var(--vt-color-brand) 55%, white);
-    --vt-brand-400: color-mix(in oklch, var(--vt-color-brand) 75%, white);
+    /* --- Brand scale ------------------------------------------------------- */
+    /* Mixes toward surface (not white) so it works correctly in dark mode too */
+    --vt-brand-50:  color-mix(in oklch, var(--vt-color-brand) 10%, var(--vt-color-surface));
+    --vt-brand-100: color-mix(in oklch, var(--vt-color-brand) 20%, var(--vt-color-surface));
+    --vt-brand-200: color-mix(in oklch, var(--vt-color-brand) 35%, var(--vt-color-surface));
+    --vt-brand-300: color-mix(in oklch, var(--vt-color-brand) 55%, var(--vt-color-surface));
+    --vt-brand-400: color-mix(in oklch, var(--vt-color-brand) 75%, var(--vt-color-surface));
     --vt-brand-500: var(--vt-color-brand);
     --vt-brand-600: color-mix(in oklch, var(--vt-color-brand) 85%, black);
     --vt-brand-700: color-mix(in oklch, var(--vt-color-brand) 70%, black);
@@ -111,22 +182,34 @@
     --vt-brand-900: color-mix(in oklch, var(--vt-color-brand) 35%, black);
     --vt-brand-950: color-mix(in oklch, var(--vt-color-brand) 20%, black);
 
-    /* Interactive state colors derived from brand */
-    --vt-color-brand-hover:  color-mix(in oklch, var(--vt-color-brand) 85%, black);
-    --vt-color-brand-active: color-mix(in oklch, var(--vt-color-brand) 70%, black);
-    --vt-color-brand-subtle: color-mix(in oklch, var(--vt-color-brand) 15%, white);
-    --vt-color-brand-ring:   color-mix(in oklch, var(--vt-color-brand) 40%, transparent);
+    /* --- Interactive brand states ----------------------------------------- */
+    /* light-dark() so hover LIGHTENS in dark mode instead of darkening */
+    --vt-color-brand-hover:  light-dark(
+      color-mix(in oklch, var(--vt-color-brand) 85%, black),
+      color-mix(in oklch, var(--vt-color-brand) 80%, white)
+    );
+    --vt-color-brand-active: light-dark(
+      color-mix(in oklch, var(--vt-color-brand) 70%, black),
+      color-mix(in oklch, var(--vt-color-brand) 65%, white)
+    );
 
-    /* Semantic colors */
-    --vt-color-success: oklch(55% 0.15 145);
-    --vt-color-warning: oklch(70% 0.18 70);
-    --vt-color-danger:  oklch(55% 0.22 25);
-    --vt-color-info:    oklch(60% 0.15 240);
+    /* Subtle tint — blends into the current surface, not hardcoded white */
+    --vt-color-brand-subtle: color-mix(in oklch, var(--vt-color-brand) 15%, var(--vt-color-surface));
 
-    --vt-color-success-subtle: color-mix(in oklch, var(--vt-color-success) 15%, white);
-    --vt-color-warning-subtle: color-mix(in oklch, var(--vt-color-warning) 15%, white);
-    --vt-color-danger-subtle:  color-mix(in oklch, var(--vt-color-danger) 15%, white);
-    --vt-color-info-subtle:    color-mix(in oklch, var(--vt-color-info) 15%, white);
+    /* Focus ring — semi-transparent, works on any background */
+    --vt-color-brand-ring: color-mix(in oklch, var(--vt-color-brand) 40%, transparent);
+
+    /* --- Semantic colors --------------------------------------------------- */
+    --vt-color-success: light-dark(oklch(52% 0.15 145), oklch(68% 0.15 145));
+    --vt-color-warning: light-dark(oklch(60% 0.18 70),  oklch(75% 0.18 70));
+    --vt-color-danger:  light-dark(oklch(52% 0.22 25),  oklch(67% 0.22 25));
+    --vt-color-info:    light-dark(oklch(55% 0.15 240), oklch(70% 0.15 240));
+
+    /* Semantic subtle — mixes into surface, correct in both modes */
+    --vt-color-success-subtle: color-mix(in oklch, var(--vt-color-success) 15%, var(--vt-color-surface));
+    --vt-color-warning-subtle: color-mix(in oklch, var(--vt-color-warning) 15%, var(--vt-color-surface));
+    --vt-color-danger-subtle:  color-mix(in oklch, var(--vt-color-danger)  15%, var(--vt-color-surface));
+    --vt-color-info-subtle:    color-mix(in oklch, var(--vt-color-info)    15%, var(--vt-color-surface));
   }
 }
 
@@ -204,14 +287,40 @@
   :root {
     color-scheme: light dark;
 
-    --vt-color-brand:           light-dark(oklch(55% 0.2 250), oklch(65% 0.2 250));
-    --vt-color-surface:         light-dark(oklch(98% 0 0), oklch(14% 0 0));
-    --vt-color-surface-raised:  light-dark(oklch(96% 0 0), oklch(18% 0 0));
-    --vt-color-surface-overlay: light-dark(oklch(100% 0 0), oklch(20% 0 0));
-    --vt-color-text:            light-dark(oklch(15% 0 0), oklch(92% 0 0));
-    --vt-color-text-muted:      light-dark(oklch(50% 0 0), oklch(60% 0 0));
-    --vt-color-border:          light-dark(oklch(88% 0 0), oklch(28% 0 0));
-    --vt-color-brand-text:      light-dark(white, oklch(10% 0 0));
+    --vt-color-brand:           light-dark(oklch(55% 0.2 250),  oklch(65% 0.2 250));
+    --vt-color-surface:         light-dark(oklch(98% 0 0),      oklch(14% 0 0));
+    --vt-color-surface-raised:  light-dark(oklch(96% 0 0),      oklch(18% 0 0));
+    --vt-color-surface-overlay: light-dark(oklch(100% 0 0),     oklch(20% 0 0));
+    --vt-color-text:            light-dark(oklch(15% 0 0),      oklch(92% 0 0));
+    --vt-color-text-muted:      light-dark(oklch(50% 0 0),      oklch(60% 0 0));
+    --vt-color-border:          light-dark(oklch(88% 0 0),      oklch(28% 0 0));
+    --vt-color-brand-text:      light-dark(white,               oklch(10% 0 0));
+  }
+
+  /* ==========================================================================
+     CSS custom property transitions — the @property differentiator.
+
+     Because all surface/text/border tokens are registered as typed <color>
+     via @property, the browser knows HOW to interpolate them. Setting
+     transition: --vt-color-* on :root means every element in the page
+     inherits those transitions automatically — no per-element transition
+     rules needed, and no JavaScript animation loops.
+
+     Try this with untyped variables: it won't work. The browser can't
+     interpolate an untyped string like "oklch(98% 0 0)".
+     ========================================================================== */
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      transition:
+        --vt-color-surface         var(--vt-duration-slow) ease,
+        --vt-color-surface-raised  var(--vt-duration-slow) ease,
+        --vt-color-surface-overlay var(--vt-duration-slow) ease,
+        --vt-color-text            var(--vt-duration-slow) ease,
+        --vt-color-text-muted      var(--vt-duration-slow) ease,
+        --vt-color-border          var(--vt-duration-slow) ease,
+        --vt-color-brand           var(--vt-duration-slow) ease,
+        --vt-color-brand-text      var(--vt-duration-slow) ease;
+    }
   }
 
   /* Explicit light theme override */
@@ -240,22 +349,13 @@
     --vt-color-brand-text:      oklch(10% 0 0);
   }
 
-  /* Contextual brand themes — apply data-brand to any container */
-  [data-brand="violet"] {
-    --vt-color-brand: light-dark(oklch(55% 0.22 290), oklch(68% 0.22 290));
-  }
-  [data-brand="emerald"] {
-    --vt-color-brand: light-dark(oklch(52% 0.18 155), oklch(65% 0.18 155));
-  }
-  [data-brand="rose"] {
-    --vt-color-brand: light-dark(oklch(55% 0.22 10), oklch(67% 0.22 10));
-  }
-  [data-brand="amber"] {
-    --vt-color-brand: light-dark(oklch(65% 0.2 65), oklch(75% 0.2 65));
-  }
-  [data-brand="cyan"] {
-    --vt-color-brand: light-dark(oklch(58% 0.18 200), oklch(70% 0.18 200));
-  }
+  /* Contextual brand themes — scope to any element with data-brand */
+  /* Brand tokens also transition because they're @property registered */
+  [data-brand="violet"]  { --vt-color-brand: light-dark(oklch(55% 0.22 290), oklch(68% 0.22 290)); }
+  [data-brand="emerald"] { --vt-color-brand: light-dark(oklch(52% 0.18 155), oklch(65% 0.18 155)); }
+  [data-brand="rose"]    { --vt-color-brand: light-dark(oklch(55% 0.22 10),  oklch(67% 0.22 10)); }
+  [data-brand="amber"]   { --vt-color-brand: light-dark(oklch(65% 0.2 65),   oklch(75% 0.2 65)); }
+  [data-brand="cyan"]    { --vt-color-brand: light-dark(oklch(58% 0.18 200), oklch(70% 0.18 200)); }
 }
 
 
@@ -309,7 +409,7 @@
     justify-content: center;
     gap: var(--vt-space-2);
 
-    /* Sizing — uses token-based spacing */
+    /* Sizing */
     padding-block: var(--vt-space-2);
     padding-inline: var(--vt-space-4);
     border-radius: var(--vt-radius-md);
@@ -330,24 +430,32 @@
     /* Interaction */
     cursor: pointer;
     user-select: none;
+
+    /*
+      Transition background-color, not the custom property directly here —
+      @property transitions on :root already handle theme-level color changes.
+      Component-level transitions handle per-interaction state changes.
+    */
     transition:
       background-color var(--vt-duration-fast) ease,
       color var(--vt-duration-fast) ease,
       border-color var(--vt-duration-fast) ease,
       box-shadow var(--vt-duration-fast) ease,
-      outline-offset var(--vt-duration-fast) ease;
+      outline-offset var(--vt-duration-fast) ease,
+      translate var(--vt-duration-fast) ease;
 
     /* Focus ring */
     outline: 2px solid transparent;
     outline-offset: 0px;
   }
 
-  .vt-btn:hover {
+  .vt-btn:hover:not(:disabled) {
     background-color: var(--vt-color-brand-hover);
   }
 
-  .vt-btn:active {
+  .vt-btn:active:not(:disabled) {
     background-color: var(--vt-color-brand-active);
+    translate: 0 1px;
   }
 
   .vt-btn:focus-visible {
@@ -376,11 +484,11 @@
     color: var(--vt-color-brand);
     border-color: var(--vt-color-brand);
   }
-  .vt-btn--outline:hover {
+  .vt-btn--outline:hover:not(:disabled) {
     background-color: var(--vt-color-brand-subtle);
   }
-  .vt-btn--outline:active {
-    background-color: color-mix(in oklch, var(--vt-color-brand) 20%, transparent);
+  .vt-btn--outline:active:not(:disabled) {
+    background-color: color-mix(in oklch, var(--vt-color-brand) 20%, var(--vt-color-surface));
   }
 
   .vt-btn--ghost {
@@ -388,7 +496,7 @@
     color: var(--vt-color-brand);
     border-color: transparent;
   }
-  .vt-btn--ghost:hover {
+  .vt-btn--ghost:hover:not(:disabled) {
     background-color: var(--vt-color-brand-subtle);
   }
 
@@ -397,15 +505,21 @@
     color: var(--vt-color-text);
     border-color: var(--vt-color-border);
   }
-  .vt-btn--surface:hover {
+  .vt-btn--surface:hover:not(:disabled) {
     background-color: var(--vt-color-surface-overlay);
   }
 
-  /* Status variants */
+  /* Danger variant — scopes brand token locally so all derived colors update */
   .vt-btn--danger {
-    --vt-color-brand: var(--vt-color-danger);
-    --vt-color-brand-hover: color-mix(in oklch, var(--vt-color-danger) 85%, black);
-    --vt-color-brand-active: color-mix(in oklch, var(--vt-color-danger) 70%, black);
+    --vt-color-brand:      var(--vt-color-danger);
+    --vt-color-brand-hover: light-dark(
+      color-mix(in oklch, var(--vt-color-danger) 85%, black),
+      color-mix(in oklch, var(--vt-color-danger) 80%, white)
+    );
+    --vt-color-brand-active: light-dark(
+      color-mix(in oklch, var(--vt-color-danger) 70%, black),
+      color-mix(in oklch, var(--vt-color-danger) 65%, white)
+    );
     --vt-color-brand-text: white;
   }
 
@@ -422,6 +536,18 @@
     padding: var(--vt-space-2);
     aspect-ratio: 1;
     border-radius: var(--vt-radius-md);
+  }
+
+  /*
+    Container query — when a button lives in a narrow container
+    (e.g. a sidebar or stacked form), it expands to full width automatically.
+    No media query needed, no JavaScript.
+  */
+  @container (max-width: 280px) {
+    .vt-btn:not(.vt-btn--icon) {
+      width: 100%;
+      justify-content: center;
+    }
   }
 }
 
@@ -566,6 +692,8 @@
     display: flex;
     flex-direction: column;
     gap: var(--vt-space-1);
+    container-type: inline-size;
+    container-name: field;
   }
 
   .vt-label {
@@ -597,6 +725,17 @@
       box-shadow var(--vt-duration-fast) ease,
       background-color var(--vt-duration-fast) ease;
     outline: none;
+    /* Prevent system accent color from bleeding through on autofill */
+    -webkit-text-fill-color: var(--vt-color-text);
+  }
+
+  /* Override browser autofill background which ignores our colors */
+  .vt-input:-webkit-autofill,
+  .vt-input:-webkit-autofill:hover,
+  .vt-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px var(--vt-color-surface-overlay) inset;
+    -webkit-text-fill-color: var(--vt-color-text);
+    caret-color: var(--vt-color-text);
   }
 
   .vt-input::placeholder {
@@ -617,6 +756,7 @@
     opacity: 0.5;
     cursor: not-allowed;
     background-color: var(--vt-color-surface-raised);
+    -webkit-text-fill-color: var(--vt-color-text-muted);
   }
 
   .vt-input--error {
@@ -635,6 +775,29 @@
 
   .vt-hint--error {
     color: var(--vt-color-danger);
+  }
+
+  /*
+    Container query — in narrow containers (mobile, sidebar) stack label
+    and hint differently. The field knows its own width; no viewport media query.
+  */
+  @container field (min-width: 400px) {
+    .vt-field--inline {
+      flex-direction: row;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .vt-field--inline .vt-label {
+      flex: 0 0 auto;
+      min-width: 120px;
+    }
+    .vt-field--inline .vt-input {
+      flex: 1;
+    }
+    .vt-field--inline .vt-hint {
+      flex: 0 0 100%;
+      padding-inline-start: 120px;
+    }
   }
 }
 

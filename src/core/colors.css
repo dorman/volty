@@ -1,11 +1,12 @@
 @layer volty.tokens {
   :root, [data-theme] {
-    /* Auto-generate brand scale from --vt-color-brand */
-    --vt-brand-50:  color-mix(in oklch, var(--vt-color-brand) 10%, white);
-    --vt-brand-100: color-mix(in oklch, var(--vt-color-brand) 20%, white);
-    --vt-brand-200: color-mix(in oklch, var(--vt-color-brand) 35%, white);
-    --vt-brand-300: color-mix(in oklch, var(--vt-color-brand) 55%, white);
-    --vt-brand-400: color-mix(in oklch, var(--vt-color-brand) 75%, white);
+    /* --- Brand scale ------------------------------------------------------- */
+    /* Mixes toward surface (not white) so it works correctly in dark mode too */
+    --vt-brand-50:  color-mix(in oklch, var(--vt-color-brand) 10%, var(--vt-color-surface));
+    --vt-brand-100: color-mix(in oklch, var(--vt-color-brand) 20%, var(--vt-color-surface));
+    --vt-brand-200: color-mix(in oklch, var(--vt-color-brand) 35%, var(--vt-color-surface));
+    --vt-brand-300: color-mix(in oklch, var(--vt-color-brand) 55%, var(--vt-color-surface));
+    --vt-brand-400: color-mix(in oklch, var(--vt-color-brand) 75%, var(--vt-color-surface));
     --vt-brand-500: var(--vt-color-brand);
     --vt-brand-600: color-mix(in oklch, var(--vt-color-brand) 85%, black);
     --vt-brand-700: color-mix(in oklch, var(--vt-color-brand) 70%, black);
@@ -13,21 +14,33 @@
     --vt-brand-900: color-mix(in oklch, var(--vt-color-brand) 35%, black);
     --vt-brand-950: color-mix(in oklch, var(--vt-color-brand) 20%, black);
 
-    /* Interactive state colors derived from brand */
-    --vt-color-brand-hover:  color-mix(in oklch, var(--vt-color-brand) 85%, black);
-    --vt-color-brand-active: color-mix(in oklch, var(--vt-color-brand) 70%, black);
-    --vt-color-brand-subtle: color-mix(in oklch, var(--vt-color-brand) 15%, white);
-    --vt-color-brand-ring:   color-mix(in oklch, var(--vt-color-brand) 40%, transparent);
+    /* --- Interactive brand states ----------------------------------------- */
+    /* light-dark() so hover LIGHTENS in dark mode instead of darkening */
+    --vt-color-brand-hover:  light-dark(
+      color-mix(in oklch, var(--vt-color-brand) 85%, black),
+      color-mix(in oklch, var(--vt-color-brand) 80%, white)
+    );
+    --vt-color-brand-active: light-dark(
+      color-mix(in oklch, var(--vt-color-brand) 70%, black),
+      color-mix(in oklch, var(--vt-color-brand) 65%, white)
+    );
 
-    /* Semantic colors */
-    --vt-color-success: oklch(55% 0.15 145);
-    --vt-color-warning: oklch(70% 0.18 70);
-    --vt-color-danger:  oklch(55% 0.22 25);
-    --vt-color-info:    oklch(60% 0.15 240);
+    /* Subtle tint — blends into the current surface, not hardcoded white */
+    --vt-color-brand-subtle: color-mix(in oklch, var(--vt-color-brand) 15%, var(--vt-color-surface));
 
-    --vt-color-success-subtle: color-mix(in oklch, var(--vt-color-success) 15%, white);
-    --vt-color-warning-subtle: color-mix(in oklch, var(--vt-color-warning) 15%, white);
-    --vt-color-danger-subtle:  color-mix(in oklch, var(--vt-color-danger) 15%, white);
-    --vt-color-info-subtle:    color-mix(in oklch, var(--vt-color-info) 15%, white);
+    /* Focus ring — semi-transparent, works on any background */
+    --vt-color-brand-ring: color-mix(in oklch, var(--vt-color-brand) 40%, transparent);
+
+    /* --- Semantic colors --------------------------------------------------- */
+    --vt-color-success: light-dark(oklch(52% 0.15 145), oklch(68% 0.15 145));
+    --vt-color-warning: light-dark(oklch(60% 0.18 70),  oklch(75% 0.18 70));
+    --vt-color-danger:  light-dark(oklch(52% 0.22 25),  oklch(67% 0.22 25));
+    --vt-color-info:    light-dark(oklch(55% 0.15 240), oklch(70% 0.15 240));
+
+    /* Semantic subtle — mixes into surface, correct in both modes */
+    --vt-color-success-subtle: color-mix(in oklch, var(--vt-color-success) 15%, var(--vt-color-surface));
+    --vt-color-warning-subtle: color-mix(in oklch, var(--vt-color-warning) 15%, var(--vt-color-surface));
+    --vt-color-danger-subtle:  color-mix(in oklch, var(--vt-color-danger)  15%, var(--vt-color-surface));
+    --vt-color-info-subtle:    color-mix(in oklch, var(--vt-color-info)    15%, var(--vt-color-surface));
   }
 }

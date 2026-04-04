@@ -3,14 +3,40 @@
   :root {
     color-scheme: light dark;
 
-    --vt-color-brand:           light-dark(oklch(55% 0.2 250), oklch(65% 0.2 250));
-    --vt-color-surface:         light-dark(oklch(98% 0 0), oklch(14% 0 0));
-    --vt-color-surface-raised:  light-dark(oklch(96% 0 0), oklch(18% 0 0));
-    --vt-color-surface-overlay: light-dark(oklch(100% 0 0), oklch(20% 0 0));
-    --vt-color-text:            light-dark(oklch(15% 0 0), oklch(92% 0 0));
-    --vt-color-text-muted:      light-dark(oklch(50% 0 0), oklch(60% 0 0));
-    --vt-color-border:          light-dark(oklch(88% 0 0), oklch(28% 0 0));
-    --vt-color-brand-text:      light-dark(white, oklch(10% 0 0));
+    --vt-color-brand:           light-dark(oklch(55% 0.2 250),  oklch(65% 0.2 250));
+    --vt-color-surface:         light-dark(oklch(98% 0 0),      oklch(14% 0 0));
+    --vt-color-surface-raised:  light-dark(oklch(96% 0 0),      oklch(18% 0 0));
+    --vt-color-surface-overlay: light-dark(oklch(100% 0 0),     oklch(20% 0 0));
+    --vt-color-text:            light-dark(oklch(15% 0 0),      oklch(92% 0 0));
+    --vt-color-text-muted:      light-dark(oklch(50% 0 0),      oklch(60% 0 0));
+    --vt-color-border:          light-dark(oklch(88% 0 0),      oklch(28% 0 0));
+    --vt-color-brand-text:      light-dark(white,               oklch(10% 0 0));
+  }
+
+  /* ==========================================================================
+     CSS custom property transitions — the @property differentiator.
+
+     Because all surface/text/border tokens are registered as typed <color>
+     via @property, the browser knows HOW to interpolate them. Setting
+     transition: --vt-color-* on :root means every element in the page
+     inherits those transitions automatically — no per-element transition
+     rules needed, and no JavaScript animation loops.
+
+     Try this with untyped variables: it won't work. The browser can't
+     interpolate an untyped string like "oklch(98% 0 0)".
+     ========================================================================== */
+  @media (prefers-reduced-motion: no-preference) {
+    :root {
+      transition:
+        --vt-color-surface         var(--vt-duration-slow) ease,
+        --vt-color-surface-raised  var(--vt-duration-slow) ease,
+        --vt-color-surface-overlay var(--vt-duration-slow) ease,
+        --vt-color-text            var(--vt-duration-slow) ease,
+        --vt-color-text-muted      var(--vt-duration-slow) ease,
+        --vt-color-border          var(--vt-duration-slow) ease,
+        --vt-color-brand           var(--vt-duration-slow) ease,
+        --vt-color-brand-text      var(--vt-duration-slow) ease;
+    }
   }
 
   /* Explicit light theme override */
@@ -39,20 +65,11 @@
     --vt-color-brand-text:      oklch(10% 0 0);
   }
 
-  /* Contextual brand themes — apply data-brand to any container */
-  [data-brand="violet"] {
-    --vt-color-brand: light-dark(oklch(55% 0.22 290), oklch(68% 0.22 290));
-  }
-  [data-brand="emerald"] {
-    --vt-color-brand: light-dark(oklch(52% 0.18 155), oklch(65% 0.18 155));
-  }
-  [data-brand="rose"] {
-    --vt-color-brand: light-dark(oklch(55% 0.22 10), oklch(67% 0.22 10));
-  }
-  [data-brand="amber"] {
-    --vt-color-brand: light-dark(oklch(65% 0.2 65), oklch(75% 0.2 65));
-  }
-  [data-brand="cyan"] {
-    --vt-color-brand: light-dark(oklch(58% 0.18 200), oklch(70% 0.18 200));
-  }
+  /* Contextual brand themes — scope to any element with data-brand */
+  /* Brand tokens also transition because they're @property registered */
+  [data-brand="violet"]  { --vt-color-brand: light-dark(oklch(55% 0.22 290), oklch(68% 0.22 290)); }
+  [data-brand="emerald"] { --vt-color-brand: light-dark(oklch(52% 0.18 155), oklch(65% 0.18 155)); }
+  [data-brand="rose"]    { --vt-color-brand: light-dark(oklch(55% 0.22 10),  oklch(67% 0.22 10)); }
+  [data-brand="amber"]   { --vt-color-brand: light-dark(oklch(65% 0.2 65),   oklch(75% 0.2 65)); }
+  [data-brand="cyan"]    { --vt-color-brand: light-dark(oklch(58% 0.18 200), oklch(70% 0.18 200)); }
 }

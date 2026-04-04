@@ -1,4 +1,10 @@
-/* Color tokens — typed as <color> so they can be transitioned */
+/* =============================================================================
+   @property token registrations
+   Typed syntax enables: animation, transition, validation, and computed fallbacks.
+   These are the things no untyped custom property can do.
+   ============================================================================= */
+
+/* --- Surface colors -------------------------------------------------------- */
 @property --vt-color-brand {
   syntax: "<color>";
   inherits: true;
@@ -17,7 +23,7 @@
 @property --vt-color-surface-overlay {
   syntax: "<color>";
   inherits: true;
-  initial-value: oklch(94% 0 0);
+  initial-value: oklch(100% 0 0);
 }
 @property --vt-color-text {
   syntax: "<color>";
@@ -40,34 +46,98 @@
   initial-value: white;
 }
 
-/* Spacing tokens — typed as <length> */
-@property --vt-space-1 { syntax: "<length>"; inherits: true; initial-value: 4px; }
-@property --vt-space-2 { syntax: "<length>"; inherits: true; initial-value: 8px; }
-@property --vt-space-3 { syntax: "<length>"; inherits: true; initial-value: 12px; }
-@property --vt-space-4 { syntax: "<length>"; inherits: true; initial-value: 16px; }
-@property --vt-space-5 { syntax: "<length>"; inherits: true; initial-value: 24px; }
-@property --vt-space-6 { syntax: "<length>"; inherits: true; initial-value: 32px; }
-@property --vt-space-8 { syntax: "<length>"; inherits: true; initial-value: 48px; }
+/* --- Derived brand colors (registered so they can be transitioned) --------- */
+@property --vt-color-brand-hover {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(45% 0.2 250);
+}
+@property --vt-color-brand-active {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(38% 0.2 250);
+}
+@property --vt-color-brand-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 250);
+}
+@property --vt-color-brand-ring {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(55% 0.2 250 / 40%);
+}
+
+/* --- Semantic colors ------------------------------------------------------- */
+@property --vt-color-success {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(55% 0.15 145);
+}
+@property --vt-color-warning {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(70% 0.18 70);
+}
+@property --vt-color-danger {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(55% 0.22 25);
+}
+@property --vt-color-info {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(60% 0.15 240);
+}
+@property --vt-color-success-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 145);
+}
+@property --vt-color-warning-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 70);
+}
+@property --vt-color-danger-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 25);
+}
+@property --vt-color-info-subtle {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(97% 0.03 240);
+}
+
+/* --- Spacing tokens — typed as <length> ----------------------------------- */
+@property --vt-space-1  { syntax: "<length>"; inherits: true; initial-value: 4px; }
+@property --vt-space-2  { syntax: "<length>"; inherits: true; initial-value: 8px; }
+@property --vt-space-3  { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-space-4  { syntax: "<length>"; inherits: true; initial-value: 16px; }
+@property --vt-space-5  { syntax: "<length>"; inherits: true; initial-value: 24px; }
+@property --vt-space-6  { syntax: "<length>"; inherits: true; initial-value: 32px; }
+@property --vt-space-8  { syntax: "<length>"; inherits: true; initial-value: 48px; }
 @property --vt-space-10 { syntax: "<length>"; inherits: true; initial-value: 64px; }
 
-/* Radius tokens */
-@property --vt-radius-sm { syntax: "<length>"; inherits: true; initial-value: 4px; }
-@property --vt-radius-md { syntax: "<length>"; inherits: true; initial-value: 8px; }
-@property --vt-radius-lg { syntax: "<length>"; inherits: true; initial-value: 12px; }
-@property --vt-radius-xl { syntax: "<length>"; inherits: true; initial-value: 16px; }
+/* --- Radius tokens --------------------------------------------------------- */
+@property --vt-radius-sm   { syntax: "<length>"; inherits: true; initial-value: 4px; }
+@property --vt-radius-md   { syntax: "<length>"; inherits: true; initial-value: 8px; }
+@property --vt-radius-lg   { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-radius-xl   { syntax: "<length>"; inherits: true; initial-value: 16px; }
 @property --vt-radius-full { syntax: "<length>"; inherits: true; initial-value: 9999px; }
 
-/* Font size tokens */
-@property --vt-text-xs { syntax: "<length>"; inherits: true; initial-value: 12px; }
-@property --vt-text-sm { syntax: "<length>"; inherits: true; initial-value: 14px; }
+/* --- Font size tokens ------------------------------------------------------ */
+@property --vt-text-xs   { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-text-sm   { syntax: "<length>"; inherits: true; initial-value: 14px; }
 @property --vt-text-base { syntax: "<length>"; inherits: true; initial-value: 16px; }
-@property --vt-text-lg { syntax: "<length>"; inherits: true; initial-value: 18px; }
-@property --vt-text-xl { syntax: "<length>"; inherits: true; initial-value: 20px; }
-@property --vt-text-2xl { syntax: "<length>"; inherits: true; initial-value: 24px; }
-@property --vt-text-3xl { syntax: "<length>"; inherits: true; initial-value: 30px; }
-@property --vt-text-4xl { syntax: "<length>"; inherits: true; initial-value: 36px; }
+@property --vt-text-lg   { syntax: "<length>"; inherits: true; initial-value: 18px; }
+@property --vt-text-xl   { syntax: "<length>"; inherits: true; initial-value: 20px; }
+@property --vt-text-2xl  { syntax: "<length>"; inherits: true; initial-value: 24px; }
+@property --vt-text-3xl  { syntax: "<length>"; inherits: true; initial-value: 30px; }
+@property --vt-text-4xl  { syntax: "<length>"; inherits: true; initial-value: 36px; }
 
-/* Transition speed tokens */
+/* --- Transition speed tokens —typed as <time> ------------------------------ */
 @property --vt-duration-fast { syntax: "<time>"; inherits: true; initial-value: 100ms; }
 @property --vt-duration-base { syntax: "<time>"; inherits: true; initial-value: 200ms; }
 @property --vt-duration-slow { syntax: "<time>"; inherits: true; initial-value: 350ms; }

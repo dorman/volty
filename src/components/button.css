@@ -6,7 +6,7 @@
     justify-content: center;
     gap: var(--vt-space-2);
 
-    /* Sizing — uses token-based spacing */
+    /* Sizing */
     padding-block: var(--vt-space-2);
     padding-inline: var(--vt-space-4);
     border-radius: var(--vt-radius-md);
@@ -27,24 +27,32 @@
     /* Interaction */
     cursor: pointer;
     user-select: none;
+
+    /*
+      Transition background-color, not the custom property directly here —
+      @property transitions on :root already handle theme-level color changes.
+      Component-level transitions handle per-interaction state changes.
+    */
     transition:
       background-color var(--vt-duration-fast) ease,
       color var(--vt-duration-fast) ease,
       border-color var(--vt-duration-fast) ease,
       box-shadow var(--vt-duration-fast) ease,
-      outline-offset var(--vt-duration-fast) ease;
+      outline-offset var(--vt-duration-fast) ease,
+      translate var(--vt-duration-fast) ease;
 
     /* Focus ring */
     outline: 2px solid transparent;
     outline-offset: 0px;
   }
 
-  .vt-btn:hover {
+  .vt-btn:hover:not(:disabled) {
     background-color: var(--vt-color-brand-hover);
   }
 
-  .vt-btn:active {
+  .vt-btn:active:not(:disabled) {
     background-color: var(--vt-color-brand-active);
+    translate: 0 1px;
   }
 
   .vt-btn:focus-visible {
@@ -73,11 +81,11 @@
     color: var(--vt-color-brand);
     border-color: var(--vt-color-brand);
   }
-  .vt-btn--outline:hover {
+  .vt-btn--outline:hover:not(:disabled) {
     background-color: var(--vt-color-brand-subtle);
   }
-  .vt-btn--outline:active {
-    background-color: color-mix(in oklch, var(--vt-color-brand) 20%, transparent);
+  .vt-btn--outline:active:not(:disabled) {
+    background-color: color-mix(in oklch, var(--vt-color-brand) 20%, var(--vt-color-surface));
   }
 
   .vt-btn--ghost {
@@ -85,7 +93,7 @@
     color: var(--vt-color-brand);
     border-color: transparent;
   }
-  .vt-btn--ghost:hover {
+  .vt-btn--ghost:hover:not(:disabled) {
     background-color: var(--vt-color-brand-subtle);
   }
 
@@ -94,15 +102,21 @@
     color: var(--vt-color-text);
     border-color: var(--vt-color-border);
   }
-  .vt-btn--surface:hover {
+  .vt-btn--surface:hover:not(:disabled) {
     background-color: var(--vt-color-surface-overlay);
   }
 
-  /* Status variants */
+  /* Danger variant — scopes brand token locally so all derived colors update */
   .vt-btn--danger {
-    --vt-color-brand: var(--vt-color-danger);
-    --vt-color-brand-hover: color-mix(in oklch, var(--vt-color-danger) 85%, black);
-    --vt-color-brand-active: color-mix(in oklch, var(--vt-color-danger) 70%, black);
+    --vt-color-brand:      var(--vt-color-danger);
+    --vt-color-brand-hover: light-dark(
+      color-mix(in oklch, var(--vt-color-danger) 85%, black),
+      color-mix(in oklch, var(--vt-color-danger) 80%, white)
+    );
+    --vt-color-brand-active: light-dark(
+      color-mix(in oklch, var(--vt-color-danger) 70%, black),
+      color-mix(in oklch, var(--vt-color-danger) 65%, white)
+    );
     --vt-color-brand-text: white;
   }
 
@@ -119,5 +133,17 @@
     padding: var(--vt-space-2);
     aspect-ratio: 1;
     border-radius: var(--vt-radius-md);
+  }
+
+  /*
+    Container query — when a button lives in a narrow container
+    (e.g. a sidebar or stacked form), it expands to full width automatically.
+    No media query needed, no JavaScript.
+  */
+  @container (max-width: 280px) {
+    .vt-btn:not(.vt-btn--icon) {
+      width: 100%;
+      justify-content: center;
+    }
   }
 }

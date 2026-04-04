@@ -26,7 +26,7 @@
      interpolate an untyped string like "oklch(98% 0 0)".
      ========================================================================== */
   @media (prefers-reduced-motion: no-preference) {
-    :root {
+    :root, [data-theme] {
       transition:
         --vt-color-surface         var(--vt-duration-slow) ease,
         --vt-color-surface-raised  var(--vt-duration-slow) ease,

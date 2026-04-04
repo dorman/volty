@@ -2,7 +2,7 @@
  * Volty v0.1.0
  * Modern CSS theme library — typed design tokens, container-scoped theming, zero build step
  * MIT License
- * Built: 2026-04-04T06:48:14.433Z
+ * Built: 2026-04-04T06:53:32.241Z
  */
 
 /* ==============================================================================
@@ -310,7 +310,7 @@
      interpolate an untyped string like "oklch(98% 0 0)".
      ========================================================================== */
   @media (prefers-reduced-motion: no-preference) {
-    :root {
+    :root, [data-theme] {
       transition:
         --vt-color-surface         var(--vt-duration-slow) ease,
         --vt-color-surface-raised  var(--vt-duration-slow) ease,

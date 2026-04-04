@@ -440,6 +440,159 @@
       gap: var(--vt-space-4);
     }
 
+    /* =========================================================================
+       Demo: @property token transitions
+       ========================================================================= */
+
+    .demo-transition-stage {
+      border-radius: var(--vt-radius-xl);
+      padding: var(--vt-space-8);
+      background-color: var(--vt-color-surface-raised);
+      border: 1px solid var(--vt-color-border);
+      display: flex;
+      flex-direction: column;
+      gap: var(--vt-space-6);
+    }
+
+    .demo-transition-explanation {
+      background-color: var(--vt-color-surface-overlay);
+      border: 1px solid var(--vt-color-border);
+      border-radius: var(--vt-radius-lg);
+      padding: var(--vt-space-4);
+      font-size: var(--vt-text-sm);
+      color: var(--vt-color-text-muted);
+      line-height: var(--vt-line-height-relaxed);
+    }
+
+    .demo-transition-explanation strong {
+      color: var(--vt-color-text);
+    }
+
+    .demo-transition-controls {
+      display: flex;
+      gap: var(--vt-space-3);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* The @property transition proof: this element's background and text color
+       are just CSS custom property values — they animate because @property
+       registers them as typed <color> */
+    .demo-token-watch {
+      border-radius: var(--vt-radius-lg);
+      padding: var(--vt-space-5);
+      background-color: var(--vt-color-surface);
+      border: 1px solid var(--vt-color-border);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--vt-space-3);
+    }
+
+    .demo-token-watch__item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--vt-space-1);
+    }
+
+    .demo-token-watch__swatch {
+      height: 40px;
+      border-radius: var(--vt-radius-md);
+      border: 1px solid color-mix(in oklch, var(--vt-color-border) 60%, transparent);
+    }
+
+    .demo-token-watch__name {
+      font-size: 10px;
+      font-family: var(--vt-font-mono);
+      color: var(--vt-color-text-muted);
+    }
+
+    /* =========================================================================
+       Demo: container queries
+       ========================================================================= */
+
+    .demo-container-stage {
+      display: grid;
+      gap: var(--vt-space-6);
+    }
+
+    .demo-resizable {
+      resize: horizontal;
+      overflow: auto;
+      min-width: 200px;
+      max-width: 100%;
+      border: 2px dashed var(--vt-color-brand);
+      border-radius: var(--vt-radius-xl);
+      padding: var(--vt-space-5);
+      background-color: var(--vt-color-surface-raised);
+      position: relative;
+    }
+
+    .demo-resizable::after {
+      content: '↔ drag to resize';
+      position: absolute;
+      bottom: var(--vt-space-2);
+      right: var(--vt-space-3);
+      font-size: 10px;
+      font-family: var(--vt-font-mono);
+      color: var(--vt-color-brand);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .demo-container-label {
+      font-size: var(--vt-text-xs);
+      font-family: var(--vt-font-mono);
+      color: var(--vt-color-brand);
+      margin-block-end: var(--vt-space-3);
+      font-weight: 600;
+    }
+
+    /* =========================================================================
+       Demo: dark mode subtles
+       ========================================================================= */
+
+    .demo-mode-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--vt-space-4);
+    }
+
+    @media (max-width: 600px) {
+      .demo-mode-compare { grid-template-columns: 1fr; }
+    }
+
+    .demo-mode-panel {
+      border-radius: var(--vt-radius-xl);
+      padding: var(--vt-space-5);
+      border: 1px solid var(--vt-color-border);
+    }
+
+    .demo-mode-panel--light {
+      background-color: oklch(98% 0 0);
+      color: oklch(15% 0 0);
+      border-color: oklch(88% 0 0);
+    }
+
+    .demo-mode-panel--dark {
+      background-color: oklch(14% 0 0);
+      color: oklch(92% 0 0);
+      border-color: oklch(28% 0 0);
+    }
+
+    .demo-mode-panel__title {
+      font-size: var(--vt-text-sm);
+      font-weight: 600;
+      margin-block-end: var(--vt-space-4);
+      font-family: var(--vt-font-mono);
+    }
+
+    .demo-subtle-row {
+      display: flex;
+      gap: var(--vt-space-2);
+      flex-wrap: wrap;
+      margin-block-end: var(--vt-space-3);
+    }
+
     /* Footer */
     .demo-footer {
       border-top: 1px solid var(--vt-color-border);
@@ -1448,6 +1601,325 @@
     </section>
 
   </main>
+
+    <!-- @PROPERTY TRANSITIONS ============================================== -->
+    <section class="demo-section" id="property-transitions">
+      <div class="demo-section__header">
+        <p class="demo-section__label">The Differentiator</p>
+        <h2 class="demo-section__title">@property Token Transitions</h2>
+        <p class="demo-section__desc">
+          Because every color token is registered as a typed <code class="demo-code">&lt;color&gt;</code>
+          via <code class="demo-code">@property</code>, CSS can interpolate between values.
+          Volty puts <code class="demo-code">transition: --vt-color-* 350ms ease</code> on
+          <code class="demo-code">:root</code> — so <em>every element on the page</em> inherits
+          the animation with zero component-level transition rules.
+          No other library ships this. Try it — click a brand or theme above and watch the swatches below fade.
+        </p>
+      </div>
+
+      <div class="demo-transition-stage">
+
+        <div class="demo-transition-explanation">
+          <strong>What you're seeing:</strong> These swatches use raw CSS custom property values —
+          <code class="demo-code">background: var(--vt-color-brand)</code> etc. — with no
+          <code class="demo-code">transition</code> rule of their own. They animate because
+          <code class="demo-code">:root</code> transitions the token itself. Untyped custom
+          properties cannot do this — the browser would snap instantly since it can't interpolate
+          an untyped string. <strong>@property is what makes this possible.</strong>
+        </div>
+
+        <!-- Live token swatches — no transition rule on any swatch, all animation is from :root -->
+        <div class="demo-token-watch">
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-brand);"></div>
+            <span class="demo-token-watch__name">--vt-color-brand</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-brand-hover);"></div>
+            <span class="demo-token-watch__name">--vt-color-brand-hover</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-brand-subtle);"></div>
+            <span class="demo-token-watch__name">--vt-color-brand-subtle</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-surface);"></div>
+            <span class="demo-token-watch__name">--vt-color-surface</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-surface-raised);"></div>
+            <span class="demo-token-watch__name">--vt-color-surface-raised</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-surface-overlay);"></div>
+            <span class="demo-token-watch__name">--vt-color-surface-overlay</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-text);"></div>
+            <span class="demo-token-watch__name">--vt-color-text</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-text-muted);"></div>
+            <span class="demo-token-watch__name">--vt-color-text-muted</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-border);"></div>
+            <span class="demo-token-watch__name">--vt-color-border</span>
+          </div>
+        </div>
+
+        <!-- A full mini UI — watch it transition when theme/brand changes -->
+        <div>
+          <p class="demo-subsection__title">Full UI — changes animate because tokens do</p>
+          <div class="demo-grid-2">
+            <div class="vt-card">
+              <div class="vt-card__header">
+                <div style="display:flex; align-items:start; justify-content:space-between; gap:var(--vt-space-2);">
+                  <h3 class="vt-card__title">Live Token Demo</h3>
+                  <span class="vt-badge">Active</span>
+                </div>
+                <p class="vt-card__description">Switch the brand or theme — every color here fades in 350ms. No JS animation, no requestAnimationFrame.</p>
+              </div>
+              <div class="vt-card__body" style="display:flex;flex-direction:column;gap:var(--vt-space-3);">
+                <div class="vt-field">
+                  <label class="vt-label" for="prop-demo-input">Email address</label>
+                  <input class="vt-input" id="prop-demo-input" type="email" placeholder="you@example.com">
+                </div>
+                <label class="vt-switch">
+                  <input type="checkbox" checked>
+                  <span class="vt-switch__track"><span class="vt-switch__thumb"></span></span>
+                  <span class="vt-switch__label">Send me updates</span>
+                </label>
+              </div>
+              <div class="vt-card__footer">
+                <button class="vt-btn vt-btn--ghost vt-btn--sm">Cancel</button>
+                <button class="vt-btn vt-btn--sm">Subscribe</button>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:var(--vt-space-3);">
+              <div class="demo-row">
+                <button class="vt-btn">Primary</button>
+                <button class="vt-btn vt-btn--outline">Outline</button>
+                <button class="vt-btn vt-btn--ghost">Ghost</button>
+              </div>
+              <div class="demo-row">
+                <span class="vt-badge">Default</span>
+                <span class="vt-badge vt-badge--solid">Solid</span>
+                <span class="vt-badge vt-badge--success">Success</span>
+                <span class="vt-badge vt-badge--warning">Warning</span>
+                <span class="vt-badge vt-badge--danger">Danger</span>
+              </div>
+              <!-- Brand scale — all auto-generated, all animate -->
+              <div style="display:grid;grid-template-columns:repeat(11,1fr);gap:4px;border-radius:var(--vt-radius-md);overflow:hidden;">
+                <div style="height:32px;background:var(--vt-brand-50);"></div>
+                <div style="height:32px;background:var(--vt-brand-100);"></div>
+                <div style="height:32px;background:var(--vt-brand-200);"></div>
+                <div style="height:32px;background:var(--vt-brand-300);"></div>
+                <div style="height:32px;background:var(--vt-brand-400);"></div>
+                <div style="height:32px;background:var(--vt-brand-500);"></div>
+                <div style="height:32px;background:var(--vt-brand-600);"></div>
+                <div style="height:32px;background:var(--vt-brand-700);"></div>
+                <div style="height:32px;background:var(--vt-brand-800);"></div>
+                <div style="height:32px;background:var(--vt-brand-900);"></div>
+                <div style="height:32px;background:var(--vt-brand-950);"></div>
+              </div>
+              <p style="font-size:var(--vt-text-xs);font-family:var(--vt-font-mono);color:var(--vt-color-text-muted);">
+                brand-50 → brand-950 — all from one token, all animated
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTAINER QUERIES =================================================== -->
+    <section class="demo-section" id="container-queries">
+      <div class="demo-section__header">
+        <p class="demo-section__label">The Differentiator</p>
+        <h2 class="demo-section__title">Real Container Queries</h2>
+        <p class="demo-section__desc">
+          Components adapt to <em>their container's width</em>, not the viewport.
+          Drag the handles below to resize — the components respond to their own available space.
+          No viewport media queries, no JavaScript resize observers.
+        </p>
+      </div>
+
+      <div class="demo-container-stage">
+
+        <!-- Button container query -->
+        <div>
+          <p class="demo-subsection__title">Button — expands to full width below 280px container</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--vt-space-4);">
+
+            <div class="demo-resizable" style="width:260px;">
+              <p class="demo-container-label">container: ~260px → buttons go full width</p>
+              <div style="display:flex;flex-direction:column;gap:var(--vt-space-2);">
+                <button class="vt-btn">Save changes</button>
+                <button class="vt-btn vt-btn--outline">Cancel</button>
+              </div>
+            </div>
+
+            <div class="demo-resizable" style="width:400px;">
+              <p class="demo-container-label">container: ~400px → buttons are inline</p>
+              <div class="demo-row">
+                <button class="vt-btn">Save changes</button>
+                <button class="vt-btn vt-btn--outline">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card footer container query -->
+        <div>
+          <p class="demo-subsection__title">Card — footer aligns right above 420px container</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--vt-space-4);">
+
+            <div class="demo-resizable" style="width:320px;">
+              <p class="demo-container-label">container: ~320px → footer stacks</p>
+              <div class="vt-card" style="padding:var(--vt-space-4);">
+                <div class="vt-card__header">
+                  <h3 class="vt-card__title">Narrow card</h3>
+                  <p class="vt-card__description">Footer buttons stack to the start.</p>
+                </div>
+                <div class="vt-card__footer">
+                  <button class="vt-btn vt-btn--surface vt-btn--sm">Dismiss</button>
+                  <button class="vt-btn vt-btn--sm">Confirm</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="demo-resizable" style="width:500px;">
+              <p class="demo-container-label">container: ~500px → footer aligns right</p>
+              <div class="vt-card" style="padding:var(--vt-space-4);">
+                <div class="vt-card__header">
+                  <h3 class="vt-card__title">Wide card</h3>
+                  <p class="vt-card__description">Footer buttons align to the end.</p>
+                </div>
+                <div class="vt-card__footer">
+                  <button class="vt-btn vt-btn--surface vt-btn--sm">Dismiss</button>
+                  <button class="vt-btn vt-btn--sm">Confirm</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Inline field container query -->
+        <div>
+          <p class="demo-subsection__title">Field — inline layout above 400px container</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--vt-space-4);">
+
+            <div class="demo-resizable" style="width:280px;">
+              <p class="demo-container-label">container: ~280px → label stacks above</p>
+              <div class="vt-field vt-field--inline">
+                <label class="vt-label" for="cq-email-narrow">Email</label>
+                <input class="vt-input" id="cq-email-narrow" type="email" placeholder="you@example.com">
+              </div>
+            </div>
+
+            <div class="demo-resizable" style="width:500px;">
+              <p class="demo-container-label">container: ~500px → label inline with input</p>
+              <div class="vt-field vt-field--inline">
+                <label class="vt-label" for="cq-email-wide">Email</label>
+                <input class="vt-input" id="cq-email-wide" type="email" placeholder="you@example.com">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- DARK MODE SUBTLES =================================================== -->
+    <section class="demo-section" id="dark-mode-colors">
+      <div class="demo-section__header">
+        <p class="demo-section__label">The Differentiator</p>
+        <h2 class="demo-section__title">Dark Mode Color Correctness</h2>
+        <p class="demo-section__desc">
+          Most CSS libraries hardcode <code class="demo-code">color-mix(... white)</code> for
+          subtle tints — which produces pale muddy grays in dark mode instead of dark tints.
+          Volty mixes into <code class="demo-code">--vt-color-surface</code> so subtle colors
+          are always correct: light tints in light mode, dark tints in dark mode.
+        </p>
+      </div>
+
+      <div class="demo-mode-compare">
+
+        <!-- Always-light panel -->
+        <div data-theme="light" class="demo-mode-panel demo-mode-panel--light">
+          <p class="demo-mode-panel__title">data-theme="light" — always light</p>
+          <div class="demo-subtle-row">
+            <span class="vt-badge vt-badge--success">Success</span>
+            <span class="vt-badge vt-badge--warning">Warning</span>
+            <span class="vt-badge vt-badge--danger">Danger</span>
+          </div>
+          <div class="demo-subtle-row">
+            <span class="vt-badge">Brand default</span>
+            <span class="vt-badge vt-badge--surface">Surface</span>
+          </div>
+          <p style="font-size:var(--vt-text-xs);color:oklch(50% 0 0);margin-block-start:var(--vt-space-2);font-family:var(--vt-font-mono);">
+            subtle = color-mix(brand, surface-light) ✓
+          </p>
+        </div>
+
+        <!-- Always-dark panel -->
+        <div data-theme="dark" class="demo-mode-panel demo-mode-panel--dark">
+          <p class="demo-mode-panel__title">data-theme="dark" — always dark</p>
+          <div class="demo-subtle-row">
+            <span class="vt-badge vt-badge--success">Success</span>
+            <span class="vt-badge vt-badge--warning">Warning</span>
+            <span class="vt-badge vt-badge--danger">Danger</span>
+          </div>
+          <div class="demo-subtle-row">
+            <span class="vt-badge">Brand default</span>
+            <span class="vt-badge vt-badge--surface">Surface</span>
+          </div>
+          <p style="font-size:var(--vt-text-xs);color:oklch(60% 0 0);margin-block-start:var(--vt-space-2);font-family:var(--vt-font-mono);">
+            subtle = color-mix(brand, surface-dark) ✓
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Show what the old (broken) approach looked like -->
+      <div class="demo-subsection">
+        <p class="demo-subsection__title">What mixing with white looks like in dark mode (the broken approach)</p>
+        <div class="demo-mode-compare">
+          <div class="demo-mode-panel demo-mode-panel--dark" style="opacity:1;">
+            <p class="demo-mode-panel__title" style="color:oklch(60% 0 0);">dark mode — wrong: color-mix(..., white)</p>
+            <div class="demo-subtle-row">
+              <!-- These manually compute what the old approach produced -->
+              <span style="
+                display:inline-flex;align-items:center;
+                padding:2px 8px;border-radius:9999px;
+                font-size:12px;font-weight:500;
+                background:color-mix(in oklch, oklch(68% 0.15 145) 15%, white);
+                color:oklch(68% 0.15 145);
+                border:1px solid color-mix(in oklch, oklch(68% 0.15 145) 25%, transparent);
+              ">Success — pale &amp; washed out</span>
+              <span style="
+                display:inline-flex;align-items:center;
+                padding:2px 8px;border-radius:9999px;
+                font-size:12px;font-weight:500;
+                background:color-mix(in oklch, oklch(52% 0.22 25) 15%, white);
+                color:oklch(67% 0.22 25);
+                border:1px solid color-mix(in oklch, oklch(52% 0.22 25) 25%, transparent);
+              ">Danger — pale &amp; washed out</span>
+            </div>
+          </div>
+          <div class="demo-mode-panel demo-mode-panel--dark" data-theme="dark">
+            <p class="demo-mode-panel__title" style="color:oklch(60% 0 0);">dark mode — correct: color-mix(..., surface)</p>
+            <div class="demo-subtle-row">
+              <span class="vt-badge vt-badge--success">Success — rich dark tint</span>
+              <span class="vt-badge vt-badge--danger">Danger — rich dark tint</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
 
   <!-- FOOTER ================================================================ -->
   <footer class="demo-footer demo-page">

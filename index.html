@@ -39,11 +39,64 @@
       max-width: 1200px;
       margin-inline: auto;
       padding-inline: var(--vt-space-5);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: var(--vt-space-4);
+    }
+
+    /* Nav links */
+    .demo-nav__links {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: var(--vt-space-4);
+      justify-content: center;
+      gap: var(--vt-space-1);
       flex-wrap: wrap;
+    }
+
+    .demo-nav__link {
+      padding-block: var(--vt-space-1);
+      padding-inline: var(--vt-space-3);
+      border-radius: var(--vt-radius-md);
+      font-size: var(--vt-text-sm);
+      font-weight: var(--vt-font-weight-medium);
+      color: var(--vt-color-text-muted);
+      text-decoration: none;
+      transition:
+        color var(--vt-duration-fast) ease,
+        background-color var(--vt-duration-fast) ease;
+    }
+
+    .demo-nav__link:hover {
+      color: var(--vt-color-text);
+      background-color: var(--vt-color-surface-raised);
+    }
+
+    .demo-nav__link.is-active {
+      color: var(--vt-color-brand);
+      background-color: var(--vt-color-brand-subtle);
+    }
+
+    /* Docs link gets a slightly special treatment */
+    .demo-nav__link--docs {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--vt-space-1);
+    }
+
+    .demo-nav__link--docs svg {
+      opacity: 0.6;
+    }
+
+    @media (max-width: 700px) {
+      .demo-nav__inner {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+      }
+      .demo-nav__links {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+      }
     }
 
     .demo-logo {
@@ -621,14 +674,36 @@
   <nav class="demo-nav">
     <div class="demo-nav__inner">
 
+      <!-- Logo -->
       <a href="#" class="demo-logo">
         <div class="demo-logo__mark">V</div>
         <div>
           <div class="demo-logo__name">Volty</div>
         </div>
-        <span class="demo-badge vt-badge vt-badge--surface demo-logo__version">v0.1.0</span>
+        <span class="vt-badge vt-badge--surface demo-logo__version">v0.1.0</span>
       </a>
 
+      <!-- Nav links -->
+      <nav class="demo-nav__links" aria-label="Site navigation">
+        <a href="#buttons"              class="demo-nav__link" onclick="setNavActive(this)">Components</a>
+        <a href="#tokens"               class="demo-nav__link" onclick="setNavActive(this)">Tokens</a>
+        <a href="#property-transitions" class="demo-nav__link" onclick="setNavActive(this)">Differentiators</a>
+        <a href="#architecture"         class="demo-nav__link" onclick="setNavActive(this)">Architecture</a>
+        <a href="https://github.com/dorman/volty#readme"
+           class="demo-nav__link demo-nav__link--docs"
+           target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Documentation
+        </a>
+      </nav>
+
+      <!-- Controls -->
       <div class="demo-nav__controls">
 
         <!-- Brand color switcher -->
@@ -1950,6 +2025,33 @@
       document.querySelectorAll('.demo-brand-btn').forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
     }
+
+    // Nav link active state on click
+    function setNavActive(link) {
+      document.querySelectorAll('.demo-nav__link').forEach(l => l.classList.remove('is-active'));
+      link.classList.add('is-active');
+    }
+
+    // Scroll spy — highlight the nav link for the section currently in view
+    (function initScrollSpy() {
+      const sections = document.querySelectorAll('section[id]');
+      const links = document.querySelectorAll('.demo-nav__link[href^="#"]');
+      if (!sections.length || !links.length) return;
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            links.forEach(l => {
+              const href = l.getAttribute('href').slice(1);
+              l.classList.toggle('is-active', href === id);
+            });
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+
+      sections.forEach(s => observer.observe(s));
+    })();
 
     // Sync button active states on load
     (function syncUI() {

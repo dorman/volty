@@ -1,0 +1,33 @@
+@layer volty.tokens {
+  :root, [data-theme] {
+    /* Auto-generate brand scale from --vt-color-brand */
+    --vt-brand-50:  color-mix(in oklch, var(--vt-color-brand) 10%, white);
+    --vt-brand-100: color-mix(in oklch, var(--vt-color-brand) 20%, white);
+    --vt-brand-200: color-mix(in oklch, var(--vt-color-brand) 35%, white);
+    --vt-brand-300: color-mix(in oklch, var(--vt-color-brand) 55%, white);
+    --vt-brand-400: color-mix(in oklch, var(--vt-color-brand) 75%, white);
+    --vt-brand-500: var(--vt-color-brand);
+    --vt-brand-600: color-mix(in oklch, var(--vt-color-brand) 85%, black);
+    --vt-brand-700: color-mix(in oklch, var(--vt-color-brand) 70%, black);
+    --vt-brand-800: color-mix(in oklch, var(--vt-color-brand) 55%, black);
+    --vt-brand-900: color-mix(in oklch, var(--vt-color-brand) 35%, black);
+    --vt-brand-950: color-mix(in oklch, var(--vt-color-brand) 20%, black);
+
+    /* Interactive state colors derived from brand */
+    --vt-color-brand-hover:  color-mix(in oklch, var(--vt-color-brand) 85%, black);
+    --vt-color-brand-active: color-mix(in oklch, var(--vt-color-brand) 70%, black);
+    --vt-color-brand-subtle: color-mix(in oklch, var(--vt-color-brand) 15%, white);
+    --vt-color-brand-ring:   color-mix(in oklch, var(--vt-color-brand) 40%, transparent);
+
+    /* Semantic colors */
+    --vt-color-success: oklch(55% 0.15 145);
+    --vt-color-warning: oklch(70% 0.18 70);
+    --vt-color-danger:  oklch(55% 0.22 25);
+    --vt-color-info:    oklch(60% 0.15 240);
+
+    --vt-color-success-subtle: color-mix(in oklch, var(--vt-color-success) 15%, white);
+    --vt-color-warning-subtle: color-mix(in oklch, var(--vt-color-warning) 15%, white);
+    --vt-color-danger-subtle:  color-mix(in oklch, var(--vt-color-danger) 15%, white);
+    --vt-color-info-subtle:    color-mix(in oklch, var(--vt-color-info) 15%, white);
+  }
+}

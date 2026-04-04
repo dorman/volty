@@ -1,0 +1,70 @@
+@layer volty.components {
+  .vt-card {
+    container-type: inline-size;
+    container-name: card;
+
+    background-color: var(--vt-color-surface-overlay);
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-xl);
+    padding: var(--vt-space-6);
+    transition:
+      background-color var(--vt-duration-base) ease,
+      border-color var(--vt-duration-base) ease;
+  }
+
+  .vt-card--raised {
+    background-color: var(--vt-color-surface-overlay);
+    box-shadow:
+      0 1px 3px color-mix(in oklch, var(--vt-color-text) 8%, transparent),
+      0 4px 16px color-mix(in oklch, var(--vt-color-text) 6%, transparent);
+  }
+
+  .vt-card--interactive {
+    cursor: pointer;
+  }
+  .vt-card--interactive:hover {
+    border-color: var(--vt-color-brand);
+    box-shadow:
+      0 0 0 1px var(--vt-color-brand),
+      0 4px 16px color-mix(in oklch, var(--vt-color-brand) 15%, transparent);
+  }
+
+  .vt-card__header {
+    margin-block-end: var(--vt-space-4);
+  }
+
+  .vt-card__title {
+    font-size: var(--vt-text-lg);
+    font-weight: var(--vt-font-weight-semibold);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+  }
+
+  .vt-card__description {
+    font-size: var(--vt-text-sm);
+    color: var(--vt-color-text-muted);
+    margin-block-start: var(--vt-space-1);
+    line-height: var(--vt-line-height-relaxed);
+  }
+
+  .vt-card__body {
+    color: var(--vt-color-text);
+  }
+
+  .vt-card__footer {
+    margin-block-start: var(--vt-space-4);
+    padding-block-start: var(--vt-space-4);
+    border-block-start: 1px solid var(--vt-color-border);
+    display: flex;
+    align-items: center;
+    gap: var(--vt-space-2);
+    flex-wrap: wrap;
+  }
+
+  /* Container-aware layout — card adapts its own internals based on its width */
+  @container card (min-width: 420px) {
+    .vt-card__footer {
+      justify-content: flex-end;
+    }
+  }
+}

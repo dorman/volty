@@ -1,0 +1,73 @@
+/* Color tokens — typed as <color> so they can be transitioned */
+@property --vt-color-brand {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(55% 0.2 250);
+}
+@property --vt-color-surface {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(98% 0 0);
+}
+@property --vt-color-surface-raised {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(96% 0 0);
+}
+@property --vt-color-surface-overlay {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(94% 0 0);
+}
+@property --vt-color-text {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(15% 0 0);
+}
+@property --vt-color-text-muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(45% 0 0);
+}
+@property --vt-color-border {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: oklch(85% 0 0);
+}
+@property --vt-color-brand-text {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: white;
+}
+
+/* Spacing tokens — typed as <length> */
+@property --vt-space-1 { syntax: "<length>"; inherits: true; initial-value: 4px; }
+@property --vt-space-2 { syntax: "<length>"; inherits: true; initial-value: 8px; }
+@property --vt-space-3 { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-space-4 { syntax: "<length>"; inherits: true; initial-value: 16px; }
+@property --vt-space-5 { syntax: "<length>"; inherits: true; initial-value: 24px; }
+@property --vt-space-6 { syntax: "<length>"; inherits: true; initial-value: 32px; }
+@property --vt-space-8 { syntax: "<length>"; inherits: true; initial-value: 48px; }
+@property --vt-space-10 { syntax: "<length>"; inherits: true; initial-value: 64px; }
+
+/* Radius tokens */
+@property --vt-radius-sm { syntax: "<length>"; inherits: true; initial-value: 4px; }
+@property --vt-radius-md { syntax: "<length>"; inherits: true; initial-value: 8px; }
+@property --vt-radius-lg { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-radius-xl { syntax: "<length>"; inherits: true; initial-value: 16px; }
+@property --vt-radius-full { syntax: "<length>"; inherits: true; initial-value: 9999px; }
+
+/* Font size tokens */
+@property --vt-text-xs { syntax: "<length>"; inherits: true; initial-value: 12px; }
+@property --vt-text-sm { syntax: "<length>"; inherits: true; initial-value: 14px; }
+@property --vt-text-base { syntax: "<length>"; inherits: true; initial-value: 16px; }
+@property --vt-text-lg { syntax: "<length>"; inherits: true; initial-value: 18px; }
+@property --vt-text-xl { syntax: "<length>"; inherits: true; initial-value: 20px; }
+@property --vt-text-2xl { syntax: "<length>"; inherits: true; initial-value: 24px; }
+@property --vt-text-3xl { syntax: "<length>"; inherits: true; initial-value: 30px; }
+@property --vt-text-4xl { syntax: "<length>"; inherits: true; initial-value: 36px; }
+
+/* Transition speed tokens */
+@property --vt-duration-fast { syntax: "<time>"; inherits: true; initial-value: 100ms; }
+@property --vt-duration-base { syntax: "<time>"; inherits: true; initial-value: 200ms; }
+@property --vt-duration-slow { syntax: "<time>"; inherits: true; initial-value: 350ms; }

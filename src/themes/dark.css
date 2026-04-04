@@ -1,0 +1,32 @@
+/*
+ * Volty Dark Theme Overrides
+ *
+ * This file can be imported separately if you want to apply the dark theme
+ * exclusively without light-dark() auto-switching. The base.css file already
+ * includes [data-theme="dark"] overrides; this file provides additional
+ * dark-specific refinements and serves as a standalone reference.
+ *
+ * Usage: Import after base.css if you need manual dark-only control.
+ */
+
+@layer volty.tokens {
+  /* Dark-mode semantic color adjustments — warmer tones for better contrast */
+  [data-theme="dark"] {
+    --vt-color-success: oklch(62% 0.15 145);
+    --vt-color-warning: oklch(75% 0.18 70);
+    --vt-color-danger:  oklch(62% 0.22 25);
+    --vt-color-info:    oklch(67% 0.15 240);
+
+    /* In dark mode, subtle colors mix with dark surface instead of white */
+    --vt-color-success-subtle: color-mix(in oklch, var(--vt-color-success) 18%, oklch(18% 0 0));
+    --vt-color-warning-subtle: color-mix(in oklch, var(--vt-color-warning) 18%, oklch(18% 0 0));
+    --vt-color-danger-subtle:  color-mix(in oklch, var(--vt-color-danger) 18%, oklch(18% 0 0));
+    --vt-color-info-subtle:    color-mix(in oklch, var(--vt-color-info) 18%, oklch(18% 0 0));
+
+    /* Brand scale also mixes with dark surface */
+    --vt-brand-50:  color-mix(in oklch, var(--vt-color-brand) 10%, oklch(14% 0 0));
+    --vt-brand-100: color-mix(in oklch, var(--vt-color-brand) 20%, oklch(14% 0 0));
+    --vt-brand-200: color-mix(in oklch, var(--vt-color-brand) 35%, oklch(14% 0 0));
+    --vt-color-brand-subtle: color-mix(in oklch, var(--vt-color-brand) 18%, oklch(14% 0 0));
+  }
+}

@@ -1,0 +1,33 @@
+@layer volty.base {
+  :root {
+    --vt-font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --vt-font-mono: ui-monospace, "Cascadia Code", "Fira Code", monospace;
+    --vt-font-weight-normal: 400;
+    --vt-font-weight-medium: 500;
+    --vt-font-weight-semibold: 600;
+    --vt-font-weight-bold: 700;
+    --vt-line-height-tight: 1.25;
+    --vt-line-height-base: 1.5;
+    --vt-line-height-relaxed: 1.75;
+
+    /* Fluid type scale — scales between viewport breakpoints */
+    --vt-text-xs:   clamp(0.69rem,  0.66rem + 0.14vw, 0.75rem);
+    --vt-text-sm:   clamp(0.83rem,  0.78rem + 0.24vw, 0.875rem);
+    --vt-text-base: clamp(1rem,     0.95rem + 0.28vw, 1rem);
+    --vt-text-lg:   clamp(1.13rem,  1.06rem + 0.35vw, 1.25rem);
+    --vt-text-xl:   clamp(1.25rem,  1.14rem + 0.54vw, 1.5rem);
+    --vt-text-2xl:  clamp(1.5rem,   1.32rem + 0.89vw, 1.875rem);
+    --vt-text-3xl:  clamp(1.75rem,  1.51rem + 1.2vw,  2.25rem);
+    --vt-text-4xl:  clamp(2rem,     1.67rem + 1.65vw, 3rem);
+    --vt-text-5xl:  clamp(2.5rem,   2rem + 2.5vw,     4rem);
+  }
+
+  html {
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-base);
+    line-height: var(--vt-line-height-base);
+    color: var(--vt-color-text);
+    background-color: var(--vt-color-surface);
+    -webkit-font-smoothing: antialiased;
+  }
+}

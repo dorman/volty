@@ -1,0 +1,49 @@
+@layer volty.components {
+  .vt-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vt-space-1);
+    padding-block: 2px;
+    padding-inline: var(--vt-space-2);
+    border-radius: var(--vt-radius-full);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    line-height: var(--vt-line-height-tight);
+    white-space: nowrap;
+
+    /* Default: brand subtle */
+    background-color: var(--vt-color-brand-subtle);
+    color: var(--vt-color-brand);
+    border: 1px solid color-mix(in oklch, var(--vt-color-brand) 25%, transparent);
+  }
+
+  .vt-badge--solid {
+    background-color: var(--vt-color-brand);
+    color: var(--vt-color-brand-text);
+    border-color: transparent;
+  }
+
+  .vt-badge--surface {
+    background-color: var(--vt-color-surface-raised);
+    color: var(--vt-color-text-muted);
+    border-color: var(--vt-color-border);
+  }
+
+  .vt-badge--success {
+    background-color: var(--vt-color-success-subtle);
+    color: var(--vt-color-success);
+    border-color: color-mix(in oklch, var(--vt-color-success) 25%, transparent);
+  }
+
+  .vt-badge--warning {
+    background-color: var(--vt-color-warning-subtle);
+    color: color-mix(in oklch, var(--vt-color-warning) 80%, black);
+    border-color: color-mix(in oklch, var(--vt-color-warning) 30%, transparent);
+  }
+
+  .vt-badge--danger {
+    background-color: var(--vt-color-danger-subtle);
+    color: var(--vt-color-danger);
+    border-color: color-mix(in oklch, var(--vt-color-danger) 25%, transparent);
+  }
+}

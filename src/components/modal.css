@@ -1,0 +1,174 @@
+@layer volty.components {
+  /*
+    Modal — built on native <dialog>.
+    No JS library needed for show/close; use dialog.showModal() / dialog.close().
+    @starting-style provides entry animation without JS.
+
+    Usage:
+      <dialog class="vt-modal" id="my-modal">
+        <div class="vt-modal__header">
+          <h2 class="vt-modal__title">Title</h2>
+          <button class="vt-modal__close" aria-label="Close" autofocus>
+            <svg .../>
+          </button>
+        </div>
+        <div class="vt-modal__body">Content</div>
+        <div class="vt-modal__footer">
+          <button class="vt-btn vt-btn--surface">Cancel</button>
+          <button class="vt-btn">Confirm</button>
+        </div>
+      </dialog>
+
+    JS: document.getElementById('my-modal').showModal()
+    Close on backdrop click:
+      modal.addEventListener('click', e => { if (e.target === modal) modal.close() })
+  */
+
+  .vt-modal {
+    /* Reset dialog defaults */
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    /* Sizing */
+    width: min(calc(100vw - var(--vt-space-8)), 560px);
+    max-height: calc(100dvh - var(--vt-space-10));
+    margin: auto;
+
+    /* Panel */
+    background-color: var(--vt-color-surface-overlay);
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-xl);
+    box-shadow:
+      0 4px 24px color-mix(in oklch, var(--vt-color-text) 12%, transparent),
+      0 1px 4px color-mix(in oklch, var(--vt-color-text) 8%, transparent);
+    overflow: hidden;
+
+    /* Entry animation */
+    transition:
+      opacity var(--vt-duration-base) ease,
+      translate var(--vt-duration-base) ease,
+      display var(--vt-duration-base) ease allow-discrete,
+      overlay var(--vt-duration-base) ease allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 -12px;
+    }
+  }
+
+  /* Exit: when closed, dialog hides — transition out */
+  .vt-modal:not([open]) {
+    opacity: 0;
+    translate: 0 -12px;
+    pointer-events: none;
+  }
+
+  /* Backdrop */
+  .vt-modal::backdrop {
+    background-color: color-mix(in oklch, var(--vt-color-text) 50%, transparent);
+    backdrop-filter: blur(2px);
+    transition:
+      opacity var(--vt-duration-base) ease,
+      display var(--vt-duration-base) ease allow-discrete,
+      overlay var(--vt-duration-base) ease allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  /* ---- Structure --------------------------------------------------------- */
+  .vt-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--vt-space-4);
+    padding: var(--vt-space-6);
+    padding-block-end: var(--vt-space-4);
+    border-block-end: 1px solid var(--vt-color-border);
+  }
+
+  .vt-modal__title {
+    font-size: var(--vt-text-lg);
+    font-weight: var(--vt-font-weight-semibold);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+    margin: 0;
+  }
+
+  .vt-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--vt-radius-sm);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--vt-color-text-muted);
+    transition:
+      background-color var(--vt-duration-fast) ease,
+      color var(--vt-duration-fast) ease;
+    padding: 0;
+  }
+
+  .vt-modal__close:hover {
+    background-color: color-mix(in oklch, var(--vt-color-text) 8%, transparent);
+    color: var(--vt-color-text);
+  }
+
+  .vt-modal__close:focus-visible {
+    outline: 2px solid var(--vt-color-brand-ring);
+    outline-offset: 2px;
+  }
+
+  .vt-modal__body {
+    padding: var(--vt-space-6);
+    color: var(--vt-color-text);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .vt-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--vt-space-3);
+    padding: var(--vt-space-4) var(--vt-space-6);
+    border-block-start: 1px solid var(--vt-color-border);
+    flex-wrap: wrap;
+  }
+
+  /* Size variants */
+  .vt-modal--sm {
+    width: min(calc(100vw - var(--vt-space-8)), 400px);
+  }
+
+  .vt-modal--lg {
+    width: min(calc(100vw - var(--vt-space-8)), 760px);
+  }
+
+  .vt-modal--full {
+    width: calc(100vw - var(--vt-space-8));
+    max-height: calc(100dvh - var(--vt-space-8));
+  }
+
+  /* Danger variant — colors the header accent */
+  .vt-modal--danger .vt-modal__title {
+    color: var(--vt-color-danger);
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .vt-modal,
+    .vt-modal::backdrop {
+      transition: none;
+    }
+  }
+}

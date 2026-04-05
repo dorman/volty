@@ -32,11 +32,16 @@ const SOURCE_FILES = [
   ["themes/dark.css", "THEME — DARK"],
 
   // 5. Components
-  ["components/button.css", "COMPONENT — BUTTON"],
-  ["components/card.css", "COMPONENT — CARD"],
-  ["components/badge.css", "COMPONENT — BADGE"],
-  ["components/input.css", "COMPONENT — INPUT"],
-  ["components/switch.css", "COMPONENT — SWITCH"],
+  ["components/button.css",  "COMPONENT — BUTTON"],
+  ["components/card.css",    "COMPONENT — CARD"],
+  ["components/badge.css",   "COMPONENT — BADGE"],
+  ["components/input.css",   "COMPONENT — INPUT"],
+  ["components/switch.css",  "COMPONENT — SWITCH"],
+  ["components/alert.css",   "COMPONENT — ALERT"],
+  ["components/tooltip.css", "COMPONENT — TOOLTIP"],
+  ["components/select.css",  "COMPONENT — SELECT"],
+  ["components/modal.css",   "COMPONENT — MODAL"],
+  ["components/toast.css",   "COMPONENT — TOAST"],
 ];
 
 const BANNER = `/*!

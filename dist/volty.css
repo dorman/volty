@@ -2,7 +2,7 @@
  * Volty v0.1.0
  * Modern CSS theme library — typed design tokens, container-scoped theming, zero build step
  * MIT License
- * Built: 2026-04-04T07:04:20.634Z
+ * Built: 2026-04-05T02:06:01.758Z
  */
 
 /* ==============================================================================
@@ -877,5 +877,824 @@
     font-size: var(--vt-text-sm);
     color: var(--vt-color-text);
     line-height: var(--vt-line-height-tight);
+  }
+}
+
+
+/* ==============================================================================
+   13. COMPONENT — ALERT — src/components/alert.css
+   ============================================================ */
+
+@layer volty.components {
+  .vt-alert {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--vt-space-3);
+    align-items: start;
+    padding: var(--vt-space-4);
+    border-radius: var(--vt-radius-lg);
+    border: 1px solid;
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+
+    /* Default: info */
+    background-color: var(--vt-color-info-subtle);
+    border-color: color-mix(in oklch, var(--vt-color-info) 30%, transparent);
+    color: var(--vt-color-text);
+  }
+
+  /* Icon column */
+  .vt-alert__icon {
+    display: flex;
+    align-items: center;
+    color: var(--vt-color-info);
+    flex-shrink: 0;
+    padding-block-start: 1px;
+  }
+
+  /* Content column */
+  .vt-alert__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vt-space-1);
+    min-width: 0;
+  }
+
+  .vt-alert__title {
+    font-weight: var(--vt-font-weight-semibold);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+  }
+
+  .vt-alert__desc {
+    color: var(--vt-color-text-muted);
+  }
+
+  /* Dismiss button column */
+  .vt-alert__dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--vt-radius-sm);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--vt-color-text-muted);
+    flex-shrink: 0;
+    transition: background-color var(--vt-duration-fast) ease,
+                color var(--vt-duration-fast) ease;
+    padding: 0;
+  }
+
+  .vt-alert__dismiss:hover {
+    background-color: color-mix(in oklch, var(--vt-color-text) 10%, transparent);
+    color: var(--vt-color-text);
+  }
+
+  /* When there's no dismiss button, collapse the last column */
+  .vt-alert:not(:has(.vt-alert__dismiss)) {
+    grid-template-columns: auto 1fr;
+  }
+
+  /* When there's no icon, collapse the first column */
+  .vt-alert:not(:has(.vt-alert__icon)) {
+    grid-template-columns: 1fr auto;
+  }
+
+  .vt-alert:not(:has(.vt-alert__icon)):not(:has(.vt-alert__dismiss)) {
+    grid-template-columns: 1fr;
+  }
+
+  /* Semantic variants */
+  .vt-alert--success {
+    background-color: var(--vt-color-success-subtle);
+    border-color: color-mix(in oklch, var(--vt-color-success) 30%, transparent);
+  }
+  .vt-alert--success .vt-alert__icon { color: var(--vt-color-success); }
+
+  .vt-alert--warning {
+    background-color: var(--vt-color-warning-subtle);
+    border-color: color-mix(in oklch, var(--vt-color-warning) 30%, transparent);
+  }
+  .vt-alert--warning .vt-alert__icon {
+    color: color-mix(in oklch, var(--vt-color-warning) 80%, black);
+  }
+
+  .vt-alert--danger {
+    background-color: var(--vt-color-danger-subtle);
+    border-color: color-mix(in oklch, var(--vt-color-danger) 30%, transparent);
+  }
+  .vt-alert--danger .vt-alert__icon { color: var(--vt-color-danger); }
+
+  /* Solid variant — higher contrast */
+  .vt-alert--solid {
+    background-color: var(--vt-color-info);
+    border-color: transparent;
+    color: white;
+  }
+  .vt-alert--solid .vt-alert__icon { color: white; }
+  .vt-alert--solid .vt-alert__title,
+  .vt-alert--solid .vt-alert__desc { color: white; }
+  .vt-alert--solid .vt-alert__dismiss { color: white; }
+  .vt-alert--solid .vt-alert__dismiss:hover {
+    background-color: color-mix(in oklch, white 20%, transparent);
+  }
+
+  .vt-alert--solid.vt-alert--success { background-color: var(--vt-color-success); }
+  .vt-alert--solid.vt-alert--warning { background-color: var(--vt-color-warning); }
+  .vt-alert--solid.vt-alert--danger  { background-color: var(--vt-color-danger); }
+}
+
+
+/* ==============================================================================
+   14. COMPONENT — TOOLTIP — src/components/tooltip.css
+   ========================================================== */
+
+@layer volty.components {
+  /*
+    Tooltip — CSS anchor positioning.
+    Requires: anchor-name on trigger, position-anchor on tooltip.
+    Falls back gracefully in non-supporting browsers (tooltip just won't position).
+
+    Usage:
+      <span class="vt-tooltip-wrap">
+        <button class="vt-btn" style="anchor-name: --my-tip">Hover me</button>
+        <span class="vt-tooltip" style="position-anchor: --my-tip" role="tooltip">
+          Helpful text
+        </span>
+      </span>
+
+    Or use data-tooltip for the simple single-line case (no anchor API needed):
+      <span class="vt-tooltip-wrap">
+        <button class="vt-btn" data-tooltip="Helpful text">Hover me</button>
+      </span>
+  */
+
+  /* Wrapper establishes position context for the simple (data-tooltip) path */
+  .vt-tooltip-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* ---- Tooltip element (anchor positioning path) -------------------------- */
+  .vt-tooltip {
+    /* Positioning */
+    position: fixed;
+    position-try-fallbacks: --below, --left, --right;
+    bottom: calc(anchor(top) - var(--vt-space-2));
+    justify-self: anchor-center;
+
+    /* Sizing */
+    max-width: 220px;
+    padding-block: var(--vt-space-1);
+    padding-inline: var(--vt-space-3);
+
+    /* Appearance */
+    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
+    color: var(--vt-color-surface);
+    border-radius: var(--vt-radius-sm);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    line-height: var(--vt-line-height-relaxed);
+    white-space: normal;
+    pointer-events: none;
+
+    /* Visibility — hidden by default, shown on trigger focus/hover */
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--vt-duration-fast) ease,
+      visibility var(--vt-duration-fast) ease;
+
+    /* Popover reset if used as popover */
+    border: none;
+    margin: 0;
+    padding-block: var(--vt-space-1);
+    padding-inline: var(--vt-space-3);
+  }
+
+  @position-try --below {
+    top: calc(anchor(bottom) + var(--vt-space-2));
+    bottom: unset;
+    justify-self: anchor-center;
+  }
+
+  @position-try --left {
+    right: calc(anchor(left) - var(--vt-space-2));
+    left: unset;
+    align-self: anchor-center;
+    bottom: unset;
+  }
+
+  @position-try --right {
+    left: calc(anchor(right) + var(--vt-space-2));
+    align-self: anchor-center;
+    bottom: unset;
+  }
+
+  /* Show tooltip when sibling trigger is hovered or focused */
+  .vt-tooltip-wrap:hover .vt-tooltip,
+  .vt-tooltip-wrap:focus-within .vt-tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ---- Simple data-tooltip path (no anchor API) --------------------------- */
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + var(--vt-space-2));
+    left: 50%;
+    translate: -50% 0;
+    white-space: nowrap;
+    max-width: 220px;
+    padding-block: var(--vt-space-1);
+    padding-inline: var(--vt-space-3);
+    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
+    color: var(--vt-color-surface);
+    border-radius: var(--vt-radius-sm);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    line-height: var(--vt-line-height-relaxed);
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--vt-duration-fast) ease,
+      visibility var(--vt-duration-fast) ease;
+  }
+
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Placement modifiers for data-tooltip */
+  [data-tooltip-placement="bottom"]::after {
+    bottom: unset;
+    top: calc(100% + var(--vt-space-2));
+  }
+
+  [data-tooltip-placement="left"]::after {
+    bottom: unset;
+    top: 50%;
+    left: unset;
+    right: calc(100% + var(--vt-space-2));
+    translate: 0 -50%;
+  }
+
+  [data-tooltip-placement="right"]::after {
+    bottom: unset;
+    top: 50%;
+    left: calc(100% + var(--vt-space-2));
+    translate: 0 -50%;
+  }
+}
+
+
+/* ==============================================================================
+   15. COMPONENT — SELECT — src/components/select.css
+   =========================================================== */
+
+@layer volty.components {
+  /*
+    Select — styled native <select> wrapper.
+    The wrapper div provides the custom chevron and container query sizing.
+
+    Usage:
+      <div class="vt-select">
+        <select>
+          <option>Option</option>
+        </select>
+      </div>
+
+    With label:
+      <div class="vt-field">
+        <label class="vt-label" for="my-select">Label</label>
+        <div class="vt-select">
+          <select id="my-select">...</select>
+        </div>
+      </div>
+  */
+
+  .vt-select {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    container-type: inline-size;
+  }
+
+  .vt-select select {
+    /* Reset */
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+
+    /* Sizing */
+    padding-block: var(--vt-space-2);
+    padding-inline-start: var(--vt-space-3);
+    padding-inline-end: var(--vt-space-8); /* room for chevron */
+    border-radius: var(--vt-radius-md);
+
+    /* Typography */
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-sm);
+    font-weight: var(--vt-font-weight-normal);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+
+    /* Colors */
+    background-color: var(--vt-color-surface-overlay);
+    border: 1px solid var(--vt-color-border);
+
+    /* Interaction */
+    cursor: pointer;
+    transition:
+      border-color var(--vt-duration-fast) ease,
+      box-shadow var(--vt-duration-fast) ease,
+      background-color var(--vt-duration-fast) ease;
+
+    /* Focus ring */
+    outline: 2px solid transparent;
+    outline-offset: 0;
+  }
+
+  .vt-select select:hover:not(:disabled) {
+    border-color: color-mix(in oklch, var(--vt-color-brand) 60%, var(--vt-color-border));
+  }
+
+  .vt-select select:focus-visible {
+    outline-color: var(--vt-color-brand-ring);
+    outline-offset: 2px;
+    border-color: var(--vt-color-brand);
+  }
+
+  /* Chevron icon — drawn with CSS, no SVG needed */
+  .vt-select::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: var(--vt-space-3);
+    width: 10px;
+    height: 6px;
+    pointer-events: none;
+    background-color: var(--vt-color-text-muted);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transition: background-color var(--vt-duration-fast) ease;
+  }
+
+  .vt-select:has(select:focus-visible)::after {
+    background-color: var(--vt-color-brand);
+  }
+
+  /* Disabled */
+  .vt-select select:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .vt-select:has(select:disabled)::after {
+    opacity: 0.45;
+  }
+
+  /* Error state */
+  .vt-select--error select {
+    border-color: var(--vt-color-danger);
+  }
+  .vt-select--error select:focus-visible {
+    outline-color: color-mix(in oklch, var(--vt-color-danger) 40%, transparent);
+    border-color: var(--vt-color-danger);
+  }
+
+  /* Size variants */
+  .vt-select--sm select {
+    padding-block: calc(var(--vt-space-1) + 1px);
+    padding-inline-start: var(--vt-space-2);
+    padding-inline-end: var(--vt-space-6);
+    font-size: var(--vt-text-xs);
+    border-radius: var(--vt-radius-sm);
+  }
+
+  .vt-select--lg select {
+    padding-block: var(--vt-space-3);
+    padding-inline-start: var(--vt-space-4);
+    padding-inline-end: var(--vt-space-10);
+    font-size: var(--vt-text-base);
+    border-radius: var(--vt-radius-lg);
+  }
+
+  /* Full width when in a narrow container */
+  @container (max-width: 320px) {
+    .vt-select {
+      width: 100%;
+    }
+    .vt-select select {
+      width: 100%;
+    }
+  }
+
+  /* ---- Field layout helper -------------------------------------------- */
+  .vt-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vt-space-2);
+  }
+
+  .vt-label {
+    font-size: var(--vt-text-sm);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+  }
+
+  .vt-field-hint {
+    font-size: var(--vt-text-xs);
+    color: var(--vt-color-text-muted);
+  }
+
+  .vt-field-error {
+    font-size: var(--vt-text-xs);
+    color: var(--vt-color-danger);
+  }
+}
+
+
+/* ==============================================================================
+   16. COMPONENT — MODAL — src/components/modal.css
+   ============================================================ */
+
+@layer volty.components {
+  /*
+    Modal — built on native <dialog>.
+    No JS library needed for show/close; use dialog.showModal() / dialog.close().
+    @starting-style provides entry animation without JS.
+
+    Usage:
+      <dialog class="vt-modal" id="my-modal">
+        <div class="vt-modal__header">
+          <h2 class="vt-modal__title">Title</h2>
+          <button class="vt-modal__close" aria-label="Close" autofocus>
+            <svg .../>
+          </button>
+        </div>
+        <div class="vt-modal__body">Content</div>
+        <div class="vt-modal__footer">
+          <button class="vt-btn vt-btn--surface">Cancel</button>
+          <button class="vt-btn">Confirm</button>
+        </div>
+      </dialog>
+
+    JS: document.getElementById('my-modal').showModal()
+    Close on backdrop click:
+      modal.addEventListener('click', e => { if (e.target === modal) modal.close() })
+  */
+
+  .vt-modal {
+    /* Reset dialog defaults */
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    /* Sizing */
+    width: min(calc(100vw - var(--vt-space-8)), 560px);
+    max-height: calc(100dvh - var(--vt-space-10));
+    margin: auto;
+
+    /* Panel */
+    background-color: var(--vt-color-surface-overlay);
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-xl);
+    box-shadow:
+      0 4px 24px color-mix(in oklch, var(--vt-color-text) 12%, transparent),
+      0 1px 4px color-mix(in oklch, var(--vt-color-text) 8%, transparent);
+    overflow: hidden;
+
+    /* Entry animation */
+    transition:
+      opacity var(--vt-duration-base) ease,
+      translate var(--vt-duration-base) ease,
+      display var(--vt-duration-base) ease allow-discrete,
+      overlay var(--vt-duration-base) ease allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 -12px;
+    }
+  }
+
+  /* Exit: when closed, dialog hides — transition out */
+  .vt-modal:not([open]) {
+    opacity: 0;
+    translate: 0 -12px;
+    pointer-events: none;
+  }
+
+  /* Backdrop */
+  .vt-modal::backdrop {
+    background-color: color-mix(in oklch, var(--vt-color-text) 50%, transparent);
+    backdrop-filter: blur(2px);
+    transition:
+      opacity var(--vt-duration-base) ease,
+      display var(--vt-duration-base) ease allow-discrete,
+      overlay var(--vt-duration-base) ease allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+    }
+  }
+
+  /* ---- Structure --------------------------------------------------------- */
+  .vt-modal__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--vt-space-4);
+    padding: var(--vt-space-6);
+    padding-block-end: var(--vt-space-4);
+    border-block-end: 1px solid var(--vt-color-border);
+  }
+
+  .vt-modal__title {
+    font-size: var(--vt-text-lg);
+    font-weight: var(--vt-font-weight-semibold);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+    margin: 0;
+  }
+
+  .vt-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--vt-radius-sm);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--vt-color-text-muted);
+    transition:
+      background-color var(--vt-duration-fast) ease,
+      color var(--vt-duration-fast) ease;
+    padding: 0;
+  }
+
+  .vt-modal__close:hover {
+    background-color: color-mix(in oklch, var(--vt-color-text) 8%, transparent);
+    color: var(--vt-color-text);
+  }
+
+  .vt-modal__close:focus-visible {
+    outline: 2px solid var(--vt-color-brand-ring);
+    outline-offset: 2px;
+  }
+
+  .vt-modal__body {
+    padding: var(--vt-space-6);
+    color: var(--vt-color-text);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .vt-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--vt-space-3);
+    padding: var(--vt-space-4) var(--vt-space-6);
+    border-block-start: 1px solid var(--vt-color-border);
+    flex-wrap: wrap;
+  }
+
+  /* Size variants */
+  .vt-modal--sm {
+    width: min(calc(100vw - var(--vt-space-8)), 400px);
+  }
+
+  .vt-modal--lg {
+    width: min(calc(100vw - var(--vt-space-8)), 760px);
+  }
+
+  .vt-modal--full {
+    width: calc(100vw - var(--vt-space-8));
+    max-height: calc(100dvh - var(--vt-space-8));
+  }
+
+  /* Danger variant — colors the header accent */
+  .vt-modal--danger .vt-modal__title {
+    color: var(--vt-color-danger);
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .vt-modal,
+    .vt-modal::backdrop {
+      transition: none;
+    }
+  }
+}
+
+
+/* ==============================================================================
+   17. COMPONENT — TOAST — src/components/toast.css
+   ============================================================ */
+
+@layer volty.components {
+  /*
+    Toast — stacked notification toasts.
+    The region is a fixed container; toasts are added/removed via JS (see volty.js).
+    Pure CSS entry/exit animation via @starting-style + allow-discrete.
+
+    Usage (HTML structure — managed by Volty.toast()):
+      <div class="vt-toast-region" aria-live="polite" aria-atomic="false"></div>
+
+    Programmatic:
+      Volty.toast({ message: "Saved!", variant: "success" })
+      Volty.toast({ message: "Error", variant: "danger", duration: 0 }) // persistent
+  */
+
+  /* ---- Region (fixed viewport container) --------------------------------- */
+  .vt-toast-region {
+    position: fixed;
+    inset-block-end: var(--vt-space-5);
+    inset-inline-end: var(--vt-space-5);
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--vt-space-2);
+    z-index: 9999;
+    pointer-events: none;
+    max-width: min(360px, calc(100vw - var(--vt-space-6)));
+  }
+
+  /* ---- Individual toast -------------------------------------------------- */
+  .vt-toast {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: var(--vt-space-3);
+    padding: var(--vt-space-3) var(--vt-space-4);
+    border-radius: var(--vt-radius-lg);
+    border: 1px solid var(--vt-color-border);
+    background-color: var(--vt-color-surface-overlay);
+    box-shadow:
+      0 2px 12px color-mix(in oklch, var(--vt-color-text) 12%, transparent),
+      0 1px 3px color-mix(in oklch, var(--vt-color-text) 8%, transparent);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+    color: var(--vt-color-text);
+    pointer-events: all;
+    width: 100%;
+
+    /* Entry/exit animation */
+    transition:
+      opacity var(--vt-duration-base) ease,
+      translate var(--vt-duration-base) ease,
+      display var(--vt-duration-base) ease allow-discrete,
+      overlay var(--vt-duration-base) ease allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 var(--vt-space-4);
+    }
+  }
+
+  .vt-toast.is-dismissing {
+    opacity: 0;
+    translate: 0 var(--vt-space-4);
+    pointer-events: none;
+  }
+
+  /* ---- Toast parts ------------------------------------------------------- */
+  .vt-toast__icon {
+    display: flex;
+    align-items: center;
+    padding-block-start: 2px;
+    flex-shrink: 0;
+    color: var(--vt-color-info);
+  }
+
+  .vt-toast__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .vt-toast__title {
+    font-weight: var(--vt-font-weight-semibold);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+  }
+
+  .vt-toast__message {
+    color: var(--vt-color-text-muted);
+  }
+
+  /* When there is only a message (no title) */
+  .vt-toast:not(:has(.vt-toast__title)) .vt-toast__message {
+    color: var(--vt-color-text);
+  }
+
+  .vt-toast__dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--vt-radius-sm);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--vt-color-text-muted);
+    flex-shrink: 0;
+    padding: 0;
+    transition:
+      background-color var(--vt-duration-fast) ease,
+      color var(--vt-duration-fast) ease;
+  }
+
+  .vt-toast__dismiss:hover {
+    background-color: color-mix(in oklch, var(--vt-color-text) 10%, transparent);
+    color: var(--vt-color-text);
+  }
+
+  /* When no dismiss button */
+  .vt-toast:not(:has(.vt-toast__dismiss)) {
+    grid-template-columns: auto 1fr;
+  }
+
+  /* When no icon */
+  .vt-toast:not(:has(.vt-toast__icon)) {
+    grid-template-columns: 1fr auto;
+  }
+
+  .vt-toast:not(:has(.vt-toast__icon)):not(:has(.vt-toast__dismiss)) {
+    grid-template-columns: 1fr;
+  }
+
+  /* ---- Semantic variants ------------------------------------------------- */
+  .vt-toast--success .vt-toast__icon { color: var(--vt-color-success); }
+  .vt-toast--success {
+    border-color: color-mix(in oklch, var(--vt-color-success) 30%, var(--vt-color-border));
+  }
+
+  .vt-toast--warning .vt-toast__icon {
+    color: color-mix(in oklch, var(--vt-color-warning) 85%, black);
+  }
+  .vt-toast--warning {
+    border-color: color-mix(in oklch, var(--vt-color-warning) 30%, var(--vt-color-border));
+  }
+
+  .vt-toast--danger .vt-toast__icon { color: var(--vt-color-danger); }
+  .vt-toast--danger {
+    border-color: color-mix(in oklch, var(--vt-color-danger) 30%, var(--vt-color-border));
+  }
+
+  /* ---- Progress bar (auto-dismiss countdown) ----------------------------- */
+  .vt-toast__progress {
+    grid-column: 1 / -1;
+    height: 2px;
+    border-radius: var(--vt-radius-full);
+    background-color: var(--vt-color-border);
+    overflow: hidden;
+    margin-block-start: var(--vt-space-2);
+  }
+
+  .vt-toast__progress-bar {
+    height: 100%;
+    width: 100%;
+    background-color: var(--vt-color-brand);
+    transform-origin: left;
+    animation: vt-toast-countdown linear forwards;
+    animation-duration: var(--vt-toast-duration, 4s);
+  }
+
+  .vt-toast--success .vt-toast__progress-bar { background-color: var(--vt-color-success); }
+  .vt-toast--warning .vt-toast__progress-bar { background-color: var(--vt-color-warning); }
+  .vt-toast--danger  .vt-toast__progress-bar { background-color: var(--vt-color-danger); }
+
+  @keyframes vt-toast-countdown {
+    from { scale: 1 1; }
+    to   { scale: 0 1; }
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .vt-toast,
+    .vt-toast__progress-bar {
+      transition: none;
+      animation: none;
+    }
   }
 }

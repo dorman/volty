@@ -1,0 +1,188 @@
+@layer volty.components {
+  /*
+    Toast — stacked notification toasts.
+    The region is a fixed container; toasts are added/removed via JS (see volty.js).
+    Pure CSS entry/exit animation via @starting-style + allow-discrete.
+
+    Usage (HTML structure — managed by Volty.toast()):
+      <div class="vt-toast-region" aria-live="polite" aria-atomic="false"></div>
+
+    Programmatic:
+      Volty.toast({ message: "Saved!", variant: "success" })
+      Volty.toast({ message: "Error", variant: "danger", duration: 0 }) // persistent
+  */
+
+  /* ---- Region (fixed viewport container) --------------------------------- */
+  .vt-toast-region {
+    position: fixed;
+    inset-block-end: var(--vt-space-5);
+    inset-inline-end: var(--vt-space-5);
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--vt-space-2);
+    z-index: 9999;
+    pointer-events: none;
+    max-width: min(360px, calc(100vw - var(--vt-space-6)));
+  }
+
+  /* ---- Individual toast -------------------------------------------------- */
+  .vt-toast {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: var(--vt-space-3);
+    padding: var(--vt-space-3) var(--vt-space-4);
+    border-radius: var(--vt-radius-lg);
+    border: 1px solid var(--vt-color-border);
+    background-color: var(--vt-color-surface-overlay);
+    box-shadow:
+      0 2px 12px color-mix(in oklch, var(--vt-color-text) 12%, transparent),
+      0 1px 3px color-mix(in oklch, var(--vt-color-text) 8%, transparent);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+    color: var(--vt-color-text);
+    pointer-events: all;
+    width: 100%;
+
+    /* Entry/exit animation */
+    transition:
+      opacity var(--vt-duration-base) ease,
+      translate var(--vt-duration-base) ease,
+      display var(--vt-duration-base) ease allow-discrete,
+      overlay var(--vt-duration-base) ease allow-discrete;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 var(--vt-space-4);
+    }
+  }
+
+  .vt-toast.is-dismissing {
+    opacity: 0;
+    translate: 0 var(--vt-space-4);
+    pointer-events: none;
+  }
+
+  /* ---- Toast parts ------------------------------------------------------- */
+  .vt-toast__icon {
+    display: flex;
+    align-items: center;
+    padding-block-start: 2px;
+    flex-shrink: 0;
+    color: var(--vt-color-info);
+  }
+
+  .vt-toast__body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .vt-toast__title {
+    font-weight: var(--vt-font-weight-semibold);
+    color: var(--vt-color-text);
+    line-height: var(--vt-line-height-tight);
+  }
+
+  .vt-toast__message {
+    color: var(--vt-color-text-muted);
+  }
+
+  /* When there is only a message (no title) */
+  .vt-toast:not(:has(.vt-toast__title)) .vt-toast__message {
+    color: var(--vt-color-text);
+  }
+
+  .vt-toast__dismiss {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: var(--vt-radius-sm);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--vt-color-text-muted);
+    flex-shrink: 0;
+    padding: 0;
+    transition:
+      background-color var(--vt-duration-fast) ease,
+      color var(--vt-duration-fast) ease;
+  }
+
+  .vt-toast__dismiss:hover {
+    background-color: color-mix(in oklch, var(--vt-color-text) 10%, transparent);
+    color: var(--vt-color-text);
+  }
+
+  /* When no dismiss button */
+  .vt-toast:not(:has(.vt-toast__dismiss)) {
+    grid-template-columns: auto 1fr;
+  }
+
+  /* When no icon */
+  .vt-toast:not(:has(.vt-toast__icon)) {
+    grid-template-columns: 1fr auto;
+  }
+
+  .vt-toast:not(:has(.vt-toast__icon)):not(:has(.vt-toast__dismiss)) {
+    grid-template-columns: 1fr;
+  }
+
+  /* ---- Semantic variants ------------------------------------------------- */
+  .vt-toast--success .vt-toast__icon { color: var(--vt-color-success); }
+  .vt-toast--success {
+    border-color: color-mix(in oklch, var(--vt-color-success) 30%, var(--vt-color-border));
+  }
+
+  .vt-toast--warning .vt-toast__icon {
+    color: color-mix(in oklch, var(--vt-color-warning) 85%, black);
+  }
+  .vt-toast--warning {
+    border-color: color-mix(in oklch, var(--vt-color-warning) 30%, var(--vt-color-border));
+  }
+
+  .vt-toast--danger .vt-toast__icon { color: var(--vt-color-danger); }
+  .vt-toast--danger {
+    border-color: color-mix(in oklch, var(--vt-color-danger) 30%, var(--vt-color-border));
+  }
+
+  /* ---- Progress bar (auto-dismiss countdown) ----------------------------- */
+  .vt-toast__progress {
+    grid-column: 1 / -1;
+    height: 2px;
+    border-radius: var(--vt-radius-full);
+    background-color: var(--vt-color-border);
+    overflow: hidden;
+    margin-block-start: var(--vt-space-2);
+  }
+
+  .vt-toast__progress-bar {
+    height: 100%;
+    width: 100%;
+    background-color: var(--vt-color-brand);
+    transform-origin: left;
+    animation: vt-toast-countdown linear forwards;
+    animation-duration: var(--vt-toast-duration, 4s);
+  }
+
+  .vt-toast--success .vt-toast__progress-bar { background-color: var(--vt-color-success); }
+  .vt-toast--warning .vt-toast__progress-bar { background-color: var(--vt-color-warning); }
+  .vt-toast--danger  .vt-toast__progress-bar { background-color: var(--vt-color-danger); }
+
+  @keyframes vt-toast-countdown {
+    from { scale: 1 1; }
+    to   { scale: 0 1; }
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    .vt-toast,
+    .vt-toast__progress-bar {
+      transition: none;
+      animation: none;
+    }
+  }
+}

@@ -1,0 +1,146 @@
+@layer volty.components {
+  /*
+    Tooltip — CSS anchor positioning.
+    Requires: anchor-name on trigger, position-anchor on tooltip.
+    Falls back gracefully in non-supporting browsers (tooltip just won't position).
+
+    Usage:
+      <span class="vt-tooltip-wrap">
+        <button class="vt-btn" style="anchor-name: --my-tip">Hover me</button>
+        <span class="vt-tooltip" style="position-anchor: --my-tip" role="tooltip">
+          Helpful text
+        </span>
+      </span>
+
+    Or use data-tooltip for the simple single-line case (no anchor API needed):
+      <span class="vt-tooltip-wrap">
+        <button class="vt-btn" data-tooltip="Helpful text">Hover me</button>
+      </span>
+  */
+
+  /* Wrapper establishes position context for the simple (data-tooltip) path */
+  .vt-tooltip-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* ---- Tooltip element (anchor positioning path) -------------------------- */
+  .vt-tooltip {
+    /* Positioning */
+    position: fixed;
+    position-try-fallbacks: --below, --left, --right;
+    bottom: calc(anchor(top) - var(--vt-space-2));
+    justify-self: anchor-center;
+
+    /* Sizing */
+    max-width: 220px;
+    padding-block: var(--vt-space-1);
+    padding-inline: var(--vt-space-3);
+
+    /* Appearance */
+    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
+    color: var(--vt-color-surface);
+    border-radius: var(--vt-radius-sm);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    line-height: var(--vt-line-height-relaxed);
+    white-space: normal;
+    pointer-events: none;
+
+    /* Visibility — hidden by default, shown on trigger focus/hover */
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--vt-duration-fast) ease,
+      visibility var(--vt-duration-fast) ease;
+
+    /* Popover reset if used as popover */
+    border: none;
+    margin: 0;
+    padding-block: var(--vt-space-1);
+    padding-inline: var(--vt-space-3);
+  }
+
+  @position-try --below {
+    top: calc(anchor(bottom) + var(--vt-space-2));
+    bottom: unset;
+    justify-self: anchor-center;
+  }
+
+  @position-try --left {
+    right: calc(anchor(left) - var(--vt-space-2));
+    left: unset;
+    align-self: anchor-center;
+    bottom: unset;
+  }
+
+  @position-try --right {
+    left: calc(anchor(right) + var(--vt-space-2));
+    align-self: anchor-center;
+    bottom: unset;
+  }
+
+  /* Show tooltip when sibling trigger is hovered or focused */
+  .vt-tooltip-wrap:hover .vt-tooltip,
+  .vt-tooltip-wrap:focus-within .vt-tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ---- Simple data-tooltip path (no anchor API) --------------------------- */
+  [data-tooltip] {
+    position: relative;
+  }
+
+  [data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + var(--vt-space-2));
+    left: 50%;
+    translate: -50% 0;
+    white-space: nowrap;
+    max-width: 220px;
+    padding-block: var(--vt-space-1);
+    padding-inline: var(--vt-space-3);
+    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
+    color: var(--vt-color-surface);
+    border-radius: var(--vt-radius-sm);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    line-height: var(--vt-line-height-relaxed);
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--vt-duration-fast) ease,
+      visibility var(--vt-duration-fast) ease;
+  }
+
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Placement modifiers for data-tooltip */
+  [data-tooltip-placement="bottom"]::after {
+    bottom: unset;
+    top: calc(100% + var(--vt-space-2));
+  }
+
+  [data-tooltip-placement="left"]::after {
+    bottom: unset;
+    top: 50%;
+    left: unset;
+    right: calc(100% + var(--vt-space-2));
+    translate: 0 -50%;
+  }
+
+  [data-tooltip-placement="right"]::after {
+    bottom: unset;
+    top: 50%;
+    left: calc(100% + var(--vt-space-2));
+    translate: 0 -50%;
+  }
+}

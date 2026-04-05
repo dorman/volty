@@ -1,0 +1,157 @@
+# Volty v0.1.0 — AI reference
+# Modern CSS theme library — typed design tokens, container-scoped theming, zero build step
+# All tokens registered via @property with typed syntax — browser-validated, Shadow DOM-inherited.
+# Use this file as context when generating Volty components.
+
+================================================================================
+TOKENS
+================================================================================
+All tokens follow the pattern --vt-[group]-[name].
+Override any token on :root or any ancestor element (including shadow hosts).
+Token overrides cascade into Shadow DOM automatically.
+
+### color
+--vt-color-brand                     <color>    initial: oklch(55% 0.2 250)
+--vt-color-surface                   <color>    initial: oklch(98% 0 0)
+--vt-color-surface-raised            <color>    initial: oklch(96% 0 0)
+--vt-color-surface-overlay           <color>    initial: oklch(100% 0 0)
+--vt-color-text                      <color>    initial: oklch(15% 0 0)
+--vt-color-text-muted                <color>    initial: oklch(45% 0 0)
+--vt-color-border                    <color>    initial: oklch(85% 0 0)
+--vt-color-brand-text                <color>    initial: white
+--vt-color-brand-hover               <color>    initial: oklch(45% 0.2 250)
+--vt-color-brand-active              <color>    initial: oklch(38% 0.2 250)
+--vt-color-brand-subtle              <color>    initial: oklch(97% 0.03 250)
+--vt-color-brand-ring                <color>    initial: oklch(55% 0.2 250 / 40%)
+--vt-color-success                   <color>    initial: oklch(55% 0.15 145)
+--vt-color-warning                   <color>    initial: oklch(70% 0.18 70)
+--vt-color-danger                    <color>    initial: oklch(55% 0.22 25)
+--vt-color-info                      <color>    initial: oklch(60% 0.15 240)
+--vt-color-success-subtle            <color>    initial: oklch(97% 0.03 145)
+--vt-color-warning-subtle            <color>    initial: oklch(97% 0.03 70)
+--vt-color-danger-subtle             <color>    initial: oklch(97% 0.03 25)
+--vt-color-info-subtle               <color>    initial: oklch(97% 0.03 240)
+
+### spacing
+--vt-space-1                         <length>   initial: 4px
+--vt-space-2                         <length>   initial: 8px
+--vt-space-3                         <length>   initial: 12px
+--vt-space-4                         <length>   initial: 16px
+--vt-space-5                         <length>   initial: 24px
+--vt-space-6                         <length>   initial: 32px
+--vt-space-8                         <length>   initial: 48px
+--vt-space-10                        <length>   initial: 64px
+
+### radius
+--vt-radius-sm                       <length>   initial: 4px
+--vt-radius-md                       <length>   initial: 8px
+--vt-radius-lg                       <length>   initial: 12px
+--vt-radius-xl                       <length>   initial: 16px
+--vt-radius-full                     <length>   initial: 9999px
+
+### font-size
+--vt-text-xs                         <length>   initial: 12px
+--vt-text-sm                         <length>   initial: 14px
+--vt-text-base                       <length>   initial: 16px
+--vt-text-lg                         <length>   initial: 18px
+--vt-text-xl                         <length>   initial: 20px
+--vt-text-2xl                        <length>   initial: 24px
+--vt-text-3xl                        <length>   initial: 30px
+--vt-text-4xl                        <length>   initial: 36px
+
+### duration
+--vt-duration-fast                   <time>     initial: 100ms
+--vt-duration-base                   <time>     initial: 200ms
+--vt-duration-slow                   <time>     initial: 350ms
+
+================================================================================
+THEMING
+================================================================================
+System:  :root uses light-dark() — no attribute needed
+Light:   data-theme="light"  on any ancestor
+Dark:    data-theme="dark"   on any ancestor
+Brand:   data-brand="violet|emerald|rose|amber|cyan"  on any ancestor
+
+Custom brand:
+  el.style.setProperty('--vt-color-brand', 'oklch(58% 0.19 142)')
+
+JS API:
+  Volty.setTheme('light' | 'dark' | 'system')
+  Volty.setBrand('violet' | 'emerald' | 'rose' | 'amber' | 'cyan' | null)
+  Volty.toast(message)
+  Volty.toast({ title, message, variant, duration, dismissible, progress })
+    variant: 'success' | 'warning' | 'danger'   duration: ms, 0=persistent
+
+================================================================================
+SHADOW DOM
+================================================================================
+Tokens cross shadow boundaries via @property inherits:true — zero config needed.
+For component classes inside shadow trees:
+  const shadow = Volty.createShadow(hostElement);          // attach + adopt
+  Volty.adoptStyles(existingShadowRoot);                    // adopt only
+  Volty.setTokens(el, { '--vt-color-brand': 'oklch(...)' }) // scoped override
+
+================================================================================
+COMPONENTS
+================================================================================
+## .vt-btn  <button | a>
+Button
+  modifiers: --sm, --lg, --outline, --ghost, --surface, --danger, --icon
+  note: Use aria-disabled instead of disabled for accessible disabled state.
+
+## .vt-card  <div | article>
+Surface card
+  modifiers: --raised, --interactive
+  elements:  __header, __title, __description, __body, __footer
+
+## .vt-badge  <span>
+Inline status badge
+  modifiers: --success, --warning, --danger, --info, --outline
+
+## .vt-input  <input>
+Text input. Wrap in .vt-field for label + hint layout.
+  modifiers: --sm, --lg, --error
+
+## .vt-select  <div > select>
+Select dropdown wrapper. Native <select> inside .vt-select div.
+  modifiers: --sm, --lg, --error
+
+## .vt-switch  <label > input[type=checkbox]>
+Toggle switch. CSS-only, no JS needed.
+
+## .vt-alert  <div[role=alert]>
+Inline alert banner.
+  modifiers: --success, --warning, --danger, --solid
+  elements:  __icon, __body, __title, __desc, __dismiss
+
+## .vt-tooltip  <span.vt-tooltip-wrap > *>
+Tooltip. Two paths: anchor-positioning (.vt-tooltip) or attribute (data-tooltip).
+  note: data-tooltip-placement: top (default) | bottom | left | right
+
+## .vt-modal  <dialog>
+Modal dialog. Uses native <dialog> element.
+  modifiers: --sm, --lg, --full, --danger
+  elements:  __header, __title, __close, __body, __footer
+  note: JS: el.showModal() / el.close(). Close on backdrop: modal.addEventListener('click', e => { if (e.target === modal) modal.close() })
+
+## .vt-toast  <div (managed by Volty.toast())>
+Toast notification. Created programmatically.
+  modifiers: --success, --warning, --danger
+  elements:  __icon, __body, __title, __message, __dismiss, __progress
+  note: JS: Volty.toast(message) or Volty.toast({ title, message, variant, duration, dismissible, progress }). duration:0 = persistent.
+
+## .vt-field  <div>
+Form field layout wrapper. Use with .vt-label, .vt-field-hint, .vt-field-error.
+  elements:  .vt-label, .vt-field-hint, .vt-field-error
+
+================================================================================
+RULES FOR AI CODE GENERATION
+================================================================================
+1. All Volty classes use the .vt- prefix.
+2. Token values must match their registered syntax — <color>, <length>, or <time>.
+3. Use semantic color tokens (--vt-color-danger, not hardcoded oklch values).
+4. Modals use native <dialog> + el.showModal(). Never use div-based modals.
+5. Toasts are created with Volty.toast() — never write .vt-toast HTML by hand.
+6. Add container-type: inline-size to any parent that should trigger responsive behavior.
+7. For form fields: wrap input/select in .vt-field with a .vt-label sibling.
+8. All @property tokens have initial-value fallbacks — missing token refs render correctly.

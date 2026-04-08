@@ -212,12 +212,134 @@
     .demo-brand-btn[data-brand-value="amber"]   { background: oklch(65% 0.2 65); }
     .demo-brand-btn[data-brand-value="cyan"]    { background: oklch(58% 0.18 200); }
 
-    /* Page layout */
-    .demo-page {
-      max-width: 1200px;
+    /* =========================================================================
+       Sidebar layout
+       ========================================================================= */
+
+    .demo-layout {
+      max-width: 1280px;
       margin-inline: auto;
       padding-inline: var(--vt-space-5);
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--vt-space-6);
+      align-items: start;
+    }
+
+    /* Sidebar */
+    .demo-sidebar {
+      position: sticky;
+      top: 72px;                          /* clears the fixed nav */
+      max-height: calc(100vh - 88px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-block: var(--vt-space-5);
+      scrollbar-width: thin;
+      scrollbar-color: var(--vt-color-border) transparent;
+    }
+
+    .demo-sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .demo-sidebar::-webkit-scrollbar-track { background: transparent; }
+    .demo-sidebar::-webkit-scrollbar-thumb {
+      background-color: var(--vt-color-border);
+      border-radius: var(--vt-radius-full);
+    }
+
+    .demo-sidebar__nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--vt-space-5);
+    }
+
+    .demo-sidebar__group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .demo-sidebar__group-label {
+      font-size: var(--vt-text-xs);
+      font-weight: var(--vt-font-weight-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--vt-color-text-muted);
+      font-family: var(--vt-font-mono);
+      padding-inline: var(--vt-space-3);
+      padding-block-end: var(--vt-space-1);
+      margin-block-end: 2px;
+    }
+
+    .demo-sidebar__link {
+      display: flex;
+      align-items: center;
+      gap: var(--vt-space-2);
+      padding-block: var(--vt-space-1);
+      padding-inline: var(--vt-space-3);
+      border-radius: var(--vt-radius-md);
+      font-size: var(--vt-text-sm);
+      font-weight: var(--vt-font-weight-normal);
+      color: var(--vt-color-text-muted);
+      text-decoration: none;
+      transition:
+        color var(--vt-duration-fast) ease,
+        background-color var(--vt-duration-fast) ease;
+      white-space: nowrap;
+    }
+
+    .demo-sidebar__link::before {
+      content: "";
+      width: 3px;
+      height: 14px;
+      border-radius: var(--vt-radius-full);
+      background-color: transparent;
+      flex-shrink: 0;
+      transition: background-color var(--vt-duration-fast) ease;
+    }
+
+    .demo-sidebar__link:hover {
+      color: var(--vt-color-text);
+      background-color: var(--vt-color-surface-raised);
+    }
+
+    .demo-sidebar__link.is-active {
+      color: var(--vt-color-brand);
+      background-color: var(--vt-color-brand-subtle);
+      font-weight: var(--vt-font-weight-medium);
+    }
+
+    .demo-sidebar__link.is-active::before {
+      background-color: var(--vt-color-brand);
+    }
+
+    .demo-sidebar__divider {
+      height: 1px;
+      background-color: var(--vt-color-border);
+      margin-block: var(--vt-space-1);
+    }
+
+    /* Page layout */
+    .demo-page {
+      min-width: 0;                       /* prevent grid blowout */
       padding-block-end: var(--vt-space-10);
+    }
+
+    /* Footer centering — outside the grid */
+    .demo-footer-wrap {
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: var(--vt-space-5);
+    }
+
+    /* Responsive — collapse sidebar below 900px */
+    @media (max-width: 900px) {
+      .demo-layout {
+        grid-template-columns: 1fr;
+      }
+      .demo-sidebar {
+        display: none;
+      }
     }
 
     /* Hero */
@@ -798,14 +920,13 @@
 
       <!-- Nav links -->
       <nav class="demo-nav__links" aria-label="Site navigation">
-        <a href="#buttons"              class="demo-nav__link" onclick="setNavActive(this)">Components</a>
-        <a href="#tokens"               class="demo-nav__link" onclick="setNavActive(this)">Tokens</a>
-        <a href="#property-transitions" class="demo-nav__link" onclick="setNavActive(this)">Differentiators</a>
-        <a href="#shadow-dom"           class="demo-nav__link" onclick="setNavActive(this)">Shadow DOM</a>
-        <a href="#ai-schema"            class="demo-nav__link" onclick="setNavActive(this)">AI</a>
-        <a href="#architecture"         class="demo-nav__link" onclick="setNavActive(this)">Architecture</a>
+        <a href="#buttons"              class="demo-nav__link">Components</a>
+        <a href="#tokens"               class="demo-nav__link">Tokens</a>
+        <a href="#property-transitions" class="demo-nav__link">Differentiators</a>
+        <a href="#shadow-dom"           class="demo-nav__link">Shadow DOM</a>
+        <a href="#ai-schema"            class="demo-nav__link">AI</a>
         <a href="about.html"            class="demo-nav__link">About</a>
-        <a href="https://github.com/dorman/volty#readme"
+        <a href="Documentation.html"
            class="demo-nav__link demo-nav__link--docs"
            target="_blank" rel="noopener">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -845,6 +966,61 @@
       </div>
     </div>
   </nav>
+
+  <!-- =========================================================================
+       MAIN CONTENT
+       ========================================================================= -->
+  <div class="demo-layout">
+
+  <!-- =========================================================================
+       SIDEBAR
+       ========================================================================= -->
+  <aside class="demo-sidebar" aria-label="Documentation navigation">
+    <nav class="demo-sidebar__nav">
+
+      <div class="demo-sidebar__group">
+        <p class="demo-sidebar__group-label">Components</p>
+        <a href="#buttons"   class="demo-sidebar__link">Buttons</a>
+        <a href="#cards"     class="demo-sidebar__link">Cards</a>
+        <a href="#badges"    class="demo-sidebar__link">Badges</a>
+        <a href="#forms"     class="demo-sidebar__link">Form Fields</a>
+        <a href="#switches"  class="demo-sidebar__link">Switches</a>
+        <a href="#alerts"    class="demo-sidebar__link">Alerts</a>
+        <a href="#tooltips"  class="demo-sidebar__link">Tooltips</a>
+        <a href="#selects"   class="demo-sidebar__link">Select</a>
+        <a href="#modals"    class="demo-sidebar__link">Modal</a>
+        <a href="#toasts"    class="demo-sidebar__link">Toast</a>
+      </div>
+
+      <div class="demo-sidebar__group">
+        <p class="demo-sidebar__group-label">Theming</p>
+        <a href="#dark-island"    class="demo-sidebar__link">Dark Island</a>
+        <a href="#brand-theming"  class="demo-sidebar__link">Brand Theming</a>
+      </div>
+
+      <div class="demo-sidebar__group">
+        <p class="demo-sidebar__group-label">Tokens</p>
+        <a href="#tokens"     class="demo-sidebar__link">Color Tokens</a>
+        <a href="#typography" class="demo-sidebar__link">Typography</a>
+      </div>
+
+      <div class="demo-sidebar__group">
+        <p class="demo-sidebar__group-label">Differentiators</p>
+        <a href="#property-transitions" class="demo-sidebar__link">@property Transitions</a>
+        <a href="#container-queries"    class="demo-sidebar__link">Container Queries</a>
+        <a href="#dark-mode-colors"     class="demo-sidebar__link">Dark Mode Colors</a>
+        <a href="#shadow-dom"           class="demo-sidebar__link">Shadow DOM</a>
+      </div>
+
+      <div class="demo-sidebar__divider"></div>
+
+      <div class="demo-sidebar__group">
+        <a href="#ai-schema"   class="demo-sidebar__link">AI / Schema</a>
+        <a href="#architecture" class="demo-sidebar__link">Architecture</a>
+      </div>
+
+    </nav>
+  </aside>
 
   <!-- =========================================================================
        MAIN CONTENT
@@ -2106,8 +2282,6 @@
       </div>
     </section>
 
-  </main>
-
     <!-- @PROPERTY TRANSITIONS ============================================== -->
     <section class="demo-section" id="property-transitions">
       <div class="demo-section__header">
@@ -2600,13 +2774,18 @@
 
     </section>
 
+  </main>
+  </div><!-- /.demo-layout -->
+
   <!-- FOOTER ================================================================ -->
-  <footer class="demo-footer demo-page">
+  <footer class="demo-footer">
+    <div class="demo-footer-wrap">
     <p class="demo-footer__text">
       <strong>Volty v0.1.0</strong> &nbsp;&mdash;&nbsp;
       10 components. 44 typed tokens. Shadow DOM native. AI schema included. &nbsp;&mdash;&nbsp;
       Drop in <code>dist/volty.css</code> + <code>dist/volty.min.css</code> and go.
     </p>
+    </div>
   </footer>
 
   <!-- =========================================================================
@@ -2630,26 +2809,50 @@
       btn.classList.add('is-active');
     }
 
-    // Nav link active state on click
-    function setNavActive(link) {
-      document.querySelectorAll('.demo-nav__link').forEach(l => l.classList.remove('is-active'));
-      link.classList.add('is-active');
-    }
-
-    // Scroll spy — highlight the nav link for the section currently in view
+    // Scroll spy — highlight nav + sidebar links for the section currently in view
     (function initScrollSpy() {
       const sections = document.querySelectorAll('section[id]');
-      const links = document.querySelectorAll('.demo-nav__link[href^="#"]');
-      if (!sections.length || !links.length) return;
+      const navLinks     = document.querySelectorAll('.demo-nav__link[href^="#"]');
+      const sidebarLinks = document.querySelectorAll('.demo-sidebar__link[href^="#"]');
+      if (!sections.length) return;
+
+      // Map section id → which top-nav link group it belongs to
+      const navGroupMap = {
+        buttons: '#buttons', cards: '#buttons', badges: '#buttons',
+        forms: '#buttons', switches: '#buttons', alerts: '#buttons',
+        tooltips: '#buttons', selects: '#buttons', modals: '#buttons', toasts: '#buttons',
+        'dark-island': '#buttons', 'brand-theming': '#buttons',
+        tokens: '#tokens', typography: '#tokens',
+        'property-transitions': '#property-transitions',
+        'container-queries': '#property-transitions',
+        'dark-mode-colors': '#property-transitions',
+        'shadow-dom': '#shadow-dom',
+        'ai-schema': '#ai-schema',
+        architecture: '#architecture',
+      };
 
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const id = entry.target.id;
-            links.forEach(l => {
+
+            // Update top nav (group-level)
+            const groupHref = navGroupMap[id];
+            navLinks.forEach(l => {
+              l.classList.toggle('is-active', l.getAttribute('href') === groupHref);
+            });
+
+            // Update sidebar (exact match)
+            sidebarLinks.forEach(l => {
               const href = l.getAttribute('href').slice(1);
               l.classList.toggle('is-active', href === id);
             });
+
+            // Scroll active sidebar link into view if it's off-screen
+            const activeLink = document.querySelector(`.demo-sidebar__link[href="#${id}"]`);
+            if (activeLink) {
+              activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
           }
         });
       }, { rootMargin: '-20% 0px -70% 0px' });
@@ -2715,6 +2918,13 @@
           document.querySelectorAll('.demo-brand-btn').forEach(b => b.classList.remove('is-active'));
           brandBtn.classList.add('is-active');
         }
+      }
+
+      // Highlight sidebar link matching the current hash on load
+      const hash = window.location.hash.slice(1);
+      if (hash) {
+        const link = document.querySelector(`.demo-sidebar__link[href="#${hash}"]`);
+        if (link) link.classList.add('is-active');
       }
     })();
   </script>

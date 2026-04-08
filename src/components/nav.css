@@ -1,0 +1,26 @@
+@layer volty.components {
+    /*
+        Nav — responsive site navigation.
+        @starting-style provides entry animation without JS.
+    
+        Usage:
+        <nav class="vt-nav">
+            <a href="#" class="vt-nav__link">Home</a>
+            <a href="#" class="vt-nav__link">About</a>
+            <a href="#" class="vt-nav__link">Contact</a>
+        </nav>
+    */
+
+    .vt-nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: color-mix(in oklch, var(--vt-color-surface) 85%, transparent);
+        backdrop-filter: blur(12px);
+        border-bottom :var(--vt--space-3);
+    }
+
+    .vt-nav__inner {
+        max-width: 1200px;
+    }
+}

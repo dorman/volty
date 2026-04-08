@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volty - A CSS library for modern web development</title>
+    <!-- Volty CSS -->
+    <link rel="stylesheet" href="dist/voltycss" />
+    <!-- Volty JS -->
+    <script src="dist/volty.js"></script>
+
+    <style>
+        /* View transition */
+        @view-transition { navigation: auto; }
+        ::view-transition-old(root),
+        ::view-transition-new(root) { animation-duration: 300ms; }
+
+        /* -- Nav --*/
+        .dashboard-nav {
+            position: sticky;
+            top: 0
+            z-index: 100;
+            background-color: color-mix(in oklch, var(--vt-color-surface) 85%, transparent);
+        }
+
+
+
+    </style>
+
+
+
+</head>
+<body>
+    <header class="demo-header">
+        <h1 class="demo-header__title">Dashboard Demo</h1>
+    </header>
+

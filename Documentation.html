@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volty — Modern CSS Theme Library</title>
+
+  <!-- Volty CSS -->
+  <link rel="stylesheet" href="dist/volty.css">
+
+  <!-- Volty JS (loaded before body so theme applies before paint) -->
+  <script src="src/volty.js"></script>
+    <style>
+    /* View transition */
+    @view-transition { navigation: auto; }
+    ::view-transition-old(root),
+    ::view-transition-new(root) { animation-duration: 300ms; }
+
+    /* ── Nav ── */
+    .demo-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: color-mix(in oklch, var(--vt-color-surface) 85%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--vt-color-border);
+      padding-block: var(--vt-space-3);
+    }
+
+    .demo-nav__inner {
+      max-width: 1200px;
+      margin-inline: auto;
+      padding-inline: var(--vt-space-5);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: var(--vt-space-4);
+    }
+
+    .demo-nav__links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--vt-space-1);
+      flex-wrap: wrap;
+    }
+
+    .demo-nav__link {
+      padding-block: var(--vt-space-1);
+      padding-inline: var(--vt-space-3);
+      border-radius: var(--vt-radius-md);
+      font-size: var(--vt-text-sm);
+      font-weight: var(--vt-font-weight-medium);
+      color: var(--vt-color-text-muted);
+      text-decoration: none;
+      transition:
+        color var(--vt-duration-fast) ease,
+        background-color var(--vt-duration-fast) ease;
+    }
+
+    .demo-nav__link:hover {
+      color: var(--vt-color-text);
+      background-color: var(--vt-color-surface-raised);
+    }
+
+    .demo-nav__link.is-active {
+      color: var(--vt-color-brand);
+      background-color: var(--vt-color-brand-subtle);
+    }
+
+    .demo-nav__link--docs {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--vt-space-1);
+    }
+
+    .demo-nav__link--docs svg { opacity: 0.6; }
+
+    @media (max-width: 700px) {
+      .demo-nav__inner {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+      }
+      .demo-nav__links { grid-column: 1 / -1; justify-content: flex-start; }
+    }
+
+    .demo-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--vt-space-2);
+      text-decoration: none;
+    }
+
+    .demo-logo__mark {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--vt-radius-md);
+      background: var(--vt-color-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--vt-color-brand-text);
+      letter-spacing: -0.03em;
+      flex-shrink: 0;
+    }
+
+    .demo-logo__name {
+      font-size: var(--vt-text-lg);
+      font-weight: var(--vt-font-weight-bold);
+      color: var(--vt-color-text);
+      letter-spacing: -0.02em;
+    }
+
+    .demo-nav__controls {
+      display: flex;
+      align-items: center;
+      gap: var(--vt-space-3);
+      flex-wrap: wrap;
+    }
+
+    .demo-theme-switcher {
+      display: flex;
+      align-items: center;
+      gap: var(--vt-space-1);
+      background-color: var(--vt-color-surface-raised);
+      border: 1px solid var(--vt-color-border);
+      border-radius: var(--vt-radius-lg);
+      padding: 3px;
+    }
+
+    .demo-theme-btn {
+      padding-block: 5px;
+      padding-inline: var(--vt-space-3);
+      border-radius: var(--vt-radius-md);
+      font-size: var(--vt-text-xs);
+      font-weight: var(--vt-font-weight-medium);
+      color: var(--vt-color-text-muted);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition:
+        background-color var(--vt-duration-fast) ease,
+        color var(--vt-duration-fast) ease;
+    }
+
+    .demo-theme-btn:hover { color: var(--vt-color-text); background-color: var(--vt-color-surface-overlay); }
+    .demo-theme-btn.is-active {
+      background-color: var(--vt-color-surface-overlay);
+      color: var(--vt-color-text);
+      box-shadow: 0 1px 3px color-mix(in oklch, var(--vt-color-text) 10%, transparent);
+    }
+    </style>
+
+  <!-- NAV ================================================================== -->
+  <nav class="demo-nav">
+    <div class="demo-nav__inner">
+
+      <a href="index.html" class="demo-logo">
+        <div class="demo-logo__mark">V</div>
+        <div><div class="demo-logo__name">Volty</div></div>
+        <span class="vt-badge vt-badge--surface" style="font-size:var(--vt-text-xs);font-family:var(--vt-font-mono);">v0.1.0</span>
+      </a>
+
+      <nav class="demo-nav__links" aria-label="Site navigation">
+        <a href="index.html#buttons"              class="demo-nav__link">Components</a>
+        <a href="index.html#tokens"               class="demo-nav__link">Tokens</a>
+        <a href="index.html#property-transitions" class="demo-nav__link">Differentiators</a>
+        <a href="index.html#architecture"         class="demo-nav__link">Architecture</a>
+        <a href="about.html"                      class="demo-nav__link is-active">About</a>
+        <a href="https://github.com/dorman/volty#readme"
+           class="demo-nav__link demo-nav__link--docs"
+           target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Documentation
+        </a>
+      </nav>
+    </head>
+  </body>
+</html>

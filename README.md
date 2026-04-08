@@ -139,6 +139,7 @@ src/
     base.css         light-dark() tokens + data-theme overrides + data-brand
     dark.css         dark-specific semantic color adjustments
   components/
+    nav.css
     button.css
     card.css
     badge.css

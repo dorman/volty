@@ -107,10 +107,19 @@
     }
 
     .demo-logo__mark {
-      height: 48px;
-      width: auto;
+      width: 32px;
+      height: 32px;
+      border-radius: var(--vt-radius-md);
+      background: var(--vt-color-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--vt-color-brand-text);
+      letter-spacing: -0.03em;
       flex-shrink: 0;
-      display: block;
+      transition: background-color var(--vt-duration-base) ease;
     }
 
     .demo-logo__name {
@@ -902,7 +911,10 @@
 
       <!-- Logo -->
       <a href="#" class="demo-logo">
-        <img src="assets/volty-logo.png" alt="Volty" class="demo-logo__mark">
+        <div class="demo-logo__mark">V</div>
+        <div>
+          <div class="demo-logo__name">Volty</div>
+        </div>
         <span class="vt-badge vt-badge--surface demo-logo__version">v0.1.0</span>
       </a>
 

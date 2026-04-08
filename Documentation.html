@@ -3,27 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volty — Documentation</title>
+  <title>Volty — Modern CSS Theme Library</title>
 
   <!-- Volty CSS -->
   <link rel="stylesheet" href="dist/volty.css">
 
   <!-- Volty JS (loaded before body so theme applies before paint) -->
   <script src="src/volty.js"></script>
-
-  <style>
-    /* =========================================================================
-       Demo-specific layout styles — not part of the library
-       ========================================================================= */
-
-    /* View transition for theme switching */
+    <style>
+    /* View transition */
     @view-transition { navigation: auto; }
     ::view-transition-old(root),
-    ::view-transition-new(root) {
-      animation-duration: 300ms;
-    }
+    ::view-transition-new(root) { animation-duration: 300ms; }
 
-    /* Layout */
+    /* ── Nav ── */
     .demo-nav {
       position: sticky;
       top: 0;
@@ -45,7 +38,6 @@
       gap: var(--vt-space-4);
     }
 
-    /* Nav links */
     .demo-nav__links {
       display: flex;
       align-items: center;
@@ -83,19 +75,14 @@
       gap: var(--vt-space-1);
     }
 
-    .demo-nav__link--docs svg {
-      opacity: 0.6;
-    }
+    .demo-nav__link--docs svg { opacity: 0.6; }
 
     @media (max-width: 700px) {
       .demo-nav__inner {
         grid-template-columns: 1fr auto;
         grid-template-rows: auto auto;
       }
-      .demo-nav__links {
-        grid-column: 1 / -1;
-        justify-content: flex-start;
-      }
+      .demo-nav__links { grid-column: 1 / -1; justify-content: flex-start; }
     }
 
     .demo-logo {
@@ -118,7 +105,6 @@
       color: var(--vt-color-brand-text);
       letter-spacing: -0.03em;
       flex-shrink: 0;
-      transition: background-color var(--vt-duration-base) ease;
     }
 
     .demo-logo__name {
@@ -126,12 +112,6 @@
       font-weight: var(--vt-font-weight-bold);
       color: var(--vt-color-text);
       letter-spacing: -0.02em;
-    }
-
-    .demo-logo__version {
-      font-size: var(--vt-text-xs);
-      color: var(--vt-color-text-muted);
-      font-family: var(--vt-font-mono);
     }
 
     .demo-nav__controls {
@@ -166,52 +146,45 @@
         color var(--vt-duration-fast) ease;
     }
 
-    .demo-theme-btn:hover {
-      color: var(--vt-color-text);
-      background-color: var(--vt-color-surface-overlay);
-    }
-
+    .demo-theme-btn:hover { color: var(--vt-color-text); background-color: var(--vt-color-surface-overlay); }
     .demo-theme-btn.is-active {
       background-color: var(--vt-color-surface-overlay);
       color: var(--vt-color-text);
       box-shadow: 0 1px 3px color-mix(in oklch, var(--vt-color-text) 10%, transparent);
     }
+    </style>
 
-    .demo-brand-switcher {
-      display: flex;
-      align-items: center;
-      gap: var(--vt-space-1);
-    }
+  <!-- NAV ================================================================== -->
+  <nav class="demo-nav">
+    <div class="demo-nav__inner">
 
-    .demo-brand-btn {
-      width: 22px;
-      height: 22px;
-      border-radius: var(--vt-radius-full);
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition:
-        transform var(--vt-duration-fast) ease,
-        border-color var(--vt-duration-fast) ease;
-      position: relative;
-    }
+      <a href="index.html" class="demo-logo">
+        <div class="demo-logo__mark">V</div>
+        <div><div class="demo-logo__name">Volty</div></div>
+        <span class="vt-badge vt-badge--surface" style="font-size:var(--vt-text-xs);font-family:var(--vt-font-mono);">v0.1.0</span>
+      </a>
 
-    .demo-brand-btn:hover {
-      transform: scale(1.15);
-    }
-
-    .demo-brand-btn.is-active {
-      border-color: var(--vt-color-text);
-      transform: scale(1.1);
-    }
-
-    .demo-brand-btn[data-brand-value="default"] { background: oklch(55% 0.2 250); }
-    .demo-brand-btn[data-brand-value="violet"]  { background: oklch(55% 0.22 290); }
-    .demo-brand-btn[data-brand-value="emerald"] { background: oklch(52% 0.18 155); }
-    .demo-brand-btn[data-brand-value="rose"]    { background: oklch(55% 0.22 10); }
-    .demo-brand-btn[data-brand-value="amber"]   { background: oklch(65% 0.2 65); }
-    .demo-brand-btn[data-brand-value="cyan"]    { background: oklch(58% 0.18 200); }
-
-    /* =========================================================================
+      <nav class="demo-nav__links" aria-label="Site navigation">
+        <a href="index.html#buttons"              class="demo-nav__link">Components</a>
+        <a href="index.html#tokens"               class="demo-nav__link">Tokens</a>
+        <a href="index.html#property-transitions" class="demo-nav__link">Differentiators</a>
+        <a href="index.html#architecture"         class="demo-nav__link">Architecture</a>
+        <a href="about.html"                      class="demo-nav__link is-active">About</a>
+        <a href="https://github.com/dorman/volty#readme"
+           class="demo-nav__link demo-nav__link--docs"
+           target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Documentation
+        </a>
+      </nav>
+    </head>
+     /* =========================================================================
        Sidebar layout
        ========================================================================= */
 
@@ -228,7 +201,7 @@
     /* Sidebar */
     .demo-sidebar {
       position: sticky;
-      top: 72px;
+      top: 72px;                          /* clears the fixed nav */
       max-height: calc(100vh - 88px);
       overflow-y: auto;
       overflow-x: hidden;
@@ -320,7 +293,7 @@
 
     /* Page layout */
     .demo-page {
-      min-width: 0;
+      min-width: 0;                       /* prevent grid blowout */
       padding-block-end: var(--vt-space-10);
     }
 
@@ -341,34 +314,72 @@
       }
     }
 
-    /* Page title */
-    .demo-page-header {
-      padding-block: var(--vt-space-8);
+    /* Hero */
+    .demo-hero {
+      padding-block: var(--vt-space-10);
+      text-align: center;
+      max-width: 720px;
+      margin-inline: auto;
     }
 
-    .demo-page-header__label {
-      font-size: var(--vt-text-xs);
-      font-weight: var(--vt-font-weight-semibold);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--vt-color-brand);
-      margin-block-end: var(--vt-space-2);
-      font-family: var(--vt-font-mono);
+    .demo-hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--vt-space-2);
+      margin-block-end: var(--vt-space-4);
     }
 
-    .demo-page-header__title {
-      font-size: var(--vt-text-4xl);
+    .demo-hero__title {
+      font-size: var(--vt-text-5xl);
       font-weight: var(--vt-font-weight-bold);
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
       color: var(--vt-color-text);
-      margin-block-end: var(--vt-space-3);
+      margin-block-end: var(--vt-space-4);
     }
 
-    .demo-page-header__desc {
-      font-size: var(--vt-text-lg);
+    .demo-hero__title span {
+      color: var(--vt-color-brand);
+      transition: color var(--vt-duration-base) ease;
+    }
+
+    .demo-hero__subtitle {
+      font-size: var(--vt-text-xl);
       color: var(--vt-color-text-muted);
       line-height: var(--vt-line-height-relaxed);
-      max-width: 600px;
+      margin-block-end: var(--vt-space-6);
+    }
+
+    .demo-hero__actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--vt-space-3);
+      flex-wrap: wrap;
+    }
+
+    /* Feature pills */
+    .demo-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--vt-space-2);
+      justify-content: center;
+      margin-block-end: var(--vt-space-8);
+    }
+
+    .demo-feature-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--vt-space-1);
+      padding-block: var(--vt-space-1);
+      padding-inline: var(--vt-space-3);
+      border-radius: var(--vt-radius-full);
+      font-size: var(--vt-text-xs);
+      font-weight: var(--vt-font-weight-medium);
+      color: var(--vt-color-text-muted);
+      background-color: var(--vt-color-surface-raised);
+      border: 1px solid var(--vt-color-border);
+      font-family: var(--vt-font-mono);
     }
 
     /* Section layout */
@@ -604,6 +615,16 @@
       color: var(--vt-color-text);
     }
 
+    .demo-transition-controls {
+      display: flex;
+      gap: var(--vt-space-3);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* The @property transition proof: this element's background and text color
+       are just CSS custom property values — they animate because @property
+       registers them as typed <color> */
     .demo-token-watch {
       border-radius: var(--vt-radius-lg);
       padding: var(--vt-space-5);
@@ -861,7 +882,7 @@
     <div class="demo-nav__inner">
 
       <!-- Logo -->
-      <a href="index.html" class="demo-logo">
+      <a href="#" class="demo-logo">
         <div class="demo-logo__mark">V</div>
         <div>
           <div class="demo-logo__name">Volty</div>
@@ -877,8 +898,17 @@
         <a href="#shadow-dom"           class="demo-nav__link">Shadow DOM</a>
         <a href="#ai-schema"            class="demo-nav__link">AI</a>
         <a href="about.html"            class="demo-nav__link">About</a>
-        <a href="index.html"            class="demo-nav__link">
-          ← Home
+        <a href="Documentation.html"
+           class="demo-nav__link demo-nav__link--docs"
+           target="_blank" rel="noopener">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Documentation
         </a>
       </nav>
 
@@ -969,14 +999,47 @@
        ========================================================================= -->
   <main class="demo-page">
 
-    <!-- PAGE HEADER ========================================================= -->
-    <div class="demo-page-header">
-      <p class="demo-page-header__label">Documentation</p>
-      <h1 class="demo-page-header__title">Components &amp; API Reference</h1>
-      <p class="demo-page-header__desc">
-        10 components, 44 typed tokens, Shadow DOM native. Use the brand and theme controls above to see everything update live.
+    <!-- HERO ================================================================ -->
+    <section class="demo-hero">
+
+      <div class="demo-hero__eyebrow">
+        <span class="vt-badge">@property typed tokens</span>
+        <span class="vt-badge">Shadow DOM native</span>
+        <span class="vt-badge">10 components</span>
+        <span class="vt-badge">AI schema</span>
+      </div>
+
+      <h1 class="demo-hero__title">
+        The theme library that<br>
+        <span>thinks in CSS</span>
+      </h1>
+
+      <p class="demo-hero__subtitle">
+        Typed design tokens via <code class="demo-code">@property</code> with <code class="demo-code">inherits: true</code> —
+        the only mechanism that passes through Shadow DOM boundaries automatically. Zero-JS dark mode,
+        container-scoped theming, native <code class="demo-code">&lt;dialog&gt;</code> modals, and a
+        machine-readable AI schema generated at build time.
       </p>
-    </div>
+
+      <div class="demo-features">
+        <span class="demo-feature-pill">@property</span>
+        <span class="demo-feature-pill">@layer</span>
+        <span class="demo-feature-pill">color-mix()</span>
+        <span class="demo-feature-pill">light-dark()</span>
+        <span class="demo-feature-pill">container-type</span>
+        <span class="demo-feature-pill">@starting-style</span>
+        <span class="demo-feature-pill">:has()</span>
+        <span class="demo-feature-pill">oklch()</span>
+        <span class="demo-feature-pill">&lt;dialog&gt;</span>
+        <span class="demo-feature-pill">adoptedStyleSheets</span>
+      </div>
+
+      <div class="demo-hero__actions">
+        <button a href="https://dorman.github.io/volty/documentation.html" class="vt-btn vt-btn--lg">Get Started</button>
+        <button a href="https://github.com/dorman/volty" class="vt-btn vt-btn--lg vt-btn--outline">View Source</button>
+      </div>
+
+    </section>
 
     <!-- BUTTONS ============================================================= -->
     <section class="demo-section" id="buttons">
@@ -1102,6 +1165,8 @@
       </div>
 
       <div class="demo-grid-2">
+
+        <!-- Basic card -->
         <div class="vt-card">
           <div class="vt-card__header">
             <h3 class="vt-card__title">Basic Card</h3>
@@ -1114,6 +1179,7 @@
           </div>
         </div>
 
+        <!-- Raised card -->
         <div class="vt-card vt-card--raised">
           <div class="vt-card__header">
             <h3 class="vt-card__title">Raised Card</h3>
@@ -1126,6 +1192,7 @@
           </div>
         </div>
 
+        <!-- Interactive card -->
         <div class="vt-card vt-card--interactive">
           <div class="vt-card__header">
             <h3 class="vt-card__title">Interactive Card</h3>
@@ -1138,6 +1205,7 @@
           </div>
         </div>
 
+        <!-- Card with footer — container query demo -->
         <div class="vt-card">
           <div class="vt-card__header">
             <h3 class="vt-card__title">Card with Footer</h3>
@@ -1153,8 +1221,10 @@
             <button class="vt-btn vt-btn--sm">Confirm</button>
           </div>
         </div>
+
       </div>
 
+      <!-- Wide card to show footer behavior -->
       <div style="margin-block-start: var(--vt-space-4);">
         <div class="vt-card vt-card--raised" style="max-width: 100%;">
           <div class="vt-card__header">
@@ -1178,6 +1248,7 @@
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- BADGES ============================================================== -->
@@ -1241,6 +1312,7 @@
         </div>
       </div>
 
+      <!-- Badges in context -->
       <div class="demo-subsection">
         <p class="demo-subsection__title">In context</p>
         <div class="demo-grid-2">
@@ -1281,6 +1353,7 @@
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- FORMS =============================================================== -->
@@ -1297,6 +1370,7 @@
       </div>
 
       <div class="demo-grid-forms">
+
         <div class="vt-field">
           <label class="vt-label" for="email">Email address</label>
           <input class="vt-input" id="email" type="email" placeholder="you@example.com">
@@ -1331,7 +1405,9 @@
           <input class="vt-input" id="search" type="search" placeholder="Search projects...">
           <span class="vt-hint">Press Cmd+K to focus from anywhere.</span>
         </div>
+
       </div>
+
     </section>
 
     <!-- SWITCHES ============================================================ -->
@@ -1347,27 +1423,39 @@
       </div>
 
       <div class="demo-grid-2">
+
         <div class="demo-showcase">
           <p class="demo-subsection__title" style="margin-block-end: var(--vt-space-4);">Functional examples</p>
           <div class="demo-switch-grid">
             <label class="vt-switch">
               <input type="checkbox" checked>
-              <span class="vt-switch__track"><span class="vt-switch__thumb"></span></span>
+              <span class="vt-switch__track">
+                <span class="vt-switch__thumb"></span>
+              </span>
               <span class="vt-switch__label">Email notifications</span>
             </label>
+
             <label class="vt-switch">
               <input type="checkbox">
-              <span class="vt-switch__track"><span class="vt-switch__thumb"></span></span>
+              <span class="vt-switch__track">
+                <span class="vt-switch__thumb"></span>
+              </span>
               <span class="vt-switch__label">SMS alerts</span>
             </label>
+
             <label class="vt-switch">
               <input type="checkbox" checked>
-              <span class="vt-switch__track"><span class="vt-switch__thumb"></span></span>
+              <span class="vt-switch__track">
+                <span class="vt-switch__thumb"></span>
+              </span>
               <span class="vt-switch__label">Marketing emails</span>
             </label>
+
             <label class="vt-switch">
               <input type="checkbox" disabled>
-              <span class="vt-switch__track"><span class="vt-switch__thumb"></span></span>
+              <span class="vt-switch__track">
+                <span class="vt-switch__thumb"></span>
+              </span>
               <span class="vt-switch__label">Account activity (required)</span>
             </label>
           </div>
@@ -1404,6 +1492,7 @@
             <button class="vt-btn vt-btn--sm">Save preferences</button>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -1421,6 +1510,7 @@
       <div class="demo-subsection">
         <p class="demo-subsection__title">Semantic variants</p>
         <div style="display:flex; flex-direction:column; gap: var(--vt-space-3);">
+
           <div class="vt-alert" role="alert">
             <div class="vt-alert__icon">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 7v5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r=".75" fill="currentColor"/></svg>
@@ -1466,6 +1556,7 @@
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             </button>
           </div>
+
         </div>
       </div>
 
@@ -1543,6 +1634,7 @@
       </div>
 
       <div class="demo-grid-forms">
+
         <div class="vt-field">
           <label class="vt-label" for="region-select">Region</label>
           <div class="vt-select">
@@ -1591,6 +1683,7 @@
           </div>
           <span class="vt-field-hint">Contact an admin to change environments.</span>
         </div>
+
       </div>
     </section>
 
@@ -1677,6 +1770,7 @@
           <button class="vt-btn" onclick="this.closest('dialog').close()">Rename</button>
         </div>
       </dialog>
+
     </section>
 
     <!-- TOAST =============================================================== -->
@@ -1711,6 +1805,7 @@
           </button>
         </div>
       </div>
+
     </section>
 
     <!-- DARK ISLAND ========================================================= -->
@@ -1728,6 +1823,7 @@
       <div class="demo-dark-island" data-theme="dark">
         <p class="demo-dark-island__label">data-theme="dark" — always dark regardless of page theme</p>
         <div class="demo-grid-2">
+
           <div class="vt-card">
             <div class="vt-card__header">
               <div style="display:flex; align-items:start; justify-content:space-between; gap: var(--vt-space-2);">
@@ -1779,6 +1875,7 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -1797,6 +1894,7 @@
       </div>
 
       <div class="demo-brand-grid">
+
         <div data-brand="default" style="--vt-color-brand: light-dark(oklch(55% 0.2 250), oklch(65% 0.2 250));">
           <div class="demo-brand-swatch">
             <p class="demo-brand-swatch__name">Blue (default)</p>
@@ -1892,7 +1990,9 @@
             </label>
           </div>
         </div>
+
       </div>
+
     </section>
 
     <!-- COLOR TOKENS ======================================================== -->
@@ -1910,45 +2010,121 @@
       <div class="demo-subsection">
         <p class="demo-subsection__title">Brand scale (auto-generated)</p>
         <div class="demo-token-grid">
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-50);"></div><span class="demo-color-swatch__name">brand-50</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-100);"></div><span class="demo-color-swatch__name">brand-100</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-200);"></div><span class="demo-color-swatch__name">brand-200</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-300);"></div><span class="demo-color-swatch__name">brand-300</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-400);"></div><span class="demo-color-swatch__name">brand-400</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-500); outline: 2px solid var(--vt-color-border); outline-offset: 2px;"></div><span class="demo-color-swatch__name">brand-500 ←</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-600);"></div><span class="demo-color-swatch__name">brand-600</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-700);"></div><span class="demo-color-swatch__name">brand-700</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-800);"></div><span class="demo-color-swatch__name">brand-800</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-900);"></div><span class="demo-color-swatch__name">brand-900</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-brand-950);"></div><span class="demo-color-swatch__name">brand-950</span></div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-50);"></div>
+            <span class="demo-color-swatch__name">brand-50</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-100);"></div>
+            <span class="demo-color-swatch__name">brand-100</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-200);"></div>
+            <span class="demo-color-swatch__name">brand-200</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-300);"></div>
+            <span class="demo-color-swatch__name">brand-300</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-400);"></div>
+            <span class="demo-color-swatch__name">brand-400</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-500); outline: 2px solid var(--vt-color-border); outline-offset: 2px;"></div>
+            <span class="demo-color-swatch__name">brand-500 ←</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-600);"></div>
+            <span class="demo-color-swatch__name">brand-600</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-700);"></div>
+            <span class="demo-color-swatch__name">brand-700</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-800);"></div>
+            <span class="demo-color-swatch__name">brand-800</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-900);"></div>
+            <span class="demo-color-swatch__name">brand-900</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-brand-950);"></div>
+            <span class="demo-color-swatch__name">brand-950</span>
+          </div>
         </div>
       </div>
 
       <div class="demo-subsection">
         <p class="demo-subsection__title">Semantic surface tokens</p>
         <div class="demo-token-grid">
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-surface);"></div><span class="demo-color-swatch__name">surface</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-surface-raised);"></div><span class="demo-color-swatch__name">surface-raised</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-surface-overlay);"></div><span class="demo-color-swatch__name">surface-overlay</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-text);"></div><span class="demo-color-swatch__name">text</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-text-muted);"></div><span class="demo-color-swatch__name">text-muted</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-border);"></div><span class="demo-color-swatch__name">border</span></div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-surface);"></div>
+            <span class="demo-color-swatch__name">surface</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-surface-raised);"></div>
+            <span class="demo-color-swatch__name">surface-raised</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-surface-overlay);"></div>
+            <span class="demo-color-swatch__name">surface-overlay</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-text);"></div>
+            <span class="demo-color-swatch__name">text</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-text-muted);"></div>
+            <span class="demo-color-swatch__name">text-muted</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-border);"></div>
+            <span class="demo-color-swatch__name">border</span>
+          </div>
         </div>
       </div>
 
       <div class="demo-subsection">
         <p class="demo-subsection__title">Semantic status tokens</p>
         <div class="demo-token-grid">
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-success);"></div><span class="demo-color-swatch__name">success</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-success-subtle);"></div><span class="demo-color-swatch__name">success-subtle</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-warning);"></div><span class="demo-color-swatch__name">warning</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-warning-subtle);"></div><span class="demo-color-swatch__name">warning-subtle</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-danger);"></div><span class="demo-color-swatch__name">danger</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-danger-subtle);"></div><span class="demo-color-swatch__name">danger-subtle</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-info);"></div><span class="demo-color-swatch__name">info</span></div>
-          <div class="demo-color-swatch"><div class="demo-color-swatch__block" style="background: var(--vt-color-info-subtle);"></div><span class="demo-color-swatch__name">info-subtle</span></div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-success);"></div>
+            <span class="demo-color-swatch__name">success</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-success-subtle);"></div>
+            <span class="demo-color-swatch__name">success-subtle</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-warning);"></div>
+            <span class="demo-color-swatch__name">warning</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-warning-subtle);"></div>
+            <span class="demo-color-swatch__name">warning-subtle</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-danger);"></div>
+            <span class="demo-color-swatch__name">danger</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-danger-subtle);"></div>
+            <span class="demo-color-swatch__name">danger-subtle</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-info);"></div>
+            <span class="demo-color-swatch__name">info</span>
+          </div>
+          <div class="demo-color-swatch">
+            <div class="demo-color-swatch__block" style="background: var(--vt-color-info-subtle);"></div>
+            <span class="demo-color-swatch__name">info-subtle</span>
+          </div>
         </div>
       </div>
+
     </section>
 
     <!-- TYPOGRAPHY =========================================================== -->
@@ -1965,15 +2141,42 @@
       </div>
 
       <div class="demo-type-scale">
-        <div class="demo-type-row"><span class="demo-type-label">text-xs</span><span style="font-size: var(--vt-text-xs); color: var(--vt-color-text);">The quick brown fox jumps over the lazy dog</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-sm</span><span style="font-size: var(--vt-text-sm); color: var(--vt-color-text);">The quick brown fox jumps over the lazy dog</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-base</span><span style="font-size: var(--vt-text-base); color: var(--vt-color-text);">The quick brown fox jumps over the lazy dog</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-lg</span><span style="font-size: var(--vt-text-lg); color: var(--vt-color-text);">The quick brown fox jumps</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-xl</span><span style="font-size: var(--vt-text-xl); color: var(--vt-color-text);">The quick brown fox jumps</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-2xl</span><span style="font-size: var(--vt-text-2xl); font-weight: 600; color: var(--vt-color-text);">The quick brown fox</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-3xl</span><span style="font-size: var(--vt-text-3xl); font-weight: 700; color: var(--vt-color-text); letter-spacing: -0.02em;">The quick brown</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-4xl</span><span style="font-size: var(--vt-text-4xl); font-weight: 700; color: var(--vt-color-text); letter-spacing: -0.03em;">The quick</span></div>
-        <div class="demo-type-row"><span class="demo-type-label">text-5xl</span><span style="font-size: var(--vt-text-5xl); font-weight: 700; color: var(--vt-color-text); letter-spacing: -0.04em; line-height: 1;">Volty</span></div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-xs</span>
+          <span style="font-size: var(--vt-text-xs); color: var(--vt-color-text);">The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-sm</span>
+          <span style="font-size: var(--vt-text-sm); color: var(--vt-color-text);">The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-base</span>
+          <span style="font-size: var(--vt-text-base); color: var(--vt-color-text);">The quick brown fox jumps over the lazy dog</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-lg</span>
+          <span style="font-size: var(--vt-text-lg); color: var(--vt-color-text);">The quick brown fox jumps</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-xl</span>
+          <span style="font-size: var(--vt-text-xl); color: var(--vt-color-text);">The quick brown fox jumps</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-2xl</span>
+          <span style="font-size: var(--vt-text-2xl); font-weight: 600; color: var(--vt-color-text);">The quick brown fox</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-3xl</span>
+          <span style="font-size: var(--vt-text-3xl); font-weight: 700; color: var(--vt-color-text); letter-spacing: -0.02em;">The quick brown</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-4xl</span>
+          <span style="font-size: var(--vt-text-4xl); font-weight: 700; color: var(--vt-color-text); letter-spacing: -0.03em;">The quick</span>
+        </div>
+        <div class="demo-type-row">
+          <span class="demo-type-label">text-5xl</span>
+          <span style="font-size: var(--vt-text-5xl); font-weight: 700; color: var(--vt-color-text); letter-spacing: -0.04em; line-height: 1;">Volty</span>
+        </div>
       </div>
     </section>
 
@@ -1990,6 +2193,7 @@
       </div>
 
       <div class="demo-grid-2">
+
         <div class="vt-card">
           <div class="vt-card__header">
             <h3 class="vt-card__title">Layer Order</h3>
@@ -1997,11 +2201,31 @@
           </div>
           <div class="vt-card__body">
             <div style="display: flex; flex-direction: column; gap: var(--vt-space-2); font-family: var(--vt-font-mono); font-size: var(--vt-text-xs);">
-              <div style="display: flex; align-items: center; gap: var(--vt-space-2);"><span class="vt-badge vt-badge--surface">1</span><code style="color: var(--vt-color-text-muted);">volty.reset</code><span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— box-sizing, margins</span></div>
-              <div style="display: flex; align-items: center; gap: var(--vt-space-2);"><span class="vt-badge vt-badge--surface">2</span><code style="color: var(--vt-color-text-muted);">volty.tokens</code><span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— CSS custom properties</span></div>
-              <div style="display: flex; align-items: center; gap: var(--vt-space-2);"><span class="vt-badge vt-badge--surface">3</span><code style="color: var(--vt-color-text-muted);">volty.base</code><span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— html, body defaults</span></div>
-              <div style="display: flex; align-items: center; gap: var(--vt-space-2);"><span class="vt-badge">4</span><code style="color: var(--vt-color-brand);">volty.components</code><span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— button, card, etc.</span></div>
-              <div style="display: flex; align-items: center; gap: var(--vt-space-2);"><span class="vt-badge">5</span><code style="color: var(--vt-color-brand);">volty.utilities</code><span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— your overrides go here</span></div>
+              <div style="display: flex; align-items: center; gap: var(--vt-space-2);">
+                <span class="vt-badge vt-badge--surface">1</span>
+                <code style="color: var(--vt-color-text-muted);">volty.reset</code>
+                <span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— box-sizing, margins</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: var(--vt-space-2);">
+                <span class="vt-badge vt-badge--surface">2</span>
+                <code style="color: var(--vt-color-text-muted);">volty.tokens</code>
+                <span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— CSS custom properties</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: var(--vt-space-2);">
+                <span class="vt-badge vt-badge--surface">3</span>
+                <code style="color: var(--vt-color-text-muted);">volty.base</code>
+                <span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— html, body defaults</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: var(--vt-space-2);">
+                <span class="vt-badge">4</span>
+                <code style="color: var(--vt-color-brand);">volty.components</code>
+                <span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— button, card, etc.</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: var(--vt-space-2);">
+                <span class="vt-badge">5</span>
+                <code style="color: var(--vt-color-brand);">volty.utilities</code>
+                <span style="color: var(--vt-color-text-muted); font-size: 0.9em;">— your overrides go here</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2026,6 +2250,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -2045,6 +2270,7 @@
       </div>
 
       <div class="demo-transition-stage">
+
         <div class="demo-transition-explanation">
           <strong>What you're seeing:</strong> These swatches use raw CSS custom property values —
           <code class="demo-code">background: var(--vt-color-brand)</code> etc. — with no
@@ -2054,18 +2280,47 @@
           an untyped string. <strong>@property is what makes this possible.</strong>
         </div>
 
+        <!-- Live token swatches — no transition rule on any swatch, all animation is from :root -->
         <div class="demo-token-watch">
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-brand);"></div><span class="demo-token-watch__name">--vt-color-brand</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-brand-hover);"></div><span class="demo-token-watch__name">--vt-color-brand-hover</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-brand-subtle);"></div><span class="demo-token-watch__name">--vt-color-brand-subtle</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-surface);"></div><span class="demo-token-watch__name">--vt-color-surface</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-surface-raised);"></div><span class="demo-token-watch__name">--vt-color-surface-raised</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-surface-overlay);"></div><span class="demo-token-watch__name">--vt-color-surface-overlay</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-text);"></div><span class="demo-token-watch__name">--vt-color-text</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-text-muted);"></div><span class="demo-token-watch__name">--vt-color-text-muted</span></div>
-          <div class="demo-token-watch__item"><div class="demo-token-watch__swatch" style="background: var(--vt-color-border);"></div><span class="demo-token-watch__name">--vt-color-border</span></div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-brand);"></div>
+            <span class="demo-token-watch__name">--vt-color-brand</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-brand-hover);"></div>
+            <span class="demo-token-watch__name">--vt-color-brand-hover</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-brand-subtle);"></div>
+            <span class="demo-token-watch__name">--vt-color-brand-subtle</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-surface);"></div>
+            <span class="demo-token-watch__name">--vt-color-surface</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-surface-raised);"></div>
+            <span class="demo-token-watch__name">--vt-color-surface-raised</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-surface-overlay);"></div>
+            <span class="demo-token-watch__name">--vt-color-surface-overlay</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-text);"></div>
+            <span class="demo-token-watch__name">--vt-color-text</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-text-muted);"></div>
+            <span class="demo-token-watch__name">--vt-color-text-muted</span>
+          </div>
+          <div class="demo-token-watch__item">
+            <div class="demo-token-watch__swatch" style="background: var(--vt-color-border);"></div>
+            <span class="demo-token-watch__name">--vt-color-border</span>
+          </div>
         </div>
 
+        <!-- A full mini UI — watch it transition when theme/brand changes -->
         <div>
           <p class="demo-subsection__title">Full UI — changes animate because tokens do</p>
           <div class="demo-grid-2">
@@ -2107,6 +2362,7 @@
                 <span class="vt-badge vt-badge--warning">Warning</span>
                 <span class="vt-badge vt-badge--danger">Danger</span>
               </div>
+              <!-- Brand scale — all auto-generated, all animate -->
               <div style="display:grid;grid-template-columns:repeat(11,1fr);gap:4px;border-radius:var(--vt-radius-md);overflow:hidden;">
                 <div style="height:32px;background:var(--vt-brand-50);"></div>
                 <div style="height:32px;background:var(--vt-brand-100);"></div>
@@ -2126,6 +2382,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -2142,9 +2399,12 @@
       </div>
 
       <div class="demo-container-stage">
+
+        <!-- Button container query -->
         <div>
           <p class="demo-subsection__title">Button — expands to full width below 280px container</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--vt-space-4);">
+
             <div class="demo-resizable" style="width:260px;">
               <p class="demo-container-label">container: ~260px → buttons go full width</p>
               <div style="display:flex;flex-direction:column;gap:var(--vt-space-2);">
@@ -2152,6 +2412,7 @@
                 <button class="vt-btn vt-btn--outline">Cancel</button>
               </div>
             </div>
+
             <div class="demo-resizable" style="width:400px;">
               <p class="demo-container-label">container: ~400px → buttons are inline</p>
               <div class="demo-row">
@@ -2162,9 +2423,11 @@
           </div>
         </div>
 
+        <!-- Card footer container query -->
         <div>
           <p class="demo-subsection__title">Card — footer aligns right above 420px container</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--vt-space-4);">
+
             <div class="demo-resizable" style="width:320px;">
               <p class="demo-container-label">container: ~320px → footer stacks</p>
               <div class="vt-card" style="padding:var(--vt-space-4);">
@@ -2178,6 +2441,7 @@
                 </div>
               </div>
             </div>
+
             <div class="demo-resizable" style="width:500px;">
               <p class="demo-container-label">container: ~500px → footer aligns right</p>
               <div class="vt-card" style="padding:var(--vt-space-4);">
@@ -2194,9 +2458,11 @@
           </div>
         </div>
 
+        <!-- Inline field container query -->
         <div>
           <p class="demo-subsection__title">Field — inline layout above 400px container</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--vt-space-4);">
+
             <div class="demo-resizable" style="width:280px;">
               <p class="demo-container-label">container: ~280px → label stacks above</p>
               <div class="vt-field vt-field--inline">
@@ -2204,6 +2470,7 @@
                 <input class="vt-input" id="cq-email-narrow" type="email" placeholder="you@example.com">
               </div>
             </div>
+
             <div class="demo-resizable" style="width:500px;">
               <p class="demo-container-label">container: ~500px → label inline with input</p>
               <div class="vt-field vt-field--inline">
@@ -2213,6 +2480,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -2230,6 +2498,8 @@
       </div>
 
       <div class="demo-mode-compare">
+
+        <!-- Always-light panel -->
         <div data-theme="light" class="demo-mode-panel demo-mode-panel--light">
           <p class="demo-mode-panel__title">data-theme="light" — always light</p>
           <div class="demo-subtle-row">
@@ -2241,9 +2511,12 @@
             <span class="vt-badge">Brand default</span>
             <span class="vt-badge vt-badge--surface">Surface</span>
           </div>
-          <p style="font-size:var(--vt-text-xs);color:oklch(50% 0 0);margin-block-start:var(--vt-space-2);font-family:var(--vt-font-mono);">subtle = color-mix(brand, surface-light) ✓</p>
+          <p style="font-size:var(--vt-text-xs);color:oklch(50% 0 0);margin-block-start:var(--vt-space-2);font-family:var(--vt-font-mono);">
+            subtle = color-mix(brand, surface-light) ✓
+          </p>
         </div>
 
+        <!-- Always-dark panel -->
         <div data-theme="dark" class="demo-mode-panel demo-mode-panel--dark">
           <p class="demo-mode-panel__title">data-theme="dark" — always dark</p>
           <div class="demo-subtle-row">
@@ -2255,18 +2528,37 @@
             <span class="vt-badge">Brand default</span>
             <span class="vt-badge vt-badge--surface">Surface</span>
           </div>
-          <p style="font-size:var(--vt-text-xs);color:oklch(60% 0 0);margin-block-start:var(--vt-space-2);font-family:var(--vt-font-mono);">subtle = color-mix(brand, surface-dark) ✓</p>
+          <p style="font-size:var(--vt-text-xs);color:oklch(60% 0 0);margin-block-start:var(--vt-space-2);font-family:var(--vt-font-mono);">
+            subtle = color-mix(brand, surface-dark) ✓
+          </p>
         </div>
+
       </div>
 
+      <!-- Show what the old (broken) approach looked like -->
       <div class="demo-subsection">
         <p class="demo-subsection__title">What mixing with white looks like in dark mode (the broken approach)</p>
         <div class="demo-mode-compare">
           <div class="demo-mode-panel demo-mode-panel--dark" style="opacity:1;">
             <p class="demo-mode-panel__title" style="color:oklch(60% 0 0);">dark mode — wrong: color-mix(..., white)</p>
             <div class="demo-subtle-row">
-              <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:12px;font-weight:500;background:color-mix(in oklch, oklch(68% 0.15 145) 15%, white);color:oklch(68% 0.15 145);border:1px solid color-mix(in oklch, oklch(68% 0.15 145) 25%, transparent);">Success — pale &amp; washed out</span>
-              <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:9999px;font-size:12px;font-weight:500;background:color-mix(in oklch, oklch(52% 0.22 25) 15%, white);color:oklch(67% 0.22 25);border:1px solid color-mix(in oklch, oklch(52% 0.22 25) 25%, transparent);">Danger — pale &amp; washed out</span>
+              <!-- These manually compute what the old approach produced -->
+              <span style="
+                display:inline-flex;align-items:center;
+                padding:2px 8px;border-radius:9999px;
+                font-size:12px;font-weight:500;
+                background:color-mix(in oklch, oklch(68% 0.15 145) 15%, white);
+                color:oklch(68% 0.15 145);
+                border:1px solid color-mix(in oklch, oklch(68% 0.15 145) 25%, transparent);
+              ">Success — pale &amp; washed out</span>
+              <span style="
+                display:inline-flex;align-items:center;
+                padding:2px 8px;border-radius:9999px;
+                font-size:12px;font-weight:500;
+                background:color-mix(in oklch, oklch(52% 0.22 25) 15%, white);
+                color:oklch(67% 0.22 25);
+                border:1px solid color-mix(in oklch, oklch(52% 0.22 25) 25%, transparent);
+              ">Danger — pale &amp; washed out</span>
             </div>
           </div>
           <div class="demo-mode-panel demo-mode-panel--dark" data-theme="dark">
@@ -2278,6 +2570,7 @@
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- SHADOW DOM ========================================================== -->
@@ -2295,11 +2588,13 @@
       </div>
 
       <div class="demo-grid-2">
+
         <div>
           <p class="demo-subsection__title">Live Shadow DOM component</p>
           <p style="font-size: var(--vt-text-sm); color: var(--vt-color-text-muted); margin-block-end: var(--vt-space-4); line-height: var(--vt-line-height-relaxed);">
             The card below lives inside a real Shadow Root. Change the brand color or theme above — it updates instantly because the tokens inherit across the boundary.
           </p>
+          <!-- Shadow host — Volty.createShadow() attaches here via JS below -->
           <div id="shadow-demo-host" class="demo-shadow-host"></div>
         </div>
 
@@ -2321,20 +2616,48 @@
             </p>
           </div>
         </div>
+
       </div>
 
       <div class="demo-subsection">
         <p class="demo-subsection__title">Tokens that cross the boundary</p>
         <div class="demo-shadow-token-table">
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand);"></div>--vt-color-brand &nbsp;<span style="opacity:.5">&lt;color&gt;</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-surface);"></div>--vt-color-surface &nbsp;<span style="opacity:.5">&lt;color&gt;</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-text);"></div>--vt-color-text &nbsp;<span style="opacity:.5">&lt;color&gt;</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-danger);"></div>--vt-color-danger &nbsp;<span style="opacity:.5">&lt;color&gt;</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-success);"></div>--vt-color-success &nbsp;<span style="opacity:.5">&lt;color&gt;</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-border); border: 1px solid var(--vt-color-text);"></div>--vt-color-border &nbsp;<span style="opacity:.5">&lt;color&gt;</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand); width: var(--vt-space-4); height: var(--vt-space-4);"></div>--vt-space-4 &nbsp;<span style="opacity:.5">&lt;length&gt; 16px</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand); border-radius: var(--vt-radius-full);"></div>--vt-radius-* &nbsp;<span style="opacity:.5">&lt;length&gt;</span></div>
-          <div class="demo-shadow-token-row"><div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand);"></div>--vt-duration-* &nbsp;<span style="opacity:.5">&lt;time&gt;</span></div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand);"></div>
+            --vt-color-brand &nbsp;<span style="opacity:.5">&lt;color&gt;</span>
+          </div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-surface);"></div>
+            --vt-color-surface &nbsp;<span style="opacity:.5">&lt;color&gt;</span>
+          </div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-text);"></div>
+            --vt-color-text &nbsp;<span style="opacity:.5">&lt;color&gt;</span>
+          </div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-danger);"></div>
+            --vt-color-danger &nbsp;<span style="opacity:.5">&lt;color&gt;</span>
+          </div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-success);"></div>
+            --vt-color-success &nbsp;<span style="opacity:.5">&lt;color&gt;</span>
+          </div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-border); border: 1px solid var(--vt-color-text);"></div>
+            --vt-color-border &nbsp;<span style="opacity:.5">&lt;color&gt;</span>
+          </div>
+          <div class="demo-shadow-token-row" style="grid-column: span 1;">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand); width: var(--vt-space-4); height: var(--vt-space-4);"></div>
+            --vt-space-4 &nbsp;<span style="opacity:.5">&lt;length&gt; 16px</span>
+          </div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand); border-radius: var(--vt-radius-full);"></div>
+            --vt-radius-* &nbsp;<span style="opacity:.5">&lt;length&gt;</span>
+          </div>
+          <div class="demo-shadow-token-row">
+            <div class="demo-shadow-token-swatch" style="background: var(--vt-color-brand);"></div>
+            --vt-duration-* &nbsp;<span style="opacity:.5">&lt;time&gt;</span>
+          </div>
         </div>
       </div>
 
@@ -2344,15 +2667,23 @@
           <div style="display: flex; flex-direction: column; gap: var(--vt-space-3); font-family: var(--vt-font-mono); font-size: var(--vt-text-xs); line-height: 1.7;">
             <div>
               <div style="color: var(--vt-color-text-muted); margin-block-end: 2px;">// Tokens work automatically. For component classes too:</div>
-              <div style="color: var(--vt-color-text);"><span style="color: var(--vt-color-brand);">const</span> shadow = Volty.<span style="color: var(--vt-color-info);">createShadow</span>(hostElement);<br>shadow.innerHTML = <span style="color: var(--vt-color-success);">`&lt;div class="vt-card"&gt;...&lt;/div&gt;`</span>;</div>
+              <div style="color: var(--vt-color-text);">
+                <span style="color: var(--vt-color-brand);">const</span> shadow = Volty.<span style="color: var(--vt-color-info);">createShadow</span>(hostElement);<br>
+                shadow.innerHTML = <span style="color: var(--vt-color-success);">`&lt;div class="vt-card"&gt;...&lt;/div&gt;`</span>;
+              </div>
             </div>
             <div>
               <div style="color: var(--vt-color-text-muted); margin-block-end: 2px;">// Scoped token overrides cascade into shadow children:</div>
-              <div style="color: var(--vt-color-text);">Volty.<span style="color: var(--vt-color-info);">setTokens</span>(hostElement, {<br>&nbsp;&nbsp;<span style="color: var(--vt-color-success);">'--vt-color-brand'</span>: <span style="color: var(--vt-color-success);">'oklch(55% 0.22 10)'</span><br>});</div>
+              <div style="color: var(--vt-color-text);">
+                Volty.<span style="color: var(--vt-color-info);">setTokens</span>(hostElement, {<br>
+                &nbsp;&nbsp;<span style="color: var(--vt-color-success);">'--vt-color-brand'</span>: <span style="color: var(--vt-color-success);">'oklch(55% 0.22 10)'</span><br>
+                });
+              </div>
             </div>
           </div>
         </div>
       </div>
+
     </section>
 
     <!-- AI SCHEMA =========================================================== -->
@@ -2369,6 +2700,7 @@
       </div>
 
       <div class="demo-ai-grid">
+
         <div class="demo-ai-card">
           <div class="demo-ai-card__icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
@@ -2395,6 +2727,7 @@
           <p class="demo-ai-card__desc">If an AI generates <code class="demo-code">--vt-color-brand: 16px</code>, the browser rejects it and falls back to <code class="demo-code">initial-value</code>. The type contract is enforced at parse time — not just in documentation.</p>
           <span class="vt-badge vt-badge--success" style="align-self: flex-start;">Unique to @property</span>
         </div>
+
       </div>
 
       <div class="demo-subsection">
@@ -2410,6 +2743,7 @@
           <div class="demo-ai-rule">All <code class="demo-code">@property</code> tokens have <code class="demo-code">initial-value</code> fallbacks — missing token references render correctly.</div>
         </div>
       </div>
+
     </section>
 
   </main>
@@ -2418,11 +2752,11 @@
   <!-- FOOTER ================================================================ -->
   <footer class="demo-footer">
     <div class="demo-footer-wrap">
-      <p class="demo-footer__text">
-        <strong>Volty v0.1.0</strong> &nbsp;&mdash;&nbsp;
-        10 components. 44 typed tokens. Shadow DOM native. AI schema included. &nbsp;&mdash;&nbsp;
-        Drop in <code>dist/volty.css</code> + <code>dist/volty.min.css</code> and go.
-      </p>
+    <p class="demo-footer__text">
+      <strong>Volty v0.1.0</strong> &nbsp;&mdash;&nbsp;
+      10 components. 44 typed tokens. Shadow DOM native. AI schema included. &nbsp;&mdash;&nbsp;
+      Drop in <code>dist/volty.css</code> + <code>dist/volty.min.css</code> and go.
+    </p>
     </div>
   </footer>
 
@@ -2454,6 +2788,7 @@
       const sidebarLinks = document.querySelectorAll('.demo-sidebar__link[href^="#"]');
       if (!sections.length) return;
 
+      // Map section id → which top-nav link group it belongs to
       const navGroupMap = {
         buttons: '#buttons', cards: '#buttons', badges: '#buttons',
         forms: '#buttons', switches: '#buttons', alerts: '#buttons',
@@ -2473,16 +2808,19 @@
           if (entry.isIntersecting) {
             const id = entry.target.id;
 
+            // Update top nav (group-level)
             const groupHref = navGroupMap[id];
             navLinks.forEach(l => {
               l.classList.toggle('is-active', l.getAttribute('href') === groupHref);
             });
 
+            // Update sidebar (exact match)
             sidebarLinks.forEach(l => {
               const href = l.getAttribute('href').slice(1);
               l.classList.toggle('is-active', href === id);
             });
 
+            // Scroll active sidebar link into view if it's off-screen
             const activeLink = document.querySelector(`.demo-sidebar__link[href="#${id}"]`);
             if (activeLink) {
               activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
@@ -2554,6 +2892,7 @@
         }
       }
 
+      // Highlight sidebar link matching the current hash on load
       const hash = window.location.hash.slice(1);
       if (hash) {
         const link = document.querySelector(`.demo-sidebar__link[href="#${hash}"]`);
@@ -2562,5 +2901,5 @@
     })();
   </script>
 
-</body>
+  </body>
 </html>

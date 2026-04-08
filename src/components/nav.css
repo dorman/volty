@@ -1,132 +1,187 @@
 @layer volty.components {
-    /*
-        Nav — responsive site navigation.
-        @starting-style provides entry animation without JS.
-    
-        Usage:
-        <nav class="vt-nav">
-            <a href="#" class="vt-nav__link">Home</a>
-            <a href="#" class="vt-nav__link">About</a>
-            <a href="#" class="vt-nav__link">Contact</a>
-        </nav>
-    */
+  /*
+    Nav — sticky top navigation bar.
+    Used directly as .vt-nav markup, or rendered by the <vt-nav> custom element.
 
-    .vt-nav {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background-color: color-mix(in oklch, var(--vt-color-surface) 85%, transparent);
-        backdrop-filter: blur(12px);
-        border-bottom :var(--vt--space-3);
-    }
+    Manual usage:
+      <nav class="vt-nav">
+        <div class="vt-nav__inner">
+          <a href="/" class="vt-nav__logo">
+            <div class="vt-nav__logo-mark">A</div>
+            <span class="vt-nav__logo-name">App</span>
+          </a>
+          <div class="vt-nav__links">
+            <a href="/" class="vt-nav__link">Home</a>
+          </div>
+          <div class="vt-nav__controls">...</div>
+        </div>
+      </nav>
 
+    Custom element (auto-rendered):
+      <vt-nav logo="My App" version="v1.0"
+              links='[{"href":"/","label":"Home"},{"href":"/docs","label":"Docs"}]'>
+      </vt-nav>
+
+    Data attribute:
+      <div data-vt-insert="nav" data-logo="My App"
+           data-links='[{"href":"/","label":"Home"}]'></div>
+
+    JS API:
+      Volty.insert('nav', target, { logo: 'My App', links: [...] });
+  */
+
+  .vt-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: color-mix(in oklch, var(--vt-color-surface) 88%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-block-end: 1px solid var(--vt-color-border);
+    padding-block: var(--vt-space-3);
+    transition:
+      background-color var(--vt-duration-base) ease,
+      border-color var(--vt-duration-base) ease;
+  }
+
+  .vt-nav__inner {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--vt-space-5);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--vt-space-4);
+  }
+
+  /* ---- Logo -------------------------------------------------------------- */
+  .vt-nav__logo {
+    display: flex;
+    align-items: center;
+    gap: var(--vt-space-2);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .vt-nav__logo-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--vt-radius-md);
+    background: var(--vt-color-brand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--vt-color-brand-text);
+    letter-spacing: -0.03em;
+    flex-shrink: 0;
+    transition: background-color var(--vt-duration-base) ease;
+  }
+
+  .vt-nav__logo-img {
+    height: 32px;
+    width: auto;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .vt-nav__logo-name {
+    font-size: var(--vt-text-lg);
+    font-weight: var(--vt-font-weight-bold);
+    color: var(--vt-color-text);
+    letter-spacing: -0.02em;
+    transition: color var(--vt-duration-base) ease;
+  }
+
+  /* ---- Links ------------------------------------------------------------- */
+  .vt-nav__links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--vt-space-1);
+    flex-wrap: wrap;
+  }
+
+  .vt-nav__link {
+    padding-block: var(--vt-space-1);
+    padding-inline: var(--vt-space-3);
+    border-radius: var(--vt-radius-md);
+    font-size: var(--vt-text-sm);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text-muted);
+    text-decoration: none;
+    transition:
+      color var(--vt-duration-fast) ease,
+      background-color var(--vt-duration-fast) ease;
+  }
+
+  .vt-nav__link:hover {
+    color: var(--vt-color-text);
+    background-color: var(--vt-color-surface-raised);
+  }
+
+  .vt-nav__link.is-active {
+    color: var(--vt-color-brand);
+    background-color: var(--vt-color-brand-subtle);
+  }
+
+  /* ---- Controls ---------------------------------------------------------- */
+  .vt-nav__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--vt-space-3);
+    flex-wrap: wrap;
+  }
+
+  .vt-nav__theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--vt-space-1);
+    background-color: var(--vt-color-surface-raised);
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-lg);
+    padding: 3px;
+    transition:
+      background-color var(--vt-duration-base) ease,
+      border-color var(--vt-duration-base) ease;
+  }
+
+  .vt-nav__theme-btn {
+    padding-block: 5px;
+    padding-inline: var(--vt-space-3);
+    border-radius: var(--vt-radius-md);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition:
+      background-color var(--vt-duration-fast) ease,
+      color var(--vt-duration-fast) ease;
+  }
+
+  .vt-nav__theme-btn:hover {
+    color: var(--vt-color-text);
+    background-color: var(--vt-color-surface-overlay);
+  }
+
+  .vt-nav__theme-btn.is-active {
+    background-color: var(--vt-color-surface-overlay);
+    color: var(--vt-color-text);
+    box-shadow: 0 1px 3px color-mix(in oklch, var(--vt-color-text) 10%, transparent);
+  }
+
+  /* ---- Responsive -------------------------------------------------------- */
+  @media (max-width: 700px) {
     .vt-nav__inner {
-        max-width: 1200px;
-        margin-inline: auto;
-        padding-inline: var(--vt-space-5);
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
-        gap: var(--vt-space-4);
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
     }
-
     .vt-nav__links {
-        display: flex;
-        align-items:  center;
-        justify-content: center;
-        gap: var(--vt-space-1);
-        flex-wrap:wrap;
+      grid-column: 1 / -1;
+      justify-content: flex-start;
     }
-    .vt-nav__link {
-        padding-block: var(--vt-space-1);
-        padding-inline: var(--vt-space-3);
-        border-radius: var(--vt-radius-md);
-        font-size: var(--vt-text-sm);
-        font-weight: var(--vt-font-weight-medium);
-        color: var(--vt-color-text-muted);
-        text-decoration: none;
-        transition:
-            color var(--vt-duration-fast) ease,
-            background-color var(--vt-duration-fast) ease;
-    }
-    .vt-nav__link.is-active {
-        color: var(--vt-color-brand);
-        background-color: var(--vt-color-brand-subtle);
-    }
-    .vt-nav__link--docs {
-        display: inline-flex;
-        align-items: center;
-        gap: var(--vt-space-1);
-    }
-
-    .vt-nav__links { grid-column: 1 / -1; justify-content: flex-start; }
+  }
 }
-
-    .vt-logo {
-        display: flex;
-        align-items: center;
-        gap: var(--vt-space-2);
-        text-decoration: none;;
-    }
-
-    .vt-logo__mark {
-        width: 32px;
-        height: 32px;
-        border-radius: var(--vt-radius-md);
-        background: var(--vt-color-brand);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        font-weight: 700;
-        color: var(--vt-color-brand-text);
-        letter-spacing: -0.03em;
-        flex-shrink: 0;
-    }
-
-    .vt-logo__name {
-        font-size: var(--vt-text-lg);
-        font-weight: var(--vt-font-weight-bold);
-        color: var(--vt-color-text);
-        letter-spacing: -.0.02em;
-    }
-
-    .vt-nav__controls {
-        display :flex;
-        align-items: center;
-        gap: var(--vt-space-3);
-        flex-wrap: wrap;
-    }
-
-    .vt-theme-switcher {
-        display: flex;
-        align-items: center;
-        gap: var(--vt-space-1);
-        background-color: var(--vt-color-surface-raised);
-        border: 1px solid var(--vt-color-border);
-        border-radius: var(--vt-radius-lg);
-        padding: 3px;
-    }
-
-    .vt-theme-btn {
-        padding-block: 5px;
-        padding-inline: var(--vt-space-3);
-        border-radius: var(--vt-radius-md);
-        font-size: var(--vt-text-xs);
-        font-weight: var(--vt-font-weight-medium);
-        color: var(--vt-color-text-muted);
-        background: transparent;
-        border: none;
-        cursor: pointer;
-        transition: 
-            background-color var(--vt-duration-fast) ease,
-            color var(--vt-duration-fast) ease;
-    }
-
-    .vt-theme-btn:hover {
-        color: var(--vt-color-text); background-color: var(--vt-color-surface-overlay); }
-    .vt-theme-btn.is.active {
-        background-color: var(--vt-color-surface-overlay);
-        color: var(--vt-color-text);
-        box-shadow: 0 1px 3px color-mix(in oklch, var(--vt-color-text) 10%, transparent);
-    }

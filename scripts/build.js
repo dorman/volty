@@ -24,6 +24,7 @@ const SOURCE_FILES = [
   ["core/spacing.css",     "SPACING"],
   ["themes/base.css",      "THEME — BASE"],
   ["themes/dark.css",      "THEME — DARK"],
+  ["components/nav.css",     "COMPONENT — NAV"],
   ["components/button.css",  "COMPONENT — BUTTON"],
   ["components/card.css",    "COMPONENT — CARD"],
   ["components/badge.css",   "COMPONENT — BADGE"],
@@ -332,13 +333,20 @@ function build() {
   fs.writeFileSync(outLlms, llms);
   const sizeLlms = (Buffer.byteLength(llms, "utf8") / 1024).toFixed(1);
 
+  // --- Copy volty-insert.js to dist -----------------------------------------
+  const insertSrc = path.join(SRC, "volty-insert.js");
+  const insertDst = path.join(DIST, "volty-insert.js");
+  fs.copyFileSync(insertSrc, insertDst);
+  const sizeInsert = (fs.statSync(insertDst).size / 1024).toFixed(1);
+
   // --- Report ---------------------------------------------------------------
   const elapsed = Date.now() - start;
   console.log(`\nVolty v${PKG.version} built in ${elapsed}ms`);
-  console.log(`  dist/volty.css         ${sizeCSS} kB`);
-  console.log(`  dist/volty.min.css     ${sizeMin} kB  (+ .map)`);
-  console.log(`  dist/volty.schema.json ${sizeSchema} kB`);
-  console.log(`  dist/llms.txt          ${sizeLlms} kB`);
+  console.log(`  dist/volty.css          ${sizeCSS} kB`);
+  console.log(`  dist/volty.min.css      ${sizeMin} kB  (+ .map)`);
+  console.log(`  dist/volty.schema.json  ${sizeSchema} kB`);
+  console.log(`  dist/llms.txt           ${sizeLlms} kB`);
+  console.log(`  dist/volty-insert.js    ${sizeInsert} kB`);
   console.log();
 }
 

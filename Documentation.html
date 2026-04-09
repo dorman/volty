@@ -934,6 +934,11 @@
       </div>
 
       <div class="demo-sidebar__group">
+        <p class="demo-sidebar__group-label">Component shorthand</p>
+        <a href="#shorthand-commands" class="demo-sidebar__link">Shorthand Commands</a>
+      </div>
+
+      <div class="demo-sidebar__group">
         <p class="demo-sidebar__group-label">Theming</p>
         <a href="#dark-island"    class="demo-sidebar__link">Dark Island</a>
         <a href="#brand-theming"  class="demo-sidebar__link">Brand Theming</a>
@@ -967,48 +972,6 @@
        MAIN CONTENT
        ========================================================================= -->
   <main class="demo-page">
-
-    <!-- HERO ================================================================ -->
-    <section class="demo-hero">
-
-      <div class="demo-hero__eyebrow">
-        <span class="vt-badge">@property typed tokens</span>
-        <span class="vt-badge">Shadow DOM native</span>
-        <span class="vt-badge">10 components</span>
-        <span class="vt-badge">AI schema</span>
-      </div>
-
-      <h1 class="demo-hero__title">
-        The theme library that<br>
-        <span>thinks in CSS</span>
-      </h1>
-
-      <p class="demo-hero__subtitle">
-        Typed design tokens via <code class="demo-code">@property</code> with <code class="demo-code">inherits: true</code> —
-        the only mechanism that passes through Shadow DOM boundaries automatically. Zero-JS dark mode,
-        container-scoped theming, native <code class="demo-code">&lt;dialog&gt;</code> modals, and a
-        machine-readable AI schema generated at build time.
-      </p>
-
-      <div class="demo-features">
-        <span class="demo-feature-pill">@property</span>
-        <span class="demo-feature-pill">@layer</span>
-        <span class="demo-feature-pill">color-mix()</span>
-        <span class="demo-feature-pill">light-dark()</span>
-        <span class="demo-feature-pill">container-type</span>
-        <span class="demo-feature-pill">@starting-style</span>
-        <span class="demo-feature-pill">:has()</span>
-        <span class="demo-feature-pill">oklch()</span>
-        <span class="demo-feature-pill">&lt;dialog&gt;</span>
-        <span class="demo-feature-pill">adoptedStyleSheets</span>
-      </div>
-
-      <div class="demo-hero__actions">
-        <button a href="https://dorman.github.io/volty/documentation.html" class="vt-btn vt-btn--lg">Get Started</button>
-        <button a href="https://github.com/dorman/volty" class="vt-btn vt-btn--lg vt-btn--outline">View Source</button>
-      </div>
-
-    </section>
 
     <!-- BUTTONS ============================================================= -->
     <section class="demo-section" id="buttons">
@@ -1322,6 +1285,25 @@
           </div>
         </div>
       </div>
+
+    </section>
+
+    <!-- Component Shorthand ================================================= -->
+    <section class="demo-section" id="shorthand-commands">
+      <div class="demo-section__header">
+        <p class="demo-section__label">Components</p>
+        <h2 class="demo-section__title">Shorthand Commands</h2>
+        <p class="demo-section__desc">
+         Drop any Volty component into a page without writing the markup by hand. Three equivalent syntaxes — pick whichever fits your workflow.
+        </p>
+      </div>
+
+        <vt-nav logo="My App" version="v1.0"
+        links='[{"href":"/","label":"Home"},{"href":"/docs","label":"Docs"},{"href":"/about","label":"About"}]'>
+        </vt-nav>
+        
+
+
 
     </section>
 

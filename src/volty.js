@@ -122,11 +122,12 @@
   function getAdoptableSheet() {
     if (_adoptableSheet) return _adoptableSheet;
     _adoptableSheet = new CSSStyleSheet();
-    // Fetch the built stylesheet once and populate the adoptable sheet.
-    // The sheet URL is resolved relative to this script's location.
+    // Prefer __voltyBase set by the embed bundle preamble; fall back to
+    // finding the script tag by name.
     const scriptEl = document.currentScript ||
       document.querySelector('script[src*="volty"]');
-    const base = scriptEl ? scriptEl.src.replace(/[^/]+$/, '') : '/';
+    const base = window.__voltyBase ||
+      (scriptEl ? scriptEl.src.replace(/[^/]+$/, '') : '/');
     fetch(base + 'volty.css')
       .then(r => r.text())
       .then(css => _adoptableSheet.replaceSync(css))

@@ -339,6 +339,40 @@ function build() {
   fs.copyFileSync(insertSrc, insertDst);
   const sizeInsert = (fs.statSync(insertDst).size / 1024).toFixed(1);
 
+  // --- volty-embed.js — single-file install ---------------------------------
+  // Preamble captures the script's own URL, sets window.__voltyBase, and
+  // injects volty.min.css so the developer only needs one <script> tag.
+  const embedPreamble = `/*!
+ * Volty v${PKG.version} — embed bundle
+ * Single-file install: drop one <script> tag, nothing else needed.
+ *
+ *   <script src="dist/volty-embed.js"></script>
+ *
+ * Automatically injects dist/volty.min.css relative to this script's URL,
+ * so it works from any directory or CDN without configuration.
+ */
+(function () {
+  var _s = document.currentScript;
+  var _base = _s ? _s.src.replace(/[^/]+$/, '') : '';
+  window.__voltyBase = _base;
+  if (!document.querySelector('link[data-volty]')) {
+    var _l = document.createElement('link');
+    _l.rel  = 'stylesheet';
+    _l.href = _base + 'volty.min.css';
+    _l.setAttribute('data-volty', '');
+    // Insert before any other styles so Volty tokens are available immediately
+    var _first = document.head.querySelector('link, style');
+    _first ? document.head.insertBefore(_l, _first) : document.head.appendChild(_l);
+  }
+})();\n`;
+
+  const voltyJs  = fs.readFileSync(path.join(SRC, "volty.js"),        "utf8");
+  const insertJs = fs.readFileSync(path.join(SRC, "volty-insert.js"), "utf8");
+  const embedJs  = BANNER + "\n" + embedPreamble + "\n" + voltyJs + "\n" + insertJs;
+  const outEmbed = path.join(DIST, "volty-embed.js");
+  fs.writeFileSync(outEmbed, embedJs);
+  const sizeEmbed = (Buffer.byteLength(embedJs, "utf8") / 1024).toFixed(1);
+
   // --- Report ---------------------------------------------------------------
   const elapsed = Date.now() - start;
   console.log(`\nVolty v${PKG.version} built in ${elapsed}ms`);
@@ -347,6 +381,7 @@ function build() {
   console.log(`  dist/volty.schema.json  ${sizeSchema} kB`);
   console.log(`  dist/llms.txt           ${sizeLlms} kB`);
   console.log(`  dist/volty-insert.js    ${sizeInsert} kB`);
+  console.log(`  dist/volty-embed.js     ${sizeEmbed} kB  ← single-file install`);
   console.log();
 }
 

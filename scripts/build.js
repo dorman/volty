@@ -35,6 +35,7 @@ const SOURCE_FILES = [
   ["components/select.css",  "COMPONENT — SELECT"],
   ["components/modal.css",   "COMPONENT — MODAL"],
   ["components/toast.css",   "COMPONENT — TOAST"],
+  ["layout/layout.css",      "LAYOUT UTILITIES"],
 ];
 
 // Component metadata — modifiers, key elements, JS API notes
@@ -113,6 +114,35 @@ const COMPONENTS = [
     description: "Form field layout wrapper. Use with .vt-label, .vt-field-hint, .vt-field-error.",
     modifiers: [],
     elements: [".vt-label", ".vt-field-hint", ".vt-field-error"],
+  },
+  // ── Layout primitives (volty.utilities layer) ──────────────────────────────
+  {
+    class: "vt-stack",
+    element: "div | section | *",
+    description: "Vertical flex column. Children stack top-to-bottom with uniform gap. Default gap: --vt-space-4.",
+    modifiers: ["--gap-1", "--gap-2", "--gap-3", "--gap-4", "--gap-5", "--gap-6", "--gap-8", "--center", "--end"],
+    notes: "Override gap inline: style=\"--vt-stack-gap: var(--vt-space-6)\"",
+  },
+  {
+    class: "vt-cluster",
+    element: "div | *",
+    description: "Horizontal wrapping flex row for inline groups: buttons, tags, breadcrumbs. Default gap: --vt-space-3.",
+    modifiers: ["--gap-1", "--gap-2", "--gap-3", "--gap-4", "--gap-5", "--gap-6", "--center", "--end", "--between"],
+    notes: "Override gap inline: style=\"--vt-cluster-gap: var(--vt-space-4)\"",
+  },
+  {
+    class: "vt-grid",
+    element: "div | *",
+    description: "Responsive auto-fit CSS grid. Columns collapse below --vt-grid-min (default 16rem) with no media queries. Default gap: --vt-space-5.",
+    modifiers: ["--cols-2", "--cols-3", "--cols-4", "--gap-1", "--gap-2", "--gap-3", "--gap-4", "--gap-5", "--gap-6", "--gap-8"],
+    notes: "Override min column width inline: style=\"--vt-grid-min: 12rem\". container-type: inline-size set — child components can use @container queries per cell.",
+  },
+  {
+    class: "vt-container",
+    element: "div | *",
+    description: "Centered max-width page wrapper with horizontal padding. Default max-width: 72rem (~1152px).",
+    modifiers: ["--sm", "--md", "--lg", "--xl", "--full"],
+    notes: "sm=640px md=896px lg=1280px xl=1536px full=no max-width. Override inline: style=\"--vt-container-width: 60rem\"",
   },
 ];
 
@@ -271,6 +301,9 @@ RULES FOR AI CODE GENERATION
 6. Add container-type: inline-size to any parent that should trigger responsive behavior.
 7. For form fields: wrap input/select in .vt-field with a .vt-label sibling.
 8. All @property tokens have initial-value fallbacks — missing token refs render correctly.
+9. Layout primitives (vt-stack, vt-cluster, vt-grid, vt-container) live in volty.utilities — they override component styles when combined.
+10. Layout gap always references a --vt-space-N token, never a hardcoded value.
+11. vt-grid auto-fit handles responsiveness — avoid --cols-N modifiers unless a fixed count is explicitly required.
 `;
 }
 

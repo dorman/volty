@@ -1,0 +1,125 @@
+@layer volty.utilities {
+
+  /* ── vt-stack ──────────────────────────────────────────────────────────────
+     Vertical flex column. Children stack top-to-bottom with a uniform gap.
+     Default gap: --vt-space-4.
+
+     Override with a gap modifier or inline style:
+       style="--vt-stack-gap: var(--vt-space-6)"
+  ─────────────────────────────────────────────────────────────────────────── */
+
+  .vt-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--vt-stack-gap, var(--vt-space-4));
+  }
+
+  /* Gap modifiers — keyed to the spacing token scale */
+  .vt-stack--gap-1 { --vt-stack-gap: var(--vt-space-1); }
+  .vt-stack--gap-2 { --vt-stack-gap: var(--vt-space-2); }
+  .vt-stack--gap-3 { --vt-stack-gap: var(--vt-space-3); }
+  .vt-stack--gap-4 { --vt-stack-gap: var(--vt-space-4); }
+  .vt-stack--gap-5 { --vt-stack-gap: var(--vt-space-5); }
+  .vt-stack--gap-6 { --vt-stack-gap: var(--vt-space-6); }
+  .vt-stack--gap-8 { --vt-stack-gap: var(--vt-space-8); }
+
+  /* Cross-axis alignment */
+  .vt-stack--center { align-items: center; }
+  .vt-stack--end    { align-items: flex-end; }
+
+
+  /* ── vt-cluster ────────────────────────────────────────────────────────────
+     Horizontal flex row, wrapping. For inline groups: buttons, tags,
+     breadcrumbs, form action rows.
+     Default gap: --vt-space-3.
+
+     Override gap inline:
+       style="--vt-cluster-gap: var(--vt-space-5)"
+  ─────────────────────────────────────────────────────────────────────────── */
+
+  .vt-cluster {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--vt-cluster-gap, var(--vt-space-3));
+    align-items: center;
+  }
+
+  /* Gap modifiers */
+  .vt-cluster--gap-1 { --vt-cluster-gap: var(--vt-space-1); }
+  .vt-cluster--gap-2 { --vt-cluster-gap: var(--vt-space-2); }
+  .vt-cluster--gap-3 { --vt-cluster-gap: var(--vt-space-3); }
+  .vt-cluster--gap-4 { --vt-cluster-gap: var(--vt-space-4); }
+  .vt-cluster--gap-5 { --vt-cluster-gap: var(--vt-space-5); }
+  .vt-cluster--gap-6 { --vt-cluster-gap: var(--vt-space-6); }
+
+  /* Main-axis alignment */
+  .vt-cluster--center  { justify-content: center; }
+  .vt-cluster--end     { justify-content: flex-end; }
+  .vt-cluster--between { justify-content: space-between; }
+
+
+  /* ── vt-grid ───────────────────────────────────────────────────────────────
+     Responsive CSS grid with auto-fit columns by default. Columns collapse
+     naturally once they'd be narrower than --vt-grid-min (default 16rem) —
+     no media queries needed.
+
+     container-type: inline-size lets child components (e.g. vt-card) run
+     their own @container queries relative to each grid cell width.
+
+     Use --cols-N modifiers for a fixed column count when you explicitly
+     don't want responsive collapsing.
+
+     Override min column width inline:
+       style="--vt-grid-min: 12rem"
+  ─────────────────────────────────────────────────────────────────────────── */
+
+  .vt-grid {
+    container-type: inline-size;
+    display: grid;
+    gap: var(--vt-grid-gap, var(--vt-space-5));
+    /* min(..., 100%) prevents overflow when the container is narrower than
+       --vt-grid-min — the RAM (Repeat, Auto, Minmax) overflow fix. */
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(var(--vt-grid-min, 16rem), 100%), 1fr)
+    );
+  }
+
+  /* Fixed column counts — opt out of auto-fit */
+  .vt-grid--cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .vt-grid--cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .vt-grid--cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  /* Gap modifiers */
+  .vt-grid--gap-1 { --vt-grid-gap: var(--vt-space-1); }
+  .vt-grid--gap-2 { --vt-grid-gap: var(--vt-space-2); }
+  .vt-grid--gap-3 { --vt-grid-gap: var(--vt-space-3); }
+  .vt-grid--gap-4 { --vt-grid-gap: var(--vt-space-4); }
+  .vt-grid--gap-5 { --vt-grid-gap: var(--vt-space-5); }
+  .vt-grid--gap-6 { --vt-grid-gap: var(--vt-space-6); }
+  .vt-grid--gap-8 { --vt-grid-gap: var(--vt-space-8); }
+
+
+  /* ── vt-container ──────────────────────────────────────────────────────────
+     Centered page-width wrapper with horizontal padding. Defaults to 72rem
+     (~1152px). Horizontal padding prevents edge-to-edge content on narrow
+     viewports without breakpoint math.
+
+     Override width inline:
+       style="--vt-container-width: 60rem"
+  ─────────────────────────────────────────────────────────────────────────── */
+
+  .vt-container {
+    width: 100%;
+    max-width: var(--vt-container-width, 72rem);
+    margin-inline: auto;
+    padding-inline: var(--vt-space-5);
+  }
+
+  .vt-container--sm   { --vt-container-width: 40rem; } /*  640px */
+  .vt-container--md   { --vt-container-width: 56rem; } /*  896px */
+  .vt-container--lg   { --vt-container-width: 80rem; } /* 1280px */
+  .vt-container--xl   { --vt-container-width: 96rem; } /* 1536px */
+  .vt-container--full { max-width: none; }
+
+}

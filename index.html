@@ -91,31 +91,15 @@
     .demo-logo {
       display: flex;
       align-items: center;
-      gap: var(--vt-space-2);
+      gap: 0;
       text-decoration: none;
     }
 
     .demo-logo__mark {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--vt-radius-md);
-      background: var(--vt-color-brand);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--vt-color-brand-text);
-      letter-spacing: -0.03em;
+      height: 100px;
+      width: auto;
       flex-shrink: 0;
-      transition: background-color var(--vt-duration-base) ease;
-    }
-
-    .demo-logo__name {
-      font-size: var(--vt-text-lg);
-      font-weight: var(--vt-font-weight-bold);
-      color: var(--vt-color-text);
-      letter-spacing: -0.02em;
+      margin-right: -55px;
     }
 
     .demo-logo__version {
@@ -182,7 +166,7 @@
     .demo-hero__eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: var(--vt-space-2);
+      gap: 0;
       margin-block-end: var(--vt-space-5);
       flex-wrap: wrap;
       justify-content: center;
@@ -222,7 +206,7 @@
     .demo-features {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--vt-space-2);
+      gap: 0;
       justify-content: center;
       margin-block-end: var(--vt-space-8);
     }
@@ -392,10 +376,7 @@
 
       <!-- Logo -->
       <a href="#" class="demo-logo">
-        <div class="demo-logo__mark">V</div>
-        <div>
-          <div class="demo-logo__name">Volty</div>
-        </div>
+        <img class="demo-logo__mark" src="assets/volty-logo.png" alt="Volty logo">
         <span class="vt-badge vt-badge--surface demo-logo__version">v0.1.0</span>
       </a>
 

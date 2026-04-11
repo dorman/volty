@@ -8,6 +8,20 @@
   <!-- Volty CSS -->
   <link rel="stylesheet" href="dist/volty.css">
 
+  <style>
+    .code-expander summary {
+      cursor: pointer;
+      font-weight :bold;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border: 1px solid #ccc;
+    }
+    .code-expander pre {
+      background-color: #eee;
+      padding: 10px;
+    }
+  </style>
+
   <!-- Volty JS (loaded before body so theme applies before paint) -->
   <script src="src/volty.js"></script>
     <style>
@@ -88,30 +102,15 @@
     .demo-logo {
       display: flex;
       align-items: center;
-      gap: var(--vt-space-2);
+      gap: 0;
       text-decoration: none;
     }
 
     .demo-logo__mark {
-      width: 32px;
-      height: 32px;
-      border-radius: var(--vt-radius-md);
-      background: var(--vt-color-brand);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--vt-color-brand-text);
-      letter-spacing: -0.03em;
+      height: 100px;
+      width: auto;
       flex-shrink: 0;
-    }
-
-    .demo-logo__name {
-      font-size: var(--vt-text-lg);
-      font-weight: var(--vt-font-weight-bold);
-      color: var(--vt-color-text);
-      letter-spacing: -0.02em;
+      margin-right: -55px;
     }
 
     .demo-nav__controls {
@@ -215,7 +214,7 @@
     .demo-sidebar__link {
       display: flex;
       align-items: center;
-      gap: var(--vt-space-2);
+      gap: 0;
       padding-block: var(--vt-space-1);
       padding-inline: var(--vt-space-3);
       border-radius: var(--vt-radius-md);
@@ -285,7 +284,8 @@
 
     /* Hero */
     .demo-hero {
-      padding-block: var(--vt-space-10);
+      padding-block-start: var(--vt-space-8);
+      padding-block-end: var(--vt-space-4);
       text-align: center;
       max-width: 720px;
       margin-inline: auto;
@@ -294,7 +294,7 @@
     .demo-hero__eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: var(--vt-space-2);
+      gap: 0;
       margin-block-end: var(--vt-space-4);
     }
 
@@ -331,7 +331,7 @@
     .demo-features {
       display: flex;
       flex-wrap: wrap;
-      gap: var(--vt-space-2);
+      gap: 0;
       justify-content: center;
       margin-block-end: var(--vt-space-8);
     }
@@ -359,6 +359,7 @@
 
     .demo-section:first-of-type {
       border-top: none;
+      padding-block-start: var(--vt-space-4);
     }
 
     .demo-section__header {
@@ -704,7 +705,7 @@
 
     .demo-subtle-row {
       display: flex;
-      gap: var(--vt-space-2);
+      gap: 0;
       flex-wrap: wrap;
       margin-block-end: var(--vt-space-3);
     }
@@ -717,7 +718,7 @@
     .demo-shadow-token-table {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: var(--vt-space-2);
+      gap: 0;
       font-size: var(--vt-text-xs);
       font-family: var(--vt-font-mono);
     }
@@ -725,7 +726,7 @@
     .demo-shadow-token-row {
       display: flex;
       align-items: center;
-      gap: var(--vt-space-2);
+      gap: 0;
       padding: var(--vt-space-2) var(--vt-space-3);
       background: var(--vt-color-surface-raised);
       border: 1px solid var(--vt-color-border);
@@ -784,7 +785,7 @@
     .demo-ai-rules {
       display: flex;
       flex-direction: column;
-      gap: var(--vt-space-2);
+      gap: 0;
       counter-reset: rule;
     }
 
@@ -852,10 +853,7 @@
 
       <!-- Logo -->
       <a href="index.html" class="demo-logo">
-        <div class="demo-logo__mark">V</div>
-        <div>
-          <div class="demo-logo__name">Volty</div>
-        </div>
+        <img class="demo-logo__mark" src="assets/volty-logo.png" alt="Volty logo">
         <span class="vt-badge vt-badge--surface demo-logo__version">v0.1.0</span>
       </a>
 
@@ -988,7 +986,6 @@
            <code class="install">&lt;script src="dist/volty-embed.js"&gt;&lt;/script&gt;</code>
         </p>
       </div>
-
     <!-- BUTTONS ============================================================= -->
     <section class="demo-section" id="buttons">
       <div class="demo-section__header">
@@ -1001,6 +998,18 @@
           matches the current brand color.
         </p>
       </div>
+
+      <details>
+        <summary style="cursor: pointer; font-weight: bold;">View code</summary>
+        <pre style="background: #5d5d5d; padding: 1rem; border-radius: 4px; overflow-x: auto;">
+          <code>&lt;button class="vt-btn"&gt;Primary&lt;/button&gt;</code>
+          <code>&lt;button class="vt-btn vt-btn--outline"&gt;Outline&lt;/button&gt;</code>
+          <code>&lt;button class="vt-btn vt-btn--ghost"&gt;Ghost&lt;/button&gt;</code>
+          <code>&lt;button class="vt-btn vt-btn--surface"&gt;Surface&lt;/button&gt;</code>
+          <code>&lt;button class="vt-btn vt-btn--danger"&gt;Danger&lt;/button&gt;</code>
+          </code>
+        </pre>      
+      </details>
 
       <div class="demo-subsection">
         <p class="demo-subsection__title">Style variants</p>

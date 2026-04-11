@@ -1,5 +1,3 @@
-# Volty
-
 <img src="assets/volty-logo.png" alt="Volty" width="400">
 
 A modern CSS theme library built on features that other libraries haven't fully exploited yet — typed design tokens, native Shadow DOM theming, and a component shorthand system that lets you drop in any component with a single tag.

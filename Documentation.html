@@ -840,6 +840,99 @@
       font-family: var(--vt-font-mono);
       color: var(--vt-color-brand);
     }
+
+    /* =========================================================================
+       Code snippet blocks
+       ========================================================================= */
+    .demo-snippet {
+      margin-block-start: var(--vt-space-6);
+      border-radius: var(--vt-radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--vt-color-border);
+    }
+
+    .demo-snippet + .demo-snippet {
+      margin-block-start: var(--vt-space-3);
+    }
+
+    .demo-snippet__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: var(--vt-space-2);
+      padding-inline: var(--vt-space-4);
+      background-color: var(--vt-color-surface-raised);
+      border-bottom: 1px solid transparent;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      gap: var(--vt-space-3);
+    }
+
+    .demo-snippet[open] .demo-snippet__header {
+      border-bottom-color: var(--vt-color-border);
+    }
+
+    .demo-snippet__header::-webkit-details-marker { display: none; }
+    .demo-snippet__header::marker { display: none; }
+
+    .demo-snippet__lang {
+      flex: 1;
+    }
+
+    .demo-snippet__chevron {
+      color: var(--vt-color-text-muted);
+      font-size: 10px;
+      transition: transform var(--vt-duration-fast) ease;
+      flex-shrink: 0;
+    }
+
+    .demo-snippet[open] .demo-snippet__chevron {
+      transform: rotate(90deg);
+    }
+
+    .demo-snippet__lang {
+      font-size: var(--vt-text-xs);
+      font-family: var(--vt-font-mono);
+      font-weight: var(--vt-font-weight-semibold);
+      color: var(--vt-color-brand);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .demo-snippet__copy {
+      font-size: var(--vt-text-xs);
+      font-family: var(--vt-font-mono);
+      padding-block: 3px;
+      padding-inline: var(--vt-space-3);
+      border-radius: var(--vt-radius-md);
+      border: 1px solid var(--vt-color-border);
+      background: transparent;
+      color: var(--vt-color-text-muted);
+      cursor: pointer;
+      transition: color var(--vt-duration-fast) ease, background-color var(--vt-duration-fast) ease;
+    }
+
+    .demo-snippet__copy:hover {
+      color: var(--vt-color-text);
+      background-color: var(--vt-color-surface-overlay);
+    }
+
+    .demo-snippet pre {
+      margin: 0;
+      padding: var(--vt-space-5);
+      overflow-x: auto;
+      background-color: oklch(10% 0 0);
+      font-family: var(--vt-font-mono);
+      font-size: 13px;
+      line-height: 1.75;
+      color: oklch(82% 0 0);
+      tab-size: 2;
+    }
+
+    .demo-snippet code {
+      white-space: pre;
+    }
   </style>
 </head>
 
@@ -999,18 +1092,6 @@
         </p>
       </div>
 
-      <details>
-        <summary style="cursor: pointer; font-weight: bold;">View code</summary>
-        <pre style="background: #5d5d5d; padding: 1rem; border-radius: 4px; overflow-x: auto;">
-          <code>&lt;button class="vt-btn"&gt;Primary&lt;/button&gt;</code>
-          <code>&lt;button class="vt-btn vt-btn--outline"&gt;Outline&lt;/button&gt;</code>
-          <code>&lt;button class="vt-btn vt-btn--ghost"&gt;Ghost&lt;/button&gt;</code>
-          <code>&lt;button class="vt-btn vt-btn--surface"&gt;Surface&lt;/button&gt;</code>
-          <code>&lt;button class="vt-btn vt-btn--danger"&gt;Danger&lt;/button&gt;</code>
-          </code>
-        </pre>      
-      </details>
-
       <div class="demo-subsection">
         <p class="demo-subsection__title">Style variants</p>
         <div class="demo-row">
@@ -1022,15 +1103,6 @@
         </div>
       </div>
       
-      <details>
-        <summary style="cursor: pointer; font-weight: bold;">View code</summary>
-        <pre style="background: #5d5d5d; padding: 1rem; border-radius: 4px; overflow-x: auto;">
-          <code>&lt;button class="vt-btn vt-btn--sm"&gt;Small&lt;/button&gt;</code>
-          <code>&lt;button class="vt-btn"&gt;Default&lt;/button&gt;</code>
-          <code>&lt;button class="vt-btn vt-btn--lg"&gt;Large&lt;/button&gt;</code>
-          </pre>
-        </details>
-            
       <div class="demo-subsection">
         <p class="demo-subsection__title">Size variants</p>
         <div class="demo-row">
@@ -1116,6 +1188,41 @@
           </button>
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Style variants --&gt;
+&lt;button class="vt-btn"&gt;Primary&lt;/button&gt;
+&lt;button class="vt-btn vt-btn--outline"&gt;Outline&lt;/button&gt;
+&lt;button class="vt-btn vt-btn--ghost"&gt;Ghost&lt;/button&gt;
+&lt;button class="vt-btn vt-btn--surface"&gt;Surface&lt;/button&gt;
+&lt;button class="vt-btn vt-btn--danger"&gt;Danger&lt;/button&gt;
+
+&lt;!-- Size variants --&gt;
+&lt;button class="vt-btn vt-btn--sm"&gt;Small&lt;/button&gt;
+&lt;button class="vt-btn"&gt;Default&lt;/button&gt;
+&lt;button class="vt-btn vt-btn--lg"&gt;Large&lt;/button&gt;
+
+&lt;!-- Icon-only button --&gt;
+&lt;button class="vt-btn vt-btn--icon" title="Add"&gt;
+  &lt;svg ...&gt;&lt;/svg&gt;
+&lt;/button&gt;
+&lt;button class="vt-btn vt-btn--icon vt-btn--outline"&gt;&lt;svg ...&gt;&lt;/svg&gt;&lt;/button&gt;
+
+&lt;!-- Button with leading/trailing icon --&gt;
+&lt;button class="vt-btn"&gt;
+  &lt;svg ...&gt;&lt;/svg&gt;
+  New Project
+&lt;/button&gt;
+
+&lt;!-- Disabled state --&gt;
+&lt;button class="vt-btn" disabled&gt;Primary&lt;/button&gt;
+&lt;button class="vt-btn vt-btn--outline" disabled&gt;Outline&lt;/button&gt;</code></pre>
+      </details>
     </section>
 
     <!-- CARDS =============================================================== -->
@@ -1214,6 +1321,40 @@
           </div>
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Basic card --&gt;
+&lt;div class="vt-card"&gt;
+  &lt;div class="vt-card__header"&gt;
+    &lt;h3 class="vt-card__title"&gt;Title&lt;/h3&gt;
+    &lt;p class="vt-card__description"&gt;Description&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="vt-card__body"&gt;Content here.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Raised (box shadow) --&gt;
+&lt;div class="vt-card vt-card--raised"&gt;...&lt;/div&gt;
+
+&lt;!-- Interactive (hover glow from brand token) --&gt;
+&lt;div class="vt-card vt-card--interactive"&gt;...&lt;/div&gt;
+
+&lt;!-- Card with footer — footer aligns right above 420px container (container query) --&gt;
+&lt;div class="vt-card"&gt;
+  &lt;div class="vt-card__header"&gt;
+    &lt;h3 class="vt-card__title"&gt;Title&lt;/h3&gt;
+  &lt;/div&gt;
+  &lt;div class="vt-card__body"&gt;...&lt;/div&gt;
+  &lt;div class="vt-card__footer"&gt;
+    &lt;button class="vt-btn vt-btn--surface vt-btn--sm"&gt;Cancel&lt;/button&gt;
+    &lt;button class="vt-btn vt-btn--sm"&gt;Confirm&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      </details>
 
     </section>
 
@@ -1320,6 +1461,36 @@
         </div>
       </div>
 
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Default (brand subtle) --&gt;
+&lt;span class="vt-badge"&gt;Beta&lt;/span&gt;
+
+&lt;!-- Solid --&gt;
+&lt;span class="vt-badge vt-badge--solid"&gt;Active&lt;/span&gt;
+
+&lt;!-- Surface (neutral) --&gt;
+&lt;span class="vt-badge vt-badge--surface"&gt;Draft&lt;/span&gt;
+&lt;span class="vt-badge vt-badge--surface"&gt;v2.4.1&lt;/span&gt;
+
+&lt;!-- Semantic status --&gt;
+&lt;span class="vt-badge vt-badge--success"&gt;Deployed&lt;/span&gt;
+&lt;span class="vt-badge vt-badge--warning"&gt;Degraded&lt;/span&gt;
+&lt;span class="vt-badge vt-badge--danger"&gt;Incident&lt;/span&gt;
+
+&lt;!-- With dot indicator --&gt;
+&lt;span class="vt-badge vt-badge--success"&gt;
+  &lt;svg width="8" height="8" viewBox="0 0 8 8"&gt;
+    &lt;circle cx="4" cy="4" r="4" fill="currentColor"/&gt;
+  &lt;/svg&gt;
+  Healthy
+&lt;/span&gt;</code></pre>
+      </details>
+
     </section>
 
     <!-- Component Shorthand ================================================= -->
@@ -1335,9 +1506,84 @@
         <vt-nav logo="My App" version="v1.0"
         links='[{"href":"/","label":"Home"},{"href":"/docs","label":"Docs"},{"href":"/about","label":"About"}]'>
         </vt-nav>
-        
 
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html — custom element</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Navigation bar --&gt;
+&lt;vt-nav logo="My App" version="v1.0"
+  links='[{"href":"/","label":"Home"},{"href":"/docs","label":"Docs"},{"href":"/about","label":"About"}]'&gt;
+&lt;/vt-nav&gt;
 
+&lt;!-- Card --&gt;
+&lt;vt-card title="Card title" description="Subtitle"&gt;Body content here.&lt;/vt-card&gt;
+&lt;vt-card title="Raised" variant="raised" footer='&lt;button class="vt-btn vt-btn--sm"&gt;Action&lt;/button&gt;'&gt;&lt;/vt-card&gt;
+
+&lt;!-- Alert --&gt;
+&lt;vt-alert variant="success" title="Deployed"&gt;Version 2.0 is live.&lt;/vt-alert&gt;
+&lt;vt-alert variant="danger" title="Error" dismissible="false"&gt;Payment failed.&lt;/vt-alert&gt;
+
+&lt;!-- Badge &amp; Button --&gt;
+&lt;vt-badge variant="success"&gt;Active&lt;/vt-badge&gt;
+&lt;vt-button variant="outline" size="sm"&gt;Outline&lt;/vt-button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;vt-modal id="confirm" title="Confirm" confirm="Yes, delete" cancel="Cancel" variant="danger"&gt;
+  This cannot be undone.
+&lt;/vt-modal&gt;
+
+&lt;!-- Toast trigger --&gt;
+&lt;vt-toast-trigger variant="success" message="Saved!" title="Done"&gt;Save changes&lt;/vt-toast-trigger&gt;</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html — data attribute</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Works on any existing element — useful for CMS output, templates --&gt;
+&lt;div data-vt-insert="nav"
+     data-logo="My App"
+     data-links='[{"href":"/","label":"Home"}]'&gt;&lt;/div&gt;
+
+&lt;div data-vt-insert="alert"
+     data-variant="warning"
+     data-title="Heads up"&gt;Rate limit at 85%.&lt;/div&gt;
+
+&lt;div data-vt-insert="card"
+     data-title="Hello"
+     data-description="Subtitle"&gt;Body content&lt;/div&gt;</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js — api</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>// Render into a target element (replaces innerHTML)
+Volty.insert('nav', document.querySelector('header'), {
+  logo: 'My App',
+  links: [
+    { href: '/', label: 'Home' },
+    { href: '/docs', label: 'Docs', active: true },
+    { href: 'https://github.com/org/repo', label: 'GitHub', external: true },
+  ],
+});
+
+// Get raw HTML string from any template
+const html = Volty.templates.card({
+  title: 'Hello',
+  description: 'World',
+  content: '&lt;p&gt;Body text&lt;/p&gt;',
+  variant: 'raised',
+});
+
+// Re-scan for data-vt-insert after dynamic content is added
+Volty.processInserts(document.getElementById('container'));</code></pre>
+      </details>
 
     </section>
 
@@ -1392,6 +1638,40 @@
         </div>
 
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Default field --&gt;
+&lt;div class="vt-field"&gt;
+  &lt;label class="vt-label" for="email"&gt;Email address&lt;/label&gt;
+  &lt;input class="vt-input" id="email" type="email" placeholder="you@example.com"&gt;
+  &lt;span class="vt-hint"&gt;We'll never share your email.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Required field --&gt;
+&lt;div class="vt-field"&gt;
+  &lt;label class="vt-label vt-label--required" for="name"&gt;Full name&lt;/label&gt;
+  &lt;input class="vt-input" id="name" type="text" placeholder="Jane Smith"&gt;
+&lt;/div&gt;
+
+&lt;!-- Error state --&gt;
+&lt;div class="vt-field"&gt;
+  &lt;label class="vt-label" for="username"&gt;Username&lt;/label&gt;
+  &lt;input class="vt-input vt-input--error" id="username" type="text" value="jane!smith"&gt;
+  &lt;span class="vt-hint vt-hint--error"&gt;Only letters, numbers, and underscores.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Disabled --&gt;
+&lt;div class="vt-field"&gt;
+  &lt;label class="vt-label" for="api-key"&gt;API Key&lt;/label&gt;
+  &lt;input class="vt-input" id="api-key" type="text" value="sk-••••••••••••••••" disabled&gt;
+  &lt;span class="vt-hint"&gt;Contact support to rotate your key.&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+      </details>
 
     </section>
 
@@ -1479,6 +1759,35 @@
         </div>
 
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;label class="vt-switch"&gt;
+  &lt;input type="checkbox" checked&gt;
+  &lt;span class="vt-switch__track"&gt;
+    &lt;span class="vt-switch__thumb"&gt;&lt;/span&gt;
+  &lt;/span&gt;
+  &lt;span class="vt-switch__label"&gt;Email notifications&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- Unchecked --&gt;
+&lt;label class="vt-switch"&gt;
+  &lt;input type="checkbox"&gt;
+  &lt;span class="vt-switch__track"&gt;&lt;span class="vt-switch__thumb"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="vt-switch__label"&gt;SMS alerts&lt;/span&gt;
+&lt;/label&gt;
+
+&lt;!-- Disabled — :has(input:checked) drives state in CSS, no JS needed --&gt;
+&lt;label class="vt-switch"&gt;
+  &lt;input type="checkbox" disabled&gt;
+  &lt;span class="vt-switch__track"&gt;&lt;span class="vt-switch__thumb"&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class="vt-switch__label"&gt;Account activity (required)&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+      </details>
     </section>
 
     <!-- ALERTS ============================================================== -->
@@ -1568,6 +1877,33 @@
           </div>
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Default (info) --&gt;
+&lt;div class="vt-alert" role="alert"&gt;
+  &lt;div class="vt-alert__icon"&gt;&lt;svg ...&gt;&lt;/svg&gt;&lt;/div&gt;
+  &lt;div class="vt-alert__body"&gt;
+    &lt;p class="vt-alert__title"&gt;Info&lt;/p&gt;
+    &lt;p class="vt-alert__desc"&gt;Your session will expire in 15 minutes.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;button class="vt-alert__dismiss" aria-label="Dismiss"
+    onclick="this.closest('.vt-alert').remove()"&gt;&lt;svg ...&gt;&lt;/svg&gt;&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;!-- Semantic variants --&gt;
+&lt;div class="vt-alert vt-alert--success" role="alert"&gt;...&lt;/div&gt;
+&lt;div class="vt-alert vt-alert--warning" role="alert"&gt;...&lt;/div&gt;
+&lt;div class="vt-alert vt-alert--danger"  role="alert"&gt;...&lt;/div&gt;
+
+&lt;!-- Solid variant (higher contrast) --&gt;
+&lt;div class="vt-alert vt-alert--solid vt-alert--success" role="alert"&gt;...&lt;/div&gt;
+&lt;div class="vt-alert vt-alert--solid vt-alert--danger"  role="alert"&gt;...&lt;/div&gt;</code></pre>
+      </details>
     </section>
 
     <!-- TOOLTIP ============================================================= -->
@@ -1604,6 +1940,24 @@
           <button class="vt-btn vt-btn--surface vt-btn--sm" data-tooltip="Appears right" data-tooltip-placement="right">Right</button>
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- data-tooltip — zero markup, pure CSS, no JS --&gt;
+&lt;button class="vt-btn" data-tooltip="Saves your current progress"&gt;Save&lt;/button&gt;
+&lt;button class="vt-btn" data-tooltip="Permanently deletes this item"
+  data-tooltip-placement="bottom"&gt;Delete&lt;/button&gt;
+
+&lt;!-- Placement variants: top (default) | bottom | left | right --&gt;
+&lt;button data-tooltip="Appears above"  data-tooltip-placement="top"&gt;Top&lt;/button&gt;
+&lt;button data-tooltip="Appears below"  data-tooltip-placement="bottom"&gt;Bottom&lt;/button&gt;
+&lt;button data-tooltip="Appears left"   data-tooltip-placement="left"&gt;Left&lt;/button&gt;
+&lt;button data-tooltip="Appears right"  data-tooltip-placement="right"&gt;Right&lt;/button&gt;</code></pre>
+      </details>
     </section>
 
     <!-- SELECT ============================================================== -->
@@ -1670,6 +2024,39 @@
         </div>
 
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Wrap in .vt-field for label + hint layout --&gt;
+&lt;div class="vt-field"&gt;
+  &lt;label class="vt-label" for="region"&gt;Region&lt;/label&gt;
+  &lt;div class="vt-select"&gt;
+    &lt;select id="region"&gt;
+      &lt;option&gt;US East (N. Virginia)&lt;/option&gt;
+      &lt;option&gt;EU (Ireland)&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+  &lt;span class="vt-field-hint"&gt;Closest to your users.&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Small size --&gt;
+&lt;div class="vt-select vt-select--sm"&gt;&lt;select&gt;...&lt;/select&gt;&lt;/div&gt;
+
+&lt;!-- Error state --&gt;
+&lt;div class="vt-select vt-select--error"&gt;
+  &lt;select&gt;&lt;option value=""&gt;Select a role…&lt;/option&gt;&lt;/select&gt;
+&lt;/div&gt;
+&lt;span class="vt-field-error"&gt;A role is required.&lt;/span&gt;
+
+&lt;!-- Disabled --&gt;
+&lt;div class="vt-select"&gt;
+  &lt;select disabled&gt;&lt;option&gt;Production&lt;/option&gt;&lt;/select&gt;
+&lt;/div&gt;</code></pre>
+      </details>
     </section>
 
     <!-- MODAL =============================================================== -->
@@ -1756,6 +2143,53 @@
         </div>
       </dialog>
 
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Trigger button --&gt;
+&lt;button class="vt-btn" onclick="document.getElementById('my-modal').showModal()"&gt;
+  Open modal
+&lt;/button&gt;
+
+&lt;!-- Default modal — entry/exit animation via @starting-style, no JS --&gt;
+&lt;dialog class="vt-modal" id="my-modal"&gt;
+  &lt;div class="vt-modal__header"&gt;
+    &lt;h2 class="vt-modal__title"&gt;Publish changes&lt;/h2&gt;
+    &lt;button class="vt-modal__close" aria-label="Close"
+      onclick="this.closest('dialog').close()"&gt;&lt;svg ...&gt;&lt;/svg&gt;&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="vt-modal__body"&gt;
+    &lt;p&gt;Your changes will go live immediately.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="vt-modal__footer"&gt;
+    &lt;button class="vt-btn vt-btn--surface" onclick="this.closest('dialog').close()"&gt;Cancel&lt;/button&gt;
+    &lt;button class="vt-btn" onclick="this.closest('dialog').close()"&gt;Publish&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/dialog&gt;
+
+&lt;!-- Size variants --&gt;
+&lt;dialog class="vt-modal vt-modal--sm" id="rename"&gt;...&lt;/dialog&gt;
+&lt;dialog class="vt-modal vt-modal--lg" id="preview"&gt;...&lt;/dialog&gt;
+
+&lt;!-- Danger variant --&gt;
+&lt;dialog class="vt-modal vt-modal--danger" id="delete"&gt;...&lt;/dialog&gt;</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js — close on backdrop click</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>document.querySelectorAll('.vt-modal').forEach(modal => {
+  modal.addEventListener('click', e => {
+    if (e.target === modal) modal.close();
+  });
+});</code></pre>
+      </details>
+
     </section>
 
     <!-- TOAST =============================================================== -->
@@ -1790,6 +2224,27 @@
           </button>
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>// Simple message
+Volty.toast('Copied to clipboard.')
+
+// With options
+Volty.toast({ message: 'Changes saved.', variant: 'success', title: 'Saved' })
+Volty.toast({ message: 'Rate limit at 85%.', variant: 'warning', title: 'Warning' })
+Volty.toast({ message: 'Could not connect.', variant: 'danger', title: 'Error' })
+
+// Persistent — stays until user dismisses (duration: 0)
+Volty.toast({ message: 'Action required.', title: 'Notice', duration: 0 })
+
+// Custom duration in ms (default: 4000)
+Volty.toast({ message: 'Deploying…', duration: 8000 })</code></pre>
+      </details>
 
     </section>
 
@@ -1863,6 +2318,37 @@
 
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Any element with data-theme="dark" always renders dark --&gt;
+&lt;div data-theme="dark"&gt;
+  &lt;div class="vt-card"&gt;...&lt;/div&gt;
+  &lt;button class="vt-btn"&gt;Always dark&lt;/button&gt;
+  &lt;span class="vt-badge vt-badge--success"&gt;Active&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;!-- Pin a section to always-light --&gt;
+&lt;div data-theme="light"&gt;...&lt;/div&gt;</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>// Override theme globally
+Volty.setTheme('dark')    // force dark
+Volty.setTheme('light')   // force light
+Volty.setTheme('system')  // follow OS preference (default)
+
+Volty.getTheme()          // → 'light' | 'dark' | 'system'
+Volty.getSystemTheme()    // → 'light' | 'dark' (actual resolved value)</code></pre>
+      </details>
     </section>
 
     <!-- BRAND THEMING ======================================================= -->
@@ -1977,6 +2463,44 @@
         </div>
 
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">html</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>&lt;!-- Scoped brand on any container — entire token scale regenerates --&gt;
+&lt;section data-brand="violet"&gt;...&lt;/section&gt;
+&lt;section data-brand="emerald"&gt;...&lt;/section&gt;
+&lt;section data-brand="rose"&gt;...&lt;/section&gt;
+&lt;section data-brand="amber"&gt;...&lt;/section&gt;
+&lt;section data-brand="cyan"&gt;...&lt;/section&gt;</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>// Apply brand globally
+Volty.setBrand('violet')
+Volty.setBrand('emerald')
+Volty.setBrand(null)    // reset to default
+
+Volty.getBrand()        // → 'violet' | null</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">css — custom brand color</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>/* Override --vt-color-brand — entire scale (50–950) regenerates via color-mix() */
+:root {
+  --vt-color-brand: oklch(58% 0.21 310);
+}</code></pre>
+      </details>
 
     </section>
 
@@ -2110,6 +2634,39 @@
         </div>
       </div>
 
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">css</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>/* Surface tokens */
+--vt-color-surface          /* page background */
+--vt-color-surface-raised   /* elevated (sidebars, inputs) */
+--vt-color-surface-overlay  /* highest (cards, modals) */
+
+/* Text */
+--vt-color-text
+--vt-color-text-muted
+
+/* Brand — entire scale (50–950) auto-generated via color-mix() */
+--vt-color-brand
+--vt-color-brand-subtle
+--vt-color-brand-hover
+--vt-color-brand-text
+
+/* Semantic */
+--vt-color-success  /  --vt-color-success-subtle
+--vt-color-warning  /  --vt-color-warning-subtle
+--vt-color-danger   /  --vt-color-danger-subtle
+--vt-color-info     /  --vt-color-info-subtle
+
+/* Override brand — entire scale regenerates automatically */
+:root {
+  --vt-color-brand: oklch(58% 0.21 310);
+}</code></pre>
+      </details>
+
     </section>
 
     <!-- TYPOGRAPHY =========================================================== -->
@@ -2163,6 +2720,38 @@
           <span style="font-size: var(--vt-text-5xl); font-weight: 700; color: var(--vt-color-text); letter-spacing: -0.04em; line-height: 1;">Volty</span>
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">css</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>/* Type scale — all registered as @property &lt;length&gt; tokens */
+--vt-text-xs    /* 12px */
+--vt-text-sm    /* 14px */
+--vt-text-base  /* 16px */
+--vt-text-lg    /* 18px */
+--vt-text-xl    /* 20px */
+--vt-text-2xl   /* 24px */
+--vt-text-3xl   /* 30px */
+--vt-text-4xl   /* 36px */
+--vt-text-5xl   /* 48px */
+
+/* Font weight tokens */
+--vt-font-weight-normal    /* 400 */
+--vt-font-weight-medium    /* 500 */
+--vt-font-weight-semibold  /* 600 */
+--vt-font-weight-bold      /* 700 */
+
+/* Usage example */
+.my-heading {
+  font-size: var(--vt-text-3xl);
+  font-weight: var(--vt-font-weight-bold);
+  letter-spacing: -0.02em;
+  color: var(--vt-color-text);
+}</code></pre>
+      </details>
     </section>
 
     <!-- LAYER ARCHITECTURE ================================================== -->
@@ -2237,6 +2826,33 @@
         </div>
 
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">css</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>/* @layer order — declared once, deterministic cascade */
+@layer
+  volty.reset,       /* box-sizing, margin resets */
+  volty.tokens,      /* @property custom properties */
+  volty.base,        /* html, body defaults */
+  volty.components,  /* .vt-btn, .vt-card, etc. */
+  volty.utilities;   /* your overrides — always win */
+
+/* Override any component without specificity battles */
+@layer volty.utilities {
+  .vt-btn { border-radius: 2px; }
+}
+
+/* @property registration (44 tokens total) */
+@property --vt-color-brand {
+  syntax: '&lt;color&gt;';
+  inherits: true;
+  initial-value: oklch(55% 0.2 250);
+}</code></pre>
+      </details>
     </section>
 
     <!-- @PROPERTY TRANSITIONS ============================================== -->
@@ -2369,6 +2985,45 @@
         </div>
 
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">css</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>/* Volty registers all color tokens as typed &lt;color&gt; via @property */
+@property --vt-color-brand {
+  syntax: '&lt;color&gt;';
+  inherits: true;
+  initial-value: oklch(55% 0.2 250);
+}
+
+/* :root transitions the token itself — every element inherits the animation */
+:root {
+  transition:
+    --vt-color-brand          350ms ease,
+    --vt-color-surface        350ms ease,
+    --vt-color-surface-raised 350ms ease,
+    --vt-color-text           350ms ease;
+}
+
+/* No transition rule needed on components — they animate for free */
+.vt-btn {
+  background: var(--vt-color-brand); /* animates when brand changes */
+  color: var(--vt-color-brand-text);
+}</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>// Each call triggers a smooth 350ms color fade across the entire page
+Volty.setBrand('violet')   // → all brand tokens animate to violet
+Volty.setTheme('dark')     // → all surface + text tokens animate to dark values</code></pre>
+      </details>
     </section>
 
     <!-- CONTAINER QUERIES =================================================== -->
@@ -2467,6 +3122,34 @@
         </div>
 
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">css — how it works</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>/* Components use container-type — they respond to their own container, not viewport */
+.vt-card {
+  container-type: inline-size;
+  container-name: card;
+}
+
+/* Footer aligns right above 420px — no media query needed */
+@container card (min-width: 420px) {
+  .vt-card__footer { justify-content: flex-end; }
+}
+
+/* Buttons go full-width below 280px container */
+@container (max-width: 280px) {
+  .vt-btn { width: 100%; justify-content: center; }
+}
+
+/* Inline field layout above 400px container */
+@container (min-width: 400px) {
+  .vt-field--inline { flex-direction: row; align-items: center; }
+}</code></pre>
+      </details>
     </section>
 
     <!-- DARK MODE SUBTLES =================================================== -->
@@ -2555,6 +3238,32 @@
           </div>
         </div>
       </div>
+
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">css</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>/* ❌ Broken approach — mixing into white produces pale muddy tints in dark mode */
+background: color-mix(in oklch, var(--vt-color-success) 15%, white);
+
+/* ✅ Volty's approach — mix into surface so dark mode gets rich dark tints */
+background: color-mix(in oklch, var(--vt-color-success) 15%, var(--vt-color-surface));
+
+/* This is how all subtle tokens are defined in Volty */
+--vt-color-success-subtle: color-mix(
+  in oklch,
+  var(--vt-color-success) 15%,
+  var(--vt-color-surface)   /* dark surface in dark mode → rich dark tint ✓ */
+);
+
+/* Usage — tokens adapt automatically in both modes */
+.vt-badge--success {
+  background: var(--vt-color-success-subtle);
+  color: var(--vt-color-success);
+}</code></pre>
+      </details>
 
     </section>
 
@@ -2669,6 +3378,55 @@
         </div>
       </div>
 
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>// Attach shadow root — tokens flow in automatically via @property inherits: true
+const shadow = Volty.createShadow(hostElement);
+shadow.innerHTML = `&lt;div class="vt-card"&gt;
+  &lt;div class="vt-card__header"&gt;
+    &lt;h3 class="vt-card__title"&gt;Shadow card&lt;/h3&gt;
+  &lt;/div&gt;
+&lt;/div&gt;`;
+
+// Adopt component styles into an existing shadow root
+Volty.adoptStyles(existingShadowRoot);
+
+// Scoped token override — cascades into all shadow children automatically
+Volty.setTokens(hostElement, {
+  '--vt-color-brand': 'oklch(55% 0.22 10)',
+});</code></pre>
+      </details>
+      <details class="demo-snippet">
+        <summary class="demo-snippet__header">
+          <span class="demo-snippet__lang">js — web component example</span>
+          <span class="demo-snippet__chevron">&#9654;</span>
+          <button class="demo-snippet__copy" onclick="event.preventDefault();event.stopPropagation();copySnippet(this)">Copy</button>
+        </summary>
+        <pre><code>class MyCard extends HTMLElement {
+  connectedCallback() {
+    const shadow = Volty.createShadow(this);
+    shadow.innerHTML = `
+      &lt;div class="vt-card vt-card--raised"&gt;
+        &lt;div class="vt-card__header"&gt;
+          &lt;h3 class="vt-card__title"&gt;&lt;slot name="title"&gt;&lt;/slot&gt;&lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;div class="vt-card__body"&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;
+      &lt;/div&gt;`;
+  }
+}
+customElements.define('my-card', MyCard);
+
+// Usage — all Volty tokens flow in automatically
+// &lt;my-card&gt;
+//   &lt;span slot="title"&gt;Hello from Shadow DOM&lt;/span&gt;
+//   Body content — tokens cross the boundary for free.
+// &lt;/my-card&gt;</code></pre>
+      </details>
+
     </section>
 
     <!-- AI SCHEMA =========================================================== -->
@@ -2749,6 +3507,16 @@
        DEMO INTERACTION SCRIPTS
        ========================================================================= -->
   <script>
+    // Copy code snippet to clipboard
+    function copySnippet(btn) {
+      const code = btn.closest('.demo-snippet').querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = orig, 1500);
+      });
+    }
+
     // Theme switcher UI
     function setThemeGlobal(btn) {
       const theme = btn.dataset.themeValue;

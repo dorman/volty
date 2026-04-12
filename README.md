@@ -1,5 +1,10 @@
 <img src="assets/volty-logo.png" alt="Volty" width="400">
 
+[![npm](https://img.shields.io/npm/v/volty?color=%236366f1&label=npm)](https://npmjs.com/package/volty)
+[![npm downloads](https://img.shields.io/npm/dw/volty?color=%2322c55e&label=downloads)](https://npmjs.com/package/volty)
+[![license](https://img.shields.io/npm/l/volty?color=%23f59e0b)](LICENSE)
+[![demo](https://img.shields.io/badge/live%20demo-volty-8b5cf6)](https://dorman.github.io/volty/)
+
 A modern CSS theme library built on features that other libraries haven't fully exploited yet — typed design tokens, native Shadow DOM theming, and a component shorthand system that lets you drop in any component with a single tag.
 
 ## What makes it different

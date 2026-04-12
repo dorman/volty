@@ -37,10 +37,10 @@
   "homepage": "https://volty.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/volty/volty"
+    "url": "https://github.com/dorman/volty"
   },
   "bugs": {
-    "url": "https://github.com/volty/volty/issues"
+    "url": "https://github.com/dorman/volty/issues"
   },
   "scripts": {
     "build":   "node scripts/build.js",

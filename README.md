@@ -20,6 +20,11 @@ A modern CSS theme library built on features that other libraries haven't fully 
 
 ## Quick start
 
+<!-- npm install -->
+```html
+npm i volty
+```
+
 ```html
 <!-- Theme + token system -->
 <link rel="stylesheet" href="dist/volty.css">
@@ -28,9 +33,6 @@ A modern CSS theme library built on features that other libraries haven't fully 
 <!-- Optional: component shorthand system -->
 <script src="dist/volty-insert.js"></script>
 ```
-
-No build step. No framework. No configuration required.
-
 ---
 
 ## Component shorthand — `volty-insert.js`

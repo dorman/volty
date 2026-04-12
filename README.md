@@ -21,10 +21,11 @@ A modern CSS theme library built on features that other libraries haven't fully 
 ## Quick start
 
 <!-- npm install -->
+To install via NPM simply run the following command:
 ```html
 npm i volty
 ```
-
+For no build setup simply include these in the header of your html file:
 ```html
 <!-- Theme + token system -->
 <link rel="stylesheet" href="dist/volty.css">

@@ -1,5 +1,5 @@
 # Volty v0.1.0 — AI reference
-# Modern CSS theme library — typed design tokens, container-scoped theming, zero build step
+# Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step
 # All tokens registered via @property with typed syntax — browser-validated, Shadow DOM-inherited.
 # Use this file as context when generating Volty components.
 
@@ -139,6 +139,32 @@ Toast notification. Created programmatically.
   modifiers: --success, --warning, --danger
   elements:  __icon, __body, __title, __message, __dismiss, __progress
   note: JS: Volty.toast(message) or Volty.toast({ title, message, variant, duration, dismissible, progress }). duration:0 = persistent.
+
+## .vt-tabs  <div>
+Tabbed content panel. Requires Volty.initTabs().
+  modifiers: --pills
+  elements:  __list, __trigger, __panel
+  note: JS: Volty.initTabs() called automatically. trigger needs aria-controls matching panel id. aria-selected managed automatically.
+
+## .vt-accordion  <div > details.vt-accordion__item>
+Collapsible accordion built on native <details>/<summary>. Zero JS needed.
+  elements:  __item, __trigger, __body
+
+## .vt-dropdown  <div>
+Toggleable dropdown menu. Requires Volty.initDropdowns().
+  modifiers: --end
+  elements:  __trigger, __menu, __item, __separator, __label
+  note: JS: Volty.initDropdowns() called automatically. Use aria-haspopup='true' aria-expanded='false' on trigger.
+
+## .vt-skeleton  <span | div>
+Shimmer loading placeholder. Pure CSS, no JS.
+  modifiers: --text, --circle, --card, --avatar, --button
+
+## .vt-progress  <progress>
+Styled native <progress> element.
+  modifiers: --sm, --lg, --success, --warning, --danger, --indeterminate
+  elements:  .vt-progress-wrap, .vt-progress-wrap__label, .vt-progress-wrap__value
+  note: Spinner: use .vt-spinner with --xs --sm --lg --xl sizes and --success --warning --danger variants.
 
 ## .vt-field  <div>
 Form field layout wrapper. Use with .vt-label, .vt-field-hint, .vt-field-error.

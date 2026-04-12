@@ -1,0 +1,137 @@
+@layer volty.components {
+  /*
+    Dropdown / Menu — toggleable menu anchored to a trigger button.
+    Requires Volty.initDropdowns() (auto-called on DOMContentLoaded).
+
+    Usage:
+      <div class="vt-dropdown">
+        <button class="vt-btn vt-btn--surface vt-dropdown__trigger" aria-haspopup="true" aria-expanded="false">
+          Options
+        </button>
+        <div class="vt-dropdown__menu" hidden>
+          <a href="#" class="vt-dropdown__item">Edit</a>
+          <a href="#" class="vt-dropdown__item">Duplicate</a>
+          <div class="vt-dropdown__separator"></div>
+          <button class="vt-dropdown__item vt-dropdown__item--danger">Delete</button>
+        </div>
+      </div>
+  */
+
+  .vt-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .vt-dropdown__menu {
+    /* Positioning */
+    position: absolute;
+    top: calc(100% + var(--vt-space-1));
+    left: 0;
+    z-index: 200;
+
+    /* Sizing */
+    min-width: max(160px, 100%);
+    max-height: 320px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    /* Appearance */
+    background-color: var(--vt-color-surface-overlay);
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-md);
+    box-shadow:
+      0 4px 16px color-mix(in oklch, var(--vt-color-text) 8%, transparent),
+      0 1px 4px color-mix(in oklch, var(--vt-color-text) 6%, transparent);
+    padding: var(--vt-space-1);
+
+    /* Entry animation */
+    transition:
+      opacity var(--vt-duration-fast) ease,
+      translate var(--vt-duration-fast) ease;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 -4px;
+    }
+  }
+
+  /* Align to the right edge of the trigger */
+  .vt-dropdown--end .vt-dropdown__menu {
+    left: auto;
+    right: 0;
+  }
+
+  .vt-dropdown__item {
+    /* Reset */
+    appearance: none;
+    border: none;
+    background: none;
+
+    /* Layout */
+    display: flex;
+    align-items: center;
+    gap: var(--vt-space-2);
+    width: 100%;
+    padding: var(--vt-space-2) var(--vt-space-3);
+    border-radius: var(--vt-radius-sm);
+
+    /* Typography */
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-sm);
+    color: var(--vt-color-text);
+    text-decoration: none;
+    text-align: start;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: background-color var(--vt-duration-fast) ease;
+    outline: 2px solid transparent;
+  }
+
+  .vt-dropdown__item:hover {
+    background-color: color-mix(in oklch, var(--vt-color-text) 6%, transparent);
+  }
+
+  .vt-dropdown__item:focus-visible {
+    outline-color: var(--vt-color-brand-ring);
+    outline-offset: -1px;
+  }
+
+  .vt-dropdown__item--danger {
+    color: var(--vt-color-danger);
+  }
+
+  .vt-dropdown__item--danger:hover {
+    background-color: var(--vt-color-danger-subtle);
+  }
+
+  .vt-dropdown__item:disabled,
+  .vt-dropdown__item[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .vt-dropdown__separator {
+    height: 1px;
+    background-color: var(--vt-color-border);
+    margin: var(--vt-space-1) calc(-1 * var(--vt-space-1));
+  }
+
+  .vt-dropdown__label {
+    display: block;
+    padding: var(--vt-space-1) var(--vt-space-3);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-dropdown__menu {
+      transition: none;
+    }
+  }
+}

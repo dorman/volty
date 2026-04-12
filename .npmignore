@@ -1,0 +1,29 @@
+# Source files (not needed by consumers — they use dist/)
+src/
+scripts/
+*.html
+Documentation.html
+about.html
+dashboard.html
+index.html
+
+# Dev/config files
+.gitignore
+.eslintrc*
+.prettierrc*
+
+# Assets
+assets/
+
+# Package manager artifacts
+node_modules/
+packages/*/node_modules/
+
+# Build artifacts (not needed)
+*.map
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo

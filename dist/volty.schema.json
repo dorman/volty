@@ -1,7 +1,7 @@
 {
   "$schema": "https://volty.dev/schema/v1",
   "version": "0.1.0",
-  "description": "Modern CSS theme library — typed design tokens, container-scoped theming, zero build step",
+  "description": "Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step",
   "tokens": {
     "--vt-color-brand": {
       "syntax": "<color>",
@@ -354,6 +354,77 @@
         "__progress"
       ],
       "notes": "JS: Volty.toast(message) or Volty.toast({ title, message, variant, duration, dismissible, progress }). duration:0 = persistent."
+    },
+    {
+      "class": "vt-tabs",
+      "element": "div",
+      "description": "Tabbed content panel. Requires Volty.initTabs().",
+      "modifiers": [
+        "--pills"
+      ],
+      "elements": [
+        "__list",
+        "__trigger",
+        "__panel"
+      ],
+      "notes": "JS: Volty.initTabs() called automatically. trigger needs aria-controls matching panel id. aria-selected managed automatically."
+    },
+    {
+      "class": "vt-accordion",
+      "element": "div > details.vt-accordion__item",
+      "description": "Collapsible accordion built on native <details>/<summary>. Zero JS needed.",
+      "elements": [
+        "__item",
+        "__trigger",
+        "__body"
+      ]
+    },
+    {
+      "class": "vt-dropdown",
+      "element": "div",
+      "description": "Toggleable dropdown menu. Requires Volty.initDropdowns().",
+      "modifiers": [
+        "--end"
+      ],
+      "elements": [
+        "__trigger",
+        "__menu",
+        "__item",
+        "__separator",
+        "__label"
+      ],
+      "notes": "JS: Volty.initDropdowns() called automatically. Use aria-haspopup='true' aria-expanded='false' on trigger."
+    },
+    {
+      "class": "vt-skeleton",
+      "element": "span | div",
+      "description": "Shimmer loading placeholder. Pure CSS, no JS.",
+      "modifiers": [
+        "--text",
+        "--circle",
+        "--card",
+        "--avatar",
+        "--button"
+      ]
+    },
+    {
+      "class": "vt-progress",
+      "element": "progress",
+      "description": "Styled native <progress> element.",
+      "modifiers": [
+        "--sm",
+        "--lg",
+        "--success",
+        "--warning",
+        "--danger",
+        "--indeterminate"
+      ],
+      "elements": [
+        ".vt-progress-wrap",
+        ".vt-progress-wrap__label",
+        ".vt-progress-wrap__value"
+      ],
+      "notes": "Spinner: use .vt-spinner with --xs --sm --lg --xl sizes and --success --warning --danger variants."
     },
     {
       "class": "vt-field",

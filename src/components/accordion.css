@@ -1,0 +1,114 @@
+@layer volty.components {
+  /*
+    Accordion — built on native <details>/<summary> for zero-JS collapsing.
+    @starting-style provides open animation.
+
+    Usage:
+      <div class="vt-accordion">
+        <details class="vt-accordion__item">
+          <summary class="vt-accordion__trigger">Question one?</summary>
+          <div class="vt-accordion__body">Answer text goes here.</div>
+        </details>
+        <details class="vt-accordion__item">
+          <summary class="vt-accordion__trigger">Question two?</summary>
+          <div class="vt-accordion__body">Another answer.</div>
+        </details>
+      </div>
+  */
+
+  .vt-accordion {
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-lg);
+    overflow: hidden;
+    container-type: inline-size;
+  }
+
+  .vt-accordion__item {
+    border-bottom: 1px solid var(--vt-color-border);
+  }
+
+  .vt-accordion__item:last-child {
+    border-bottom: none;
+  }
+
+  .vt-accordion__trigger {
+    /* Reset <summary> defaults */
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--vt-space-4);
+
+    /* Layout */
+    padding: var(--vt-space-4) var(--vt-space-5);
+    width: 100%;
+    cursor: pointer;
+
+    /* Typography */
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-sm);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text);
+
+    /* Background */
+    background-color: var(--vt-color-surface-raised);
+    transition: background-color var(--vt-duration-fast) ease;
+
+    outline: 2px solid transparent;
+  }
+
+  /* Remove default marker in all browsers */
+  .vt-accordion__trigger::-webkit-details-marker { display: none; }
+  .vt-accordion__trigger::marker { display: none; }
+
+  .vt-accordion__trigger:hover {
+    background-color: color-mix(in oklch, var(--vt-color-surface-raised) 60%, var(--vt-color-surface-overlay));
+  }
+
+  .vt-accordion__trigger:focus-visible {
+    outline-color: var(--vt-color-brand-ring);
+    outline-offset: -2px;
+  }
+
+  /* Chevron icon — CSS-drawn, no SVG dependency */
+  .vt-accordion__trigger::after {
+    content: '';
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--vt-color-text-muted);
+    border-bottom: 2px solid var(--vt-color-text-muted);
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform var(--vt-duration-base) ease;
+  }
+
+  .vt-accordion__item[open] > .vt-accordion__trigger::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+
+  .vt-accordion__body {
+    padding: var(--vt-space-4) var(--vt-space-5);
+    color: var(--vt-color-text-muted);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+
+    /* Entry animation */
+    @starting-style {
+      opacity: 0;
+      padding-block: 0;
+    }
+
+    transition:
+      opacity var(--vt-duration-base) ease,
+      padding-block var(--vt-duration-base) ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-accordion__trigger::after {
+      transition: none;
+    }
+    .vt-accordion__body {
+      transition: none;
+    }
+  }
+}

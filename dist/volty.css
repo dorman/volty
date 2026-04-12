@@ -1,8 +1,8 @@
 /*!
  * Volty v0.1.0
- * Modern CSS theme library — typed design tokens, container-scoped theming, zero build step
+ * Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step
  * MIT License
- * Built: 2026-04-11T17:07:22.037Z
+ * Built: 2026-04-12T19:35:26.808Z
  */
 
 /* ==============================================================================
@@ -1894,7 +1894,644 @@
 
 
 /* ==============================================================================
-   19. LAYOUT UTILITIES — src/layout/layout.css
+   19. COMPONENT — TABS — src/components/tabs.css
+   ============================================================= */
+
+@layer volty.components {
+  /*
+    Tabs — keyboard accessible, ARIA-managed via Volty.initTabs()
+
+    Usage:
+      <div class="vt-tabs" role="tablist">
+        <div class="vt-tabs__list" role="tablist" aria-label="My tabs">
+          <button class="vt-tabs__trigger" role="tab" aria-selected="true" aria-controls="tab-1">Tab 1</button>
+          <button class="vt-tabs__trigger" role="tab" aria-selected="false" aria-controls="tab-2">Tab 2</button>
+        </div>
+        <div class="vt-tabs__panel" id="tab-1" role="tabpanel">Content 1</div>
+        <div class="vt-tabs__panel" id="tab-2" role="tabpanel" hidden>Content 2</div>
+      </div>
+
+    JS: Volty.initTabs() — called automatically on DOMContentLoaded
+  */
+
+  .vt-tabs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vt-tabs__list {
+    display: flex;
+    gap: var(--vt-space-1);
+    border-bottom: 1px solid var(--vt-color-border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .vt-tabs__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vt-tabs__trigger {
+    /* Reset */
+    appearance: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vt-space-2);
+    padding-block: var(--vt-space-3);
+    padding-inline: var(--vt-space-4);
+    white-space: nowrap;
+
+    /* Typography */
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-sm);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text-muted);
+
+    /* Active indicator */
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+
+    /* Interaction */
+    transition:
+      color var(--vt-duration-fast) ease,
+      border-color var(--vt-duration-fast) ease,
+      background-color var(--vt-duration-fast) ease;
+
+    border-radius: var(--vt-radius-sm) var(--vt-radius-sm) 0 0;
+
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+  }
+
+  .vt-tabs__trigger:hover {
+    color: var(--vt-color-text);
+    background-color: color-mix(in oklch, var(--vt-color-text) 5%, transparent);
+  }
+
+  .vt-tabs__trigger[aria-selected="true"] {
+    color: var(--vt-color-brand);
+    border-bottom-color: var(--vt-color-brand);
+  }
+
+  .vt-tabs__trigger:focus-visible {
+    outline-color: var(--vt-color-brand-ring);
+    outline-offset: -2px;
+  }
+
+  .vt-tabs__trigger:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .vt-tabs__panel {
+    padding-block: var(--vt-space-5);
+    color: var(--vt-color-text);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+  }
+
+  .vt-tabs__panel[hidden] {
+    display: none;
+  }
+
+  /* Pill variant — tabs look like a segmented control */
+  .vt-tabs--pills .vt-tabs__list {
+    border-bottom: none;
+    background-color: var(--vt-color-surface-raised);
+    border-radius: var(--vt-radius-md);
+    padding: var(--vt-space-1);
+    gap: var(--vt-space-1);
+  }
+
+  .vt-tabs--pills .vt-tabs__trigger {
+    border-bottom: none;
+    border-radius: var(--vt-radius-sm);
+    margin-bottom: 0;
+  }
+
+  .vt-tabs--pills .vt-tabs__trigger[aria-selected="true"] {
+    background-color: var(--vt-color-surface-overlay);
+    color: var(--vt-color-text);
+    box-shadow: 0 1px 3px color-mix(in oklch, var(--vt-color-text) 10%, transparent);
+  }
+
+  .vt-tabs--pills .vt-tabs__panel {
+    padding-block-start: var(--vt-space-4);
+  }
+}
+
+
+/* ==============================================================================
+   20. COMPONENT — ACCORDION — src/components/accordion.css
+   ======================================================== */
+
+@layer volty.components {
+  /*
+    Accordion — built on native <details>/<summary> for zero-JS collapsing.
+    @starting-style provides open animation.
+
+    Usage:
+      <div class="vt-accordion">
+        <details class="vt-accordion__item">
+          <summary class="vt-accordion__trigger">Question one?</summary>
+          <div class="vt-accordion__body">Answer text goes here.</div>
+        </details>
+        <details class="vt-accordion__item">
+          <summary class="vt-accordion__trigger">Question two?</summary>
+          <div class="vt-accordion__body">Another answer.</div>
+        </details>
+      </div>
+  */
+
+  .vt-accordion {
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-lg);
+    overflow: hidden;
+    container-type: inline-size;
+  }
+
+  .vt-accordion__item {
+    border-bottom: 1px solid var(--vt-color-border);
+  }
+
+  .vt-accordion__item:last-child {
+    border-bottom: none;
+  }
+
+  .vt-accordion__trigger {
+    /* Reset <summary> defaults */
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--vt-space-4);
+
+    /* Layout */
+    padding: var(--vt-space-4) var(--vt-space-5);
+    width: 100%;
+    cursor: pointer;
+
+    /* Typography */
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-sm);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text);
+
+    /* Background */
+    background-color: var(--vt-color-surface-raised);
+    transition: background-color var(--vt-duration-fast) ease;
+
+    outline: 2px solid transparent;
+  }
+
+  /* Remove default marker in all browsers */
+  .vt-accordion__trigger::-webkit-details-marker { display: none; }
+  .vt-accordion__trigger::marker { display: none; }
+
+  .vt-accordion__trigger:hover {
+    background-color: color-mix(in oklch, var(--vt-color-surface-raised) 60%, var(--vt-color-surface-overlay));
+  }
+
+  .vt-accordion__trigger:focus-visible {
+    outline-color: var(--vt-color-brand-ring);
+    outline-offset: -2px;
+  }
+
+  /* Chevron icon — CSS-drawn, no SVG dependency */
+  .vt-accordion__trigger::after {
+    content: '';
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid var(--vt-color-text-muted);
+    border-bottom: 2px solid var(--vt-color-text-muted);
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform var(--vt-duration-base) ease;
+  }
+
+  .vt-accordion__item[open] > .vt-accordion__trigger::after {
+    transform: rotate(-135deg) translate(-2px, -2px);
+  }
+
+  .vt-accordion__body {
+    padding: var(--vt-space-4) var(--vt-space-5);
+    color: var(--vt-color-text-muted);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+
+    /* Entry animation */
+    @starting-style {
+      opacity: 0;
+      padding-block: 0;
+    }
+
+    transition:
+      opacity var(--vt-duration-base) ease,
+      padding-block var(--vt-duration-base) ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-accordion__trigger::after {
+      transition: none;
+    }
+    .vt-accordion__body {
+      transition: none;
+    }
+  }
+}
+
+
+/* ==============================================================================
+   21. COMPONENT — DROPDOWN — src/components/dropdown.css
+   ========================================================= */
+
+@layer volty.components {
+  /*
+    Dropdown / Menu — toggleable menu anchored to a trigger button.
+    Requires Volty.initDropdowns() (auto-called on DOMContentLoaded).
+
+    Usage:
+      <div class="vt-dropdown">
+        <button class="vt-btn vt-btn--surface vt-dropdown__trigger" aria-haspopup="true" aria-expanded="false">
+          Options
+        </button>
+        <div class="vt-dropdown__menu" hidden>
+          <a href="#" class="vt-dropdown__item">Edit</a>
+          <a href="#" class="vt-dropdown__item">Duplicate</a>
+          <div class="vt-dropdown__separator"></div>
+          <button class="vt-dropdown__item vt-dropdown__item--danger">Delete</button>
+        </div>
+      </div>
+  */
+
+  .vt-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .vt-dropdown__menu {
+    /* Positioning */
+    position: absolute;
+    top: calc(100% + var(--vt-space-1));
+    left: 0;
+    z-index: 200;
+
+    /* Sizing */
+    min-width: max(160px, 100%);
+    max-height: 320px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    /* Appearance */
+    background-color: var(--vt-color-surface-overlay);
+    border: 1px solid var(--vt-color-border);
+    border-radius: var(--vt-radius-md);
+    box-shadow:
+      0 4px 16px color-mix(in oklch, var(--vt-color-text) 8%, transparent),
+      0 1px 4px color-mix(in oklch, var(--vt-color-text) 6%, transparent);
+    padding: var(--vt-space-1);
+
+    /* Entry animation */
+    transition:
+      opacity var(--vt-duration-fast) ease,
+      translate var(--vt-duration-fast) ease;
+
+    @starting-style {
+      opacity: 0;
+      translate: 0 -4px;
+    }
+  }
+
+  /* Align to the right edge of the trigger */
+  .vt-dropdown--end .vt-dropdown__menu {
+    left: auto;
+    right: 0;
+  }
+
+  .vt-dropdown__item {
+    /* Reset */
+    appearance: none;
+    border: none;
+    background: none;
+
+    /* Layout */
+    display: flex;
+    align-items: center;
+    gap: var(--vt-space-2);
+    width: 100%;
+    padding: var(--vt-space-2) var(--vt-space-3);
+    border-radius: var(--vt-radius-sm);
+
+    /* Typography */
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-sm);
+    color: var(--vt-color-text);
+    text-decoration: none;
+    text-align: start;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: background-color var(--vt-duration-fast) ease;
+    outline: 2px solid transparent;
+  }
+
+  .vt-dropdown__item:hover {
+    background-color: color-mix(in oklch, var(--vt-color-text) 6%, transparent);
+  }
+
+  .vt-dropdown__item:focus-visible {
+    outline-color: var(--vt-color-brand-ring);
+    outline-offset: -1px;
+  }
+
+  .vt-dropdown__item--danger {
+    color: var(--vt-color-danger);
+  }
+
+  .vt-dropdown__item--danger:hover {
+    background-color: var(--vt-color-danger-subtle);
+  }
+
+  .vt-dropdown__item:disabled,
+  .vt-dropdown__item[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .vt-dropdown__separator {
+    height: 1px;
+    background-color: var(--vt-color-border);
+    margin: var(--vt-space-1) calc(-1 * var(--vt-space-1));
+  }
+
+  .vt-dropdown__label {
+    display: block;
+    padding: var(--vt-space-1) var(--vt-space-3);
+    font-size: var(--vt-text-xs);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: default;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-dropdown__menu {
+      transition: none;
+    }
+  }
+}
+
+
+/* ==============================================================================
+   22. COMPONENT — SKELETON — src/components/skeleton.css
+   ========================================================= */
+
+@layer volty.components {
+  /*
+    Skeleton loader — shimmer placeholder for loading states.
+
+    Usage:
+      <!-- Text line -->
+      <span class="vt-skeleton vt-skeleton--text" style="width: 60%"></span>
+
+      <!-- Avatar circle -->
+      <span class="vt-skeleton vt-skeleton--circle" style="width: 40px"></span>
+
+      <!-- Card placeholder -->
+      <div class="vt-skeleton vt-skeleton--card"></div>
+
+      <!-- Composed layout -->
+      <div class="vt-skeleton-group" style="display:flex;gap:var(--vt-space-3);align-items:center">
+        <span class="vt-skeleton vt-skeleton--circle" style="width:40px;flex-shrink:0"></span>
+        <div style="flex:1;display:flex;flex-direction:column;gap:var(--vt-space-2)">
+          <span class="vt-skeleton vt-skeleton--text" style="width:40%"></span>
+          <span class="vt-skeleton vt-skeleton--text" style="width:70%"></span>
+        </div>
+      </div>
+  */
+
+  @keyframes vt-shimmer {
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+
+  .vt-skeleton {
+    display: block;
+    border-radius: var(--vt-radius-sm);
+    background: linear-gradient(
+      90deg,
+      var(--vt-color-surface-raised) 25%,
+      color-mix(in oklch, var(--vt-color-surface-overlay) 80%, var(--vt-color-border)) 50%,
+      var(--vt-color-surface-raised) 75%
+    );
+    background-size: 400% 100%;
+    animation: vt-shimmer 1.8s ease-in-out infinite;
+  }
+
+  /* Variants */
+  .vt-skeleton--text {
+    height: 1em;
+    border-radius: var(--vt-radius-full);
+    display: block;
+  }
+
+  .vt-skeleton--circle {
+    border-radius: var(--vt-radius-full);
+    aspect-ratio: 1 / 1;
+  }
+
+  .vt-skeleton--card {
+    height: 120px;
+    border-radius: var(--vt-radius-lg);
+  }
+
+  .vt-skeleton--avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--vt-radius-full);
+  }
+
+  .vt-skeleton--button {
+    height: 36px;
+    width: 100px;
+    border-radius: var(--vt-radius-md);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-skeleton {
+      animation: none;
+      background: var(--vt-color-surface-raised);
+    }
+  }
+}
+
+
+/* ==============================================================================
+   23. COMPONENT — PROGRESS — src/components/progress.css
+   ========================================================= */
+
+@layer volty.components {
+  /*
+    Progress bar — styled native <progress> element.
+    Spinner — CSS-only loading indicator.
+
+    Usage:
+      <!-- Determinate -->
+      <progress class="vt-progress" value="60" max="100"></progress>
+
+      <!-- With label -->
+      <div class="vt-progress-wrap">
+        <span class="vt-progress-wrap__label">Uploading…</span>
+        <span class="vt-progress-wrap__value">60%</span>
+      </div>
+      <progress class="vt-progress vt-progress--success" value="60" max="100"></progress>
+
+      <!-- Indeterminate -->
+      <progress class="vt-progress vt-progress--indeterminate"></progress>
+
+      <!-- Spinner -->
+      <span class="vt-spinner" aria-label="Loading" role="status"></span>
+      <span class="vt-spinner vt-spinner--sm"></span>
+      <span class="vt-spinner vt-spinner--lg vt-spinner--success"></span>
+  */
+
+  /* ---- Progress bar -------------------------------------------------------- */
+
+  .vt-progress {
+    /* Reset */
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    width: 100%;
+    border: none;
+
+    /* Sizing */
+    height: var(--vt-space-2);
+    border-radius: var(--vt-radius-full);
+
+    /* Track */
+    background-color: var(--vt-color-surface-raised);
+    overflow: hidden;
+  }
+
+  /* Track (WebKit) */
+  .vt-progress::-webkit-progress-bar {
+    background-color: var(--vt-color-surface-raised);
+    border-radius: var(--vt-radius-full);
+  }
+
+  /* Fill (WebKit) */
+  .vt-progress::-webkit-progress-value {
+    background-color: var(--vt-color-brand);
+    border-radius: var(--vt-radius-full);
+    transition: width var(--vt-duration-base) ease;
+  }
+
+  /* Fill (Firefox) */
+  .vt-progress::-moz-progress-bar {
+    background-color: var(--vt-color-brand);
+    border-radius: var(--vt-radius-full);
+    transition: width var(--vt-duration-base) ease;
+  }
+
+  /* Semantic color variants */
+  .vt-progress--success::-webkit-progress-value { background-color: var(--vt-color-success); }
+  .vt-progress--warning::-webkit-progress-value { background-color: var(--vt-color-warning); }
+  .vt-progress--danger::-webkit-progress-value  { background-color: var(--vt-color-danger); }
+  .vt-progress--success::-moz-progress-bar      { background-color: var(--vt-color-success); }
+  .vt-progress--warning::-moz-progress-bar      { background-color: var(--vt-color-warning); }
+  .vt-progress--danger::-moz-progress-bar       { background-color: var(--vt-color-danger); }
+
+  /* Size variants */
+  .vt-progress--sm { height: calc(var(--vt-space-2) / 2); }
+  .vt-progress--lg { height: var(--vt-space-3); }
+
+  /* Indeterminate */
+  @keyframes vt-progress-slide {
+    0%   { transform: translateX(-100%) scaleX(0.5); }
+    50%  { transform: translateX(50%)  scaleX(0.6); }
+    100% { transform: translateX(300%) scaleX(0.3); }
+  }
+
+  .vt-progress--indeterminate::-webkit-progress-value {
+    width: 100% !important;
+    animation: vt-progress-slide 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    transform-origin: left center;
+  }
+
+  /* Label wrapper */
+  .vt-progress-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-block-end: var(--vt-space-2);
+  }
+
+  .vt-progress-wrap__label {
+    font-size: var(--vt-text-sm);
+    color: var(--vt-color-text);
+    font-weight: var(--vt-font-weight-medium);
+  }
+
+  .vt-progress-wrap__value {
+    font-size: var(--vt-text-xs);
+    color: var(--vt-color-text-muted);
+    font-family: var(--vt-font-mono);
+  }
+
+  /* ---- Spinner ------------------------------------------------------------- */
+
+  @keyframes vt-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .vt-spinner {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--vt-color-border);
+    border-top-color: var(--vt-color-brand);
+    border-radius: var(--vt-radius-full);
+    animation: vt-spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+
+  /* Sizes */
+  .vt-spinner--xs { width: 0.75rem;  height: 0.75rem;  border-width: 1.5px; }
+  .vt-spinner--sm { width: 1rem;     height: 1rem; }
+  .vt-spinner--lg { width: 2rem;     height: 2rem;     border-width: 3px; }
+  .vt-spinner--xl { width: 3rem;     height: 3rem;     border-width: 4px; }
+
+  /* Semantic color variants */
+  .vt-spinner--success { border-top-color: var(--vt-color-success); }
+  .vt-spinner--warning { border-top-color: var(--vt-color-warning); }
+  .vt-spinner--danger  { border-top-color: var(--vt-color-danger); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-progress::-webkit-progress-value,
+    .vt-progress::-moz-progress-bar {
+      transition: none;
+    }
+    .vt-progress--indeterminate::-webkit-progress-value {
+      animation: none;
+    }
+    .vt-spinner {
+      animation-duration: 1.5s;
+    }
+  }
+}
+
+
+/* ==============================================================================
+   24. LAYOUT UTILITIES — src/layout/layout.css
    ============================================================= */
 
 @layer volty.utilities {

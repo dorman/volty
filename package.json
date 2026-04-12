@@ -1,20 +1,57 @@
 {
   "name": "volty",
   "version": "0.1.0",
-  "description": "Modern CSS theme library — typed design tokens, container-scoped theming, zero build step",
-  "main": "dist/volty.css",
-  "files": ["dist/", "src/"],
-  "keywords": ["css", "theme", "design-system", "tokens", "container-queries", "dark-mode"],
+  "description": "Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step",
   "license": "MIT",
+  "main": "dist/volty.css",
+  "exports": {
+    ".":         "./dist/volty.css",
+    "./css":     "./dist/volty.css",
+    "./min":     "./dist/volty.min.css",
+    "./js":      "./src/volty.js",
+    "./insert":  "./dist/volty-insert.js",
+    "./embed":   "./dist/volty-embed.js",
+    "./schema":  "./dist/volty.schema.json"
+  },
+  "files": [
+    "dist/",
+    "src/volty.js",
+    "src/volty-insert.js"
+  ],
+  "workspaces": [
+    "packages/*"
+  ],
+  "keywords": [
+    "css",
+    "theme",
+    "design-system",
+    "tokens",
+    "css-variables",
+    "custom-properties",
+    "dark-mode",
+    "container-queries",
+    "shadow-dom",
+    "web-components",
+    "typescript"
+  ],
+  "homepage": "https://volty.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/volty/volty"
+  },
+  "bugs": {
+    "url": "https://github.com/volty/volty/issues"
+  },
   "scripts": {
-    "build": "node scripts/build.js",
-    "watch": "chokidar 'src/**/*.css' -c 'node scripts/build.js' --initial",
-    "dev": "node scripts/dev.js",
-    "start": "node scripts/dev.js"
+    "build":   "node scripts/build.js",
+    "watch":   "chokidar 'src/**/*.css' -c 'node scripts/build.js' --initial",
+    "dev":     "node scripts/dev.js",
+    "start":   "node scripts/dev.js",
+    "prepublishOnly": "node scripts/build.js"
   },
   "devDependencies": {
-    "browser-sync": "^3.0.3",
-    "chokidar-cli": "^3.0.0",
+    "browser-sync":    "^3.0.3",
+    "chokidar-cli":    "^3.0.0",
     "lightningcss-cli": "^1.29.2"
   }
 }

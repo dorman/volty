@@ -1,0 +1,9 @@
+# Source (consumers use dist/)
+src/
+
+# Config
+tsconfig.json
+*.tsbuildinfo
+
+# Dev artifacts
+node_modules/

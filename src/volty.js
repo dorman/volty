@@ -335,10 +335,143 @@
   }
 
   /* ==========================================================================
+     TABS
+     ========================================================================== */
+
+  /**
+   * Initialize keyboard navigation and ARIA for all .vt-tabs on the page.
+   * Called automatically on DOMContentLoaded. Call manually after dynamic content.
+   *
+   * @param {Element|Document} [root=document]
+   */
+  function initTabs(root) {
+    root = root || document;
+    root.querySelectorAll('.vt-tabs').forEach(function (tabs) {
+      if (tabs._vtTabsInit) return;
+      tabs._vtTabsInit = true;
+
+      var triggers = Array.from(tabs.querySelectorAll('.vt-tabs__trigger'));
+      var panels   = Array.from(tabs.querySelectorAll('.vt-tabs__panel'));
+
+      function selectTab(index) {
+        triggers.forEach(function (t, i) {
+          var selected = i === index;
+          t.setAttribute('aria-selected', selected ? 'true' : 'false');
+          t.setAttribute('tabindex', selected ? '0' : '-1');
+        });
+        panels.forEach(function (p, i) {
+          p.hidden = i !== index;
+        });
+      }
+
+      triggers.forEach(function (trigger, i) {
+        trigger.addEventListener('click', function () { selectTab(i); });
+        trigger.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight') { e.preventDefault(); selectTab((i + 1) % triggers.length); triggers[(i + 1) % triggers.length].focus(); }
+          if (e.key === 'ArrowLeft')  { e.preventDefault(); selectTab((i - 1 + triggers.length) % triggers.length); triggers[(i - 1 + triggers.length) % triggers.length].focus(); }
+          if (e.key === 'Home')       { e.preventDefault(); selectTab(0); triggers[0].focus(); }
+          if (e.key === 'End')        { e.preventDefault(); selectTab(triggers.length - 1); triggers[triggers.length - 1].focus(); }
+        });
+      });
+
+      var initial = triggers.findIndex(function (t) { return t.getAttribute('aria-selected') === 'true'; });
+      selectTab(initial >= 0 ? initial : 0);
+    });
+  }
+
+  /* ==========================================================================
+     DROPDOWNS
+     ========================================================================== */
+
+  /**
+   * Initialize toggle behavior and keyboard for all .vt-dropdown on the page.
+   * Called automatically on DOMContentLoaded. Call manually after dynamic content.
+   *
+   * @param {Element|Document} [root=document]
+   */
+  function initDropdowns(root) {
+    root = root || document;
+    root.querySelectorAll('.vt-dropdown').forEach(function (dropdown) {
+      if (dropdown._vtDropInit) return;
+      dropdown._vtDropInit = true;
+
+      var trigger = dropdown.querySelector('.vt-dropdown__trigger');
+      var menu    = dropdown.querySelector('.vt-dropdown__menu');
+      if (!trigger || !menu) return;
+
+      function openMenu() {
+        menu.hidden = false;
+        trigger.setAttribute('aria-expanded', 'true');
+        // Focus first item
+        var first = menu.querySelector('.vt-dropdown__item:not(:disabled):not([aria-disabled="true"])');
+        if (first) first.focus();
+      }
+
+      function closeMenu() {
+        menu.hidden = true;
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+
+      trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (menu.hidden) {
+          // Close all other open dropdowns first
+          document.querySelectorAll('.vt-dropdown__menu').forEach(function (m) {
+            if (m !== menu) { m.hidden = true; var t = m.closest('.vt-dropdown') && m.closest('.vt-dropdown').querySelector('.vt-dropdown__trigger'); if (t) t.setAttribute('aria-expanded', 'false'); }
+          });
+          openMenu();
+        } else {
+          closeMenu();
+        }
+      });
+
+      dropdown.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { closeMenu(); trigger.focus(); }
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          var items = Array.from(menu.querySelectorAll('.vt-dropdown__item:not(:disabled)'));
+          var idx = items.indexOf(document.activeElement);
+          var next = items[idx + 1] || items[0];
+          if (next) next.focus();
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          var items = Array.from(menu.querySelectorAll('.vt-dropdown__item:not(:disabled)'));
+          var idx = items.indexOf(document.activeElement);
+          var prev = items[idx - 1] || items[items.length - 1];
+          if (prev) prev.focus();
+        }
+      });
+    });
+
+    // Global click-outside handler (only add once)
+    if (!document._vtDropOutside) {
+      document._vtDropOutside = true;
+      document.addEventListener('click', function () {
+        document.querySelectorAll('.vt-dropdown__menu').forEach(function (m) {
+          m.hidden = true;
+          var t = m.closest('.vt-dropdown') && m.closest('.vt-dropdown').querySelector('.vt-dropdown__trigger');
+          if (t) t.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  }
+
+  /* ==========================================================================
      INIT
      ========================================================================== */
 
   initTheme();
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      initTabs();
+      initDropdowns();
+    });
+  } else {
+    initTabs();
+    initDropdowns();
+  }
 
   /* ==========================================================================
      PUBLIC API
@@ -358,5 +491,9 @@
 
     // Toast
     toast,
+
+    // Interactive components
+    initTabs,
+    initDropdowns,
   };
 })();

@@ -1,0 +1,127 @@
+@layer volty.components {
+  /*
+    Tabs — keyboard accessible, ARIA-managed via Volty.initTabs()
+
+    Usage:
+      <div class="vt-tabs" role="tablist">
+        <div class="vt-tabs__list" role="tablist" aria-label="My tabs">
+          <button class="vt-tabs__trigger" role="tab" aria-selected="true" aria-controls="tab-1">Tab 1</button>
+          <button class="vt-tabs__trigger" role="tab" aria-selected="false" aria-controls="tab-2">Tab 2</button>
+        </div>
+        <div class="vt-tabs__panel" id="tab-1" role="tabpanel">Content 1</div>
+        <div class="vt-tabs__panel" id="tab-2" role="tabpanel" hidden>Content 2</div>
+      </div>
+
+    JS: Volty.initTabs() — called automatically on DOMContentLoaded
+  */
+
+  .vt-tabs {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vt-tabs__list {
+    display: flex;
+    gap: var(--vt-space-1);
+    border-bottom: 1px solid var(--vt-color-border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .vt-tabs__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .vt-tabs__trigger {
+    /* Reset */
+    appearance: none;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    /* Layout */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--vt-space-2);
+    padding-block: var(--vt-space-3);
+    padding-inline: var(--vt-space-4);
+    white-space: nowrap;
+
+    /* Typography */
+    font-family: var(--vt-font-sans);
+    font-size: var(--vt-text-sm);
+    font-weight: var(--vt-font-weight-medium);
+    color: var(--vt-color-text-muted);
+
+    /* Active indicator */
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+
+    /* Interaction */
+    transition:
+      color var(--vt-duration-fast) ease,
+      border-color var(--vt-duration-fast) ease,
+      background-color var(--vt-duration-fast) ease;
+
+    border-radius: var(--vt-radius-sm) var(--vt-radius-sm) 0 0;
+
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+  }
+
+  .vt-tabs__trigger:hover {
+    color: var(--vt-color-text);
+    background-color: color-mix(in oklch, var(--vt-color-text) 5%, transparent);
+  }
+
+  .vt-tabs__trigger[aria-selected="true"] {
+    color: var(--vt-color-brand);
+    border-bottom-color: var(--vt-color-brand);
+  }
+
+  .vt-tabs__trigger:focus-visible {
+    outline-color: var(--vt-color-brand-ring);
+    outline-offset: -2px;
+  }
+
+  .vt-tabs__trigger:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .vt-tabs__panel {
+    padding-block: var(--vt-space-5);
+    color: var(--vt-color-text);
+    font-size: var(--vt-text-sm);
+    line-height: var(--vt-line-height-relaxed);
+  }
+
+  .vt-tabs__panel[hidden] {
+    display: none;
+  }
+
+  /* Pill variant — tabs look like a segmented control */
+  .vt-tabs--pills .vt-tabs__list {
+    border-bottom: none;
+    background-color: var(--vt-color-surface-raised);
+    border-radius: var(--vt-radius-md);
+    padding: var(--vt-space-1);
+    gap: var(--vt-space-1);
+  }
+
+  .vt-tabs--pills .vt-tabs__trigger {
+    border-bottom: none;
+    border-radius: var(--vt-radius-sm);
+    margin-bottom: 0;
+  }
+
+  .vt-tabs--pills .vt-tabs__trigger[aria-selected="true"] {
+    background-color: var(--vt-color-surface-overlay);
+    color: var(--vt-color-text);
+    box-shadow: 0 1px 3px color-mix(in oklch, var(--vt-color-text) 10%, transparent);
+  }
+
+  .vt-tabs--pills .vt-tabs__panel {
+    padding-block-start: var(--vt-space-4);
+  }
+}

@@ -353,6 +353,155 @@
       return `<button class="${btnCls}" onclick='Volty.toast(${opts})'>${label}</button>`;
     },
 
+    /* ---- tabs ---------------------------------------------------------------
+       Options:
+         tabs   {array}  [{label, content, active?}]
+         variant {string} 'pills'
+    */
+    tabs(o = {}) {
+      const tabList = Array.isArray(o.tabs) ? o.tabs : [
+        { label: 'Tab 1', content: '<p>Content for tab one.</p>' },
+        { label: 'Tab 2', content: '<p>Content for tab two.</p>' },
+        { label: 'Tab 3', content: '<p>Content for tab three.</p>' },
+      ];
+      const variant = o.variant ? ` vt-tabs--${o.variant}` : '';
+      const uid = o.id || ('vt-tabs-' + Math.random().toString(36).slice(2, 7));
+
+      const triggers = tabList.map((t, i) => {
+        const selected = t.active || i === 0;
+        return `<button class="vt-tabs__trigger" role="tab" aria-selected="${selected}" aria-controls="${uid}-panel-${i}" id="${uid}-tab-${i}" tabindex="${selected ? 0 : -1}">${t.label}</button>`;
+      }).join('');
+
+      const panels = tabList.map((t, i) => {
+        const hidden = !(t.active || i === 0);
+        return `<div class="vt-tabs__panel" id="${uid}-panel-${i}" role="tabpanel" aria-labelledby="${uid}-tab-${i}"${hidden ? ' hidden' : ''}>${t.content || ''}</div>`;
+      }).join('');
+
+      return `
+<div class="vt-tabs${variant}">
+  <div class="vt-tabs__list" role="tablist">${triggers}</div>
+  ${panels}
+</div>`;
+    },
+
+    /* ---- accordion ----------------------------------------------------------
+       Options:
+         items  {array}  [{title, content, open?}]
+    */
+    accordion(o = {}) {
+      const items = Array.isArray(o.items) ? o.items : [
+        { title: 'What is Volty?', content: 'A modern CSS theme library.' },
+        { title: 'Is it free?', content: 'The core library is MIT licensed.' },
+      ];
+      const itemHtml = items.map(item => `
+  <details class="vt-accordion__item"${item.open ? ' open' : ''}>
+    <summary class="vt-accordion__trigger">${item.title}</summary>
+    <div class="vt-accordion__body">${item.content}</div>
+  </details>`).join('');
+
+      return `<div class="vt-accordion">${itemHtml}\n</div>`;
+    },
+
+    /* ---- dropdown -----------------------------------------------------------
+       Options:
+         label   {string}  Trigger button label
+         items   {array}   [{label, href?, danger?, disabled?, separator?}]
+         variant {string}  Button variant for trigger
+         align   {string}  'end' to right-align menu
+    */
+    dropdown(o = {}) {
+      const label   = o.label || o.content || 'Options';
+      const items   = Array.isArray(o.items) ? o.items : [
+        { label: 'Edit' }, { label: 'Duplicate' }, { separator: true }, { label: 'Delete', danger: true },
+      ];
+      const btnCls  = ['vt-btn vt-btn--surface vt-dropdown__trigger', o.size ? `vt-btn--${o.size}` : ''].filter(Boolean).join(' ');
+      const wrapCls = ['vt-dropdown', o.align === 'end' ? 'vt-dropdown--end' : ''].filter(Boolean).join(' ');
+
+      const itemHtml = items.map(item => {
+        if (item.separator) return `<div class="vt-dropdown__separator"></div>`;
+        if (item.label && !item.href) {
+          const danger   = item.danger    ? ' vt-dropdown__item--danger' : '';
+          const disabled = item.disabled  ? ' aria-disabled="true"'      : '';
+          return `<button class="vt-dropdown__item${danger}"${disabled}>${item.label}</button>`;
+        }
+        const danger = item.danger ? ' vt-dropdown__item--danger' : '';
+        return `<a href="${item.href || '#'}" class="vt-dropdown__item${danger}">${item.label}</a>`;
+      }).join('');
+
+      const chevron = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" style="margin-inline-start:var(--vt-space-1)"><path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+      return `
+<div class="${wrapCls}">
+  <button class="${btnCls}" aria-haspopup="true" aria-expanded="false">${label}${chevron}</button>
+  <div class="vt-dropdown__menu" hidden>${itemHtml}</div>
+</div>`;
+    },
+
+    /* ---- skeleton -----------------------------------------------------------
+       Options:
+         variant  {string}  'text'|'circle'|'card'|'avatar'|'button'
+         width    {string}  CSS width value
+         lines    {number}  Number of text lines (for 'text' variant)
+    */
+    skeleton(o = {}) {
+      const variant = o.variant || 'text';
+      const width   = o.width || (variant === 'text' ? '60%' : undefined);
+      const lines   = parseInt(o.lines || 1, 10);
+      const style   = width ? ` style="width:${width}"` : '';
+
+      if (variant === 'text' && lines > 1) {
+        const lineHtml = Array.from({ length: lines }, (_, i) => {
+          const w = i === lines - 1 ? '40%' : (i === 0 ? '80%' : '65%');
+          return `<span class="vt-skeleton vt-skeleton--text" style="width:${w}"></span>`;
+        }).join('');
+        return `<div style="display:flex;flex-direction:column;gap:var(--vt-space-2)">${lineHtml}</div>`;
+      }
+
+      return `<span class="vt-skeleton vt-skeleton--${variant}"${style}></span>`;
+    },
+
+    /* ---- progress -----------------------------------------------------------
+       Options:
+         value    {number}  0-100
+         max      {number}  Default 100
+         variant  {string}  'success'|'warning'|'danger'
+         size     {string}  'sm'|'lg'
+         label    {string}  Label text above bar
+         indeterminate {bool}
+    */
+    progress(o = {}) {
+      const value   = o.value !== undefined ? Number(o.value) : undefined;
+      const max     = o.max !== undefined ? Number(o.max) : 100;
+      const variant = o.variant ? ` vt-progress--${o.variant}` : '';
+      const size    = o.size    ? ` vt-progress--${o.size}`    : '';
+      const indet   = (o.indeterminate === true || o.indeterminate === 'true') ? ' vt-progress--indeterminate' : '';
+      const cls     = `vt-progress${variant}${size}${indet}`;
+      const pct     = value !== undefined ? Math.round((value / max) * 100) : null;
+
+      const label = o.label
+        ? `<div class="vt-progress-wrap">
+             <span class="vt-progress-wrap__label">${o.label}</span>
+             ${pct !== null ? `<span class="vt-progress-wrap__value">${pct}%</span>` : ''}
+           </div>`
+        : '';
+
+      const valueAttr = value !== undefined ? ` value="${value}"` : '';
+      return `${label}<progress class="${cls}"${valueAttr} max="${max}" aria-label="${o.label || 'Progress'}"></progress>`;
+    },
+
+    /* ---- spinner ------------------------------------------------------------
+       Options:
+         variant  {string}  'success'|'warning'|'danger'
+         size     {string}  'xs'|'sm'|'lg'|'xl'
+         label    {string}  Accessible label (default: 'Loading')
+    */
+    spinner(o = {}) {
+      const variant = o.variant ? ` vt-spinner--${o.variant}` : '';
+      const size    = o.size    ? ` vt-spinner--${o.size}`    : '';
+      const label   = o.label || 'Loading';
+      return `<span class="vt-spinner${variant}${size}" role="status" aria-label="${label}"></span>`;
+    },
+
   };
 
   /* ==========================================================================
@@ -446,6 +595,12 @@
     'vt-button':        'button',
     'vt-modal':         'modal',
     'vt-toast-trigger': 'toast-trigger',
+    'vt-tabs':          'tabs',
+    'vt-accordion':     'accordion',
+    'vt-dropdown':      'dropdown',
+    'vt-skeleton':      'skeleton',
+    'vt-progress':      'progress',
+    'vt-spinner':       'spinner',
   };
 
   Object.entries(ELEMENT_MAP).forEach(([tag, key]) => defineVtElement(tag, key));

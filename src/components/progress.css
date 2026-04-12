@@ -1,0 +1,151 @@
+@layer volty.components {
+  /*
+    Progress bar — styled native <progress> element.
+    Spinner — CSS-only loading indicator.
+
+    Usage:
+      <!-- Determinate -->
+      <progress class="vt-progress" value="60" max="100"></progress>
+
+      <!-- With label -->
+      <div class="vt-progress-wrap">
+        <span class="vt-progress-wrap__label">Uploading…</span>
+        <span class="vt-progress-wrap__value">60%</span>
+      </div>
+      <progress class="vt-progress vt-progress--success" value="60" max="100"></progress>
+
+      <!-- Indeterminate -->
+      <progress class="vt-progress vt-progress--indeterminate"></progress>
+
+      <!-- Spinner -->
+      <span class="vt-spinner" aria-label="Loading" role="status"></span>
+      <span class="vt-spinner vt-spinner--sm"></span>
+      <span class="vt-spinner vt-spinner--lg vt-spinner--success"></span>
+  */
+
+  /* ---- Progress bar -------------------------------------------------------- */
+
+  .vt-progress {
+    /* Reset */
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    width: 100%;
+    border: none;
+
+    /* Sizing */
+    height: var(--vt-space-2);
+    border-radius: var(--vt-radius-full);
+
+    /* Track */
+    background-color: var(--vt-color-surface-raised);
+    overflow: hidden;
+  }
+
+  /* Track (WebKit) */
+  .vt-progress::-webkit-progress-bar {
+    background-color: var(--vt-color-surface-raised);
+    border-radius: var(--vt-radius-full);
+  }
+
+  /* Fill (WebKit) */
+  .vt-progress::-webkit-progress-value {
+    background-color: var(--vt-color-brand);
+    border-radius: var(--vt-radius-full);
+    transition: width var(--vt-duration-base) ease;
+  }
+
+  /* Fill (Firefox) */
+  .vt-progress::-moz-progress-bar {
+    background-color: var(--vt-color-brand);
+    border-radius: var(--vt-radius-full);
+    transition: width var(--vt-duration-base) ease;
+  }
+
+  /* Semantic color variants */
+  .vt-progress--success::-webkit-progress-value { background-color: var(--vt-color-success); }
+  .vt-progress--warning::-webkit-progress-value { background-color: var(--vt-color-warning); }
+  .vt-progress--danger::-webkit-progress-value  { background-color: var(--vt-color-danger); }
+  .vt-progress--success::-moz-progress-bar      { background-color: var(--vt-color-success); }
+  .vt-progress--warning::-moz-progress-bar      { background-color: var(--vt-color-warning); }
+  .vt-progress--danger::-moz-progress-bar       { background-color: var(--vt-color-danger); }
+
+  /* Size variants */
+  .vt-progress--sm { height: calc(var(--vt-space-2) / 2); }
+  .vt-progress--lg { height: var(--vt-space-3); }
+
+  /* Indeterminate */
+  @keyframes vt-progress-slide {
+    0%   { transform: translateX(-100%) scaleX(0.5); }
+    50%  { transform: translateX(50%)  scaleX(0.6); }
+    100% { transform: translateX(300%) scaleX(0.3); }
+  }
+
+  .vt-progress--indeterminate::-webkit-progress-value {
+    width: 100% !important;
+    animation: vt-progress-slide 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    transform-origin: left center;
+  }
+
+  /* Label wrapper */
+  .vt-progress-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-block-end: var(--vt-space-2);
+  }
+
+  .vt-progress-wrap__label {
+    font-size: var(--vt-text-sm);
+    color: var(--vt-color-text);
+    font-weight: var(--vt-font-weight-medium);
+  }
+
+  .vt-progress-wrap__value {
+    font-size: var(--vt-text-xs);
+    color: var(--vt-color-text-muted);
+    font-family: var(--vt-font-mono);
+  }
+
+  /* ---- Spinner ------------------------------------------------------------- */
+
+  @keyframes vt-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  .vt-spinner {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--vt-color-border);
+    border-top-color: var(--vt-color-brand);
+    border-radius: var(--vt-radius-full);
+    animation: vt-spin 0.7s linear infinite;
+    vertical-align: middle;
+  }
+
+  /* Sizes */
+  .vt-spinner--xs { width: 0.75rem;  height: 0.75rem;  border-width: 1.5px; }
+  .vt-spinner--sm { width: 1rem;     height: 1rem; }
+  .vt-spinner--lg { width: 2rem;     height: 2rem;     border-width: 3px; }
+  .vt-spinner--xl { width: 3rem;     height: 3rem;     border-width: 4px; }
+
+  /* Semantic color variants */
+  .vt-spinner--success { border-top-color: var(--vt-color-success); }
+  .vt-spinner--warning { border-top-color: var(--vt-color-warning); }
+  .vt-spinner--danger  { border-top-color: var(--vt-color-danger); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vt-progress::-webkit-progress-value,
+    .vt-progress::-moz-progress-bar {
+      transition: none;
+    }
+    .vt-progress--indeterminate::-webkit-progress-value {
+      animation: none;
+    }
+    .vt-spinner {
+      animation-duration: 1.5s;
+    }
+  }
+}

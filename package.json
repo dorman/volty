@@ -1,17 +1,17 @@
 {
   "name": "volty",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step",
   "license": "MIT",
   "main": "dist/volty.css",
   "exports": {
-    ".":         "./dist/volty.css",
-    "./css":     "./dist/volty.css",
-    "./min":     "./dist/volty.min.css",
-    "./js":      "./src/volty.js",
-    "./insert":  "./dist/volty-insert.js",
-    "./embed":   "./dist/volty-embed.js",
-    "./schema":  "./dist/volty.schema.json"
+    ".": "./dist/volty.css",
+    "./css": "./dist/volty.css",
+    "./min": "./dist/volty.min.css",
+    "./js": "./src/volty.js",
+    "./insert": "./dist/volty-insert.js",
+    "./embed": "./dist/volty-embed.js",
+    "./schema": "./dist/volty.schema.json"
   },
   "files": [
     "dist/",
@@ -43,15 +43,15 @@
     "url": "https://github.com/dorman/volty/issues"
   },
   "scripts": {
-    "build":   "node scripts/build.js",
-    "watch":   "chokidar 'src/**/*.css' -c 'node scripts/build.js' --initial",
-    "dev":     "node scripts/dev.js",
-    "start":   "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "watch": "chokidar 'src/**/*.css' -c 'node scripts/build.js' --initial",
+    "dev": "node scripts/dev.js",
+    "start": "node scripts/dev.js",
     "prepublishOnly": "node scripts/build.js"
   },
   "devDependencies": {
-    "browser-sync":    "^3.0.3",
-    "chokidar-cli":    "^3.0.0",
+    "browser-sync": "^3.0.3",
+    "chokidar-cli": "^3.0.0",
     "lightningcss-cli": "^1.29.2"
   }
 }

@@ -1,12 +1,12 @@
 /*!
- * Volty v0.1.1
+ * Volty v0.1.2
  * Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step
  * MIT License
- * Built: 2026-04-13T22:41:18.095Z
+ * Built: 2026-04-14T22:39:42.580Z
  */
 
 /*!
- * Volty v0.1.1 — embed bundle
+ * Volty v0.1.2 — embed bundle
  * Single-file install: drop one <script> tag, nothing else needed.
  *
  *   <script src="dist/volty-embed.js"></script>

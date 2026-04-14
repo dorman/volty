@@ -448,6 +448,20 @@ function build() {
   fs.writeFileSync(outEmbed, embedJs);
   const sizeEmbed = (Buffer.byteLength(embedJs, "utf8") / 1024).toFixed(1);
 
+  // --- Inject version into HTML files ---------------------------------------
+  const HTML_FILES = ["index.html", "about.html", "Documentation.html"];
+  const versionRe = /v\d+\.\d+\.\d+/g;
+  HTML_FILES.forEach(file => {
+    const filePath = path.join(ROOT, file);
+    if (!fs.existsSync(filePath)) return;
+    const original = fs.readFileSync(filePath, "utf8");
+    const updated = original.replace(versionRe, `v${PKG.version}`);
+    if (updated !== original) {
+      fs.writeFileSync(filePath, updated);
+      console.log(`  updated version → ${file}`);
+    }
+  });
+
   // --- Report ---------------------------------------------------------------
   const elapsed = Date.now() - start;
   console.log(`\nVolty v${PKG.version} built in ${elapsed}ms`);

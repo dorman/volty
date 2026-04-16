@@ -3,7 +3,7 @@ import { cx } from '../utils';
 
 export type InputSize = 'sm' | 'lg';
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   size?: InputSize;
   error?: boolean;
   className?: string;

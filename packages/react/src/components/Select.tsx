@@ -3,7 +3,7 @@ import { cx } from '../utils';
 
 export type SelectSize = 'sm' | 'lg';
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   size?: SelectSize;
   error?: boolean;
   wrapperClassName?: string;

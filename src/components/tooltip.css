@@ -38,8 +38,11 @@
     padding-inline: var(--vt-space-3);
 
     /* Appearance */
-    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
-    color: var(--vt-color-surface);
+    background-color: light-dark(
+      color-mix(in oklch, var(--vt-color-text) 92%, transparent),
+      oklch(26% 0 0)
+    );
+    color: light-dark(var(--vt-color-surface), var(--vt-color-text));
     border-radius: var(--vt-radius-sm);
     font-size: var(--vt-text-xs);
     font-weight: var(--vt-font-weight-medium);
@@ -102,8 +105,11 @@
     max-width: 220px;
     padding-block: var(--vt-space-1);
     padding-inline: var(--vt-space-3);
-    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
-    color: var(--vt-color-surface);
+    background-color: light-dark(
+      color-mix(in oklch, var(--vt-color-text) 92%, transparent),
+      oklch(26% 0 0)
+    );
+    color: light-dark(var(--vt-color-surface), var(--vt-color-text));
     border-radius: var(--vt-radius-sm);
     font-size: var(--vt-text-xs);
     font-weight: var(--vt-font-weight-medium);

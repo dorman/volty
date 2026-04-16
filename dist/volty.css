@@ -2,7 +2,7 @@
  * Volty v0.1.2
  * Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step
  * MIT License
- * Built: 2026-04-14T22:39:42.580Z
+ * Built: 2026-04-16T04:46:42.619Z
  */
 
 /* ==============================================================================
@@ -1245,8 +1245,11 @@
     padding-inline: var(--vt-space-3);
 
     /* Appearance */
-    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
-    color: var(--vt-color-surface);
+    background-color: light-dark(
+      color-mix(in oklch, var(--vt-color-text) 92%, transparent),
+      oklch(26% 0 0)
+    );
+    color: light-dark(var(--vt-color-surface), var(--vt-color-text));
     border-radius: var(--vt-radius-sm);
     font-size: var(--vt-text-xs);
     font-weight: var(--vt-font-weight-medium);
@@ -1309,8 +1312,11 @@
     max-width: 220px;
     padding-block: var(--vt-space-1);
     padding-inline: var(--vt-space-3);
-    background-color: color-mix(in oklch, var(--vt-color-text) 92%, transparent);
-    color: var(--vt-color-surface);
+    background-color: light-dark(
+      color-mix(in oklch, var(--vt-color-text) 92%, transparent),
+      oklch(26% 0 0)
+    );
+    color: light-dark(var(--vt-color-surface), var(--vt-color-text));
     border-radius: var(--vt-radius-sm);
     font-size: var(--vt-text-xs);
     font-weight: var(--vt-font-weight-medium);

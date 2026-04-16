@@ -2,7 +2,7 @@
  * Volty v0.1.3
  * Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step
  * MIT License
- * Built: 2026-04-16T04:59:47.784Z
+ * Built: 2026-04-16T22:35:09.886Z
  */
 
 /* ==============================================================================
@@ -1500,18 +1500,6 @@
   }
 
   /* ---- Field layout helper -------------------------------------------- */
-  .vt-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--vt-space-2);
-  }
-
-  .vt-label {
-    font-size: var(--vt-text-sm);
-    font-weight: var(--vt-font-weight-medium);
-    color: var(--vt-color-text);
-    line-height: var(--vt-line-height-tight);
-  }
 
   .vt-field-hint {
     font-size: var(--vt-text-xs);

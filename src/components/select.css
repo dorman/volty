@@ -135,18 +135,6 @@
   }
 
   /* ---- Field layout helper -------------------------------------------- */
-  .vt-field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--vt-space-2);
-  }
-
-  .vt-label {
-    font-size: var(--vt-text-sm);
-    font-weight: var(--vt-font-weight-medium);
-    color: var(--vt-color-text);
-    line-height: var(--vt-line-height-tight);
-  }
 
   .vt-field-hint {
     font-size: var(--vt-text-xs);

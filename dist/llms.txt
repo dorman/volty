@@ -1,4 +1,4 @@
-# Volty v0.1.2 — AI reference
+# Volty v0.1.3 — AI reference
 # Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step
 # All tokens registered via @property with typed syntax — browser-validated, Shadow DOM-inherited.
 # Use this file as context when generating Volty components.

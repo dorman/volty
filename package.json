@@ -1,6 +1,6 @@
 {
   "name": "volty",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step",
   "license": "MIT",
   "main": "dist/volty.css",

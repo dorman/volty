@@ -66,6 +66,11 @@
     color: var(--vt-color-text);
   }
 
+  .vt-alert__dismiss:focus-visible {
+    outline: 2px solid var(--vt-color-brand-ring);
+    outline-offset: 2px;
+  }
+
   /* When there's no dismiss button, collapse the last column */
   .vt-alert:not(:has(.vt-alert__dismiss)) {
     grid-template-columns: auto 1fr;

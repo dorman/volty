@@ -2,7 +2,7 @@
  * Volty v0.1.3
  * Modern CSS theme library — typed design tokens, native Shadow DOM theming, zero build step
  * MIT License
- * Built: 2026-04-16T22:35:09.886Z
+ * Built: 2026-04-17T03:24:58.683Z
  */
 
 /* ==============================================================================
@@ -1146,6 +1146,11 @@
     color: var(--vt-color-text);
   }
 
+  .vt-alert__dismiss:focus-visible {
+    outline: 2px solid var(--vt-color-brand-ring);
+    outline-offset: 2px;
+  }
+
   /* When there's no dismiss button, collapse the last column */
   .vt-alert:not(:has(.vt-alert__dismiss)) {
     grid-template-columns: auto 1fr;
@@ -1814,6 +1819,11 @@
   .vt-toast__dismiss:hover {
     background-color: color-mix(in oklch, var(--vt-color-text) 10%, transparent);
     color: var(--vt-color-text);
+  }
+
+  .vt-toast__dismiss:focus-visible {
+    outline: 2px solid var(--vt-color-brand-ring);
+    outline-offset: 2px;
   }
 
   /* When no dismiss button */

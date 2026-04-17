@@ -117,6 +117,11 @@
     color: var(--vt-color-text);
   }
 
+  .vt-toast__dismiss:focus-visible {
+    outline: 2px solid var(--vt-color-brand-ring);
+    outline-offset: 2px;
+  }
+
   /* When no dismiss button */
   .vt-toast:not(:has(.vt-toast__dismiss)) {
     grid-template-columns: auto 1fr;
